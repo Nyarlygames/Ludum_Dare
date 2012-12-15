@@ -45,7 +45,13 @@ package
 								kids.add(new Kid(en[1], en[2]));
 							break;
 							case "Build":
-								builds.add(new Buildings(en[1], en[2], en[3]));
+								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
+							break;
+							case "Hopital":
+								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
+							break;
+							case "Autre":
+								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
 							break;
 							default:
 						}

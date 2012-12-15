@@ -8,15 +8,18 @@ package
 	 */
 	public class SpawnObjet extends FlxSprite 
 	{
+
+		public var label:String = "";
+		public var id:int = 0;
+		private var imgs:ImgRegistry = new ImgRegistry;
 		
-		[Embed(source = '../assets/gfx/spawnobj.png')] public var ImgSpawnObj:Class;
-		
-		public function SpawnObjet(xpos:int, ypos:int) 
+		public function SpawnObjet(xpos:int, ypos:int, lab:String, index:int) 
 		{
-			super(xpos, ypos, ImgSpawnObj);
+			id = index;
+			super(xpos, ypos, imgs.assets[id +2]);
 			x -= frameWidth / 2;
 			y -= frameHeight / 2;
-			
+			label = lab;
 		}
 		
 	}

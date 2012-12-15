@@ -13,7 +13,7 @@ package
 	{
 		[Embed(source = '../assets/gfx/player.png')] public var ImgPlayer:Class;
 		public var speed:int = 2;
-		public var lifes:int = 3;
+		public var lives:int = 3;
 		
 		public function Player(x:int, y:int) 
 		{
@@ -38,7 +38,19 @@ package
 		}
 		
 		public function getLoot(obj1:Player, obj2:SpawnObjet):void {
-			lifes++;
+			switch(obj2.label){
+				case "Build":
+					lives++;
+				break;
+				case "Hopital":
+					if (lives < 3)
+						lives++;
+				break;
+				case "Autre":
+					speed *= 2;
+				break;
+				default:
+			}
 			obj2.destroy();
 			obj2.exists = false;
 		}

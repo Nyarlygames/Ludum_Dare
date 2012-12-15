@@ -12,7 +12,6 @@ package
 	 */
 	public class Buildings extends FlxSprite
 	{
-		[Embed(source = '../assets/gfx/building2.png')] public var ImgBuilding2:Class;
 		private var imgs:ImgRegistry = new ImgRegistry();
 		private var timer:FlxTimer = new FlxTimer();
 		private var timer_spawn:FlxTimer = new FlxTimer();
@@ -23,11 +22,13 @@ package
 		public var loot:SpawnObjet;
 		private var id:int = 1;
 		private var spawntime:int = 10;
+		private var label:String = "";
 		
-		public function Buildings(x:int, y:int, index:int) 
+		public function Buildings(x:int, y:int, index:int, lab:String) 
 		{
 			super(x, y, imgs.assets[index]);
 			id = index;
+			label = lab;
 		}
 		
 		override public function update():void {
@@ -35,7 +36,7 @@ package
 			if ((timer != null) && (timer.finished) && (take != null)) {
 				team = !team;
 				if (team)
-					loadGraphic(ImgBuilding2);
+					loadGraphic(imgs.assets[id+1]);
 				else
 					loadGraphic(imgs.assets[id]);
 				timer = null;
@@ -53,7 +54,7 @@ package
 		}
 		
 		public function spawnobj():void {
-			loot = new SpawnObjet(x + frameWidth/2, y + frameHeight/2);
+			loot = new SpawnObjet(x + frameWidth/2, y + frameHeight/2, label, id);
 			FlxG.state.add(loot);
 		}
 		
