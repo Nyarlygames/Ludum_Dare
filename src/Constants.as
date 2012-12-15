@@ -6,8 +6,8 @@ package
 	 */
 	public class Constants 
 	{
-		public static const NBTILESWIDTH:uint = 64;
-		public static const NBTILESHEIGHT:uint = 8;
+		public static const NBTILESWIDTH:uint = 81;
+		public static const NBTILESHEIGHT:uint = 61;
 		public static const TILESIZE:uint = 32;
 	}
 

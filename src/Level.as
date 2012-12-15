@@ -33,19 +33,17 @@ package
 		public var childcount:int = 0;
 		public var started:Boolean = false;
 		
-		private var lastPosition:Array;
-		private var distances:Array;
+		private var lastPosition:Array = new Array;
+		private var distances:Array = new Array();
 		
 		public function Level(nom:String, rat:String):void
 		{
 			rating = rat;
 			name = nom;
-			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);0
-			add(background);
+			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
+			//add(background);
 			// JOUEUR
 			player = new Player(FlxG.width / 2, FlxG.height / 2, background.frameWidth, background.frameHeight);
-			
-			trace(background.frameWidth, background.frameHeight);
 			esrbs = map.esrbs;
 			kids = map.kids;
 			builds = map.builds;
@@ -108,8 +106,7 @@ package
 				}
 			}
 			
-			var count:uint = 0;
-
+			var count:uint = 0;		
 			distanceArray[aiming.getSquare()[0]][aiming.getSquare()[1]] = ++count;//Find hero
 			
 			while(findIndexInArray(0, distanceArray).length != 0) {

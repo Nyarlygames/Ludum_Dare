@@ -75,7 +75,6 @@ package
 		 * Uses the distance array to guide ennemies toward player
 		 */
 		private function pathfinder(stalker:Object,distanceArray:Array):void {
-			trace(stalker.y);
 		}
 	}
 }
