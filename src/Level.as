@@ -33,6 +33,9 @@ package
 		public var childcount:int = 0;
 		public var started:Boolean = false;
 		
+		private var lastPosition:Array;
+		private var distances:Array;
+		
 		public function Level(nom:String, rat:String):void
 		{
 			rating = rat;
@@ -61,10 +64,106 @@ package
 			//ui.sticktoplayer(player);
 			FlxG.worldBounds =  new FlxRect(0, 0, background.frameWidth, background.frameHeight);
 			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
+			
+			lastPosition = player.getSquare();
+			distances = distanceCalculator(player);
 		}
 		
+		
+		/*
+		 * Finds a value in a "two-dimensional" array
+		 */
+		private function findIndexInArray(value:Object,array:Array):Array {
+			var occurences:Array = new Array();
+			
+			for (var i:uint = 0 ; i < Constants.NBTILESWIDTH ; i++) {
+				for (var j:uint = 0 ; j < Constants.NBTILESHEIGHT ; j++) {
+					if (array[j][i] == value) {
+						occurences.push(j,i);
+					}
+				}
+			}
+			return occurences;
+		}
+		
+		/*
+		 * Determines the distance between the player and every other square
+		 * Returns a two-dimensionnal array corresponding with the map
+		 */
+		private function distanceCalculator(aiming:Character):Array {
+			var mazeArray:Array = map.collisionsMap;
+			
+			//Create an array with the dimensions of the map array
+			var distanceArray:Array = new Array();
+			
+			//Fill array of distances with 0 on empty tiles and 999 on blocked tiles so that they won't be chosen as path
+			for (var j:uint = 0 ; j < Constants.NBTILESHEIGHT ; j++) {
+				distanceArray[j] = [];
+				for (var i:uint = 0 ; i < Constants.NBTILESWIDTH ; i++) {
+					if(mazeArray[j][i] == 1) {
+						distanceArray[j][i] = 999;
+					} else {
+						distanceArray[j][i] = 0;
+					}
+				}
+			}
+			
+			var count:uint = 0;
+
+			distanceArray[aiming.getSquare()[0]][aiming.getSquare()[1]] = ++count;//Find hero
+			
+			while(findIndexInArray(0, distanceArray).length != 0) {
+				var centerIndex:Array = findIndexInArray(count++, distanceArray);
+				for (i = 0 ; i < centerIndex.length ; i += 2) {
+					if(centerIndex[i] != null && centerIndex[i+1] != null) {
+						//Fill the neighbors with the incrementing count gives the distance
+						if(distanceArray[centerIndex[i] - 1] != null) {
+							if (distanceArray[centerIndex[i] - 1][centerIndex[i+1] - 1] != null && distanceArray[centerIndex[i] - 1][centerIndex[i+1] - 1] == 0) {
+								distanceArray[centerIndex[i] - 1][centerIndex[i+1] - 1] = count;
+							}
+							if (distanceArray[centerIndex[i] - 1][centerIndex[i+1]] != null && distanceArray[centerIndex[i] - 1][centerIndex[i+1]] == 0) {
+								distanceArray[centerIndex[i] - 1][centerIndex[i+1]] = count;
+							}
+							if (distanceArray[centerIndex[i] - 1][centerIndex[i+1] + 1] != null && distanceArray[centerIndex[i] - 1][centerIndex[i+1] + 1] == 0) {
+								distanceArray[centerIndex[i] - 1][centerIndex[i+1] + 1] = count;
+							}
+						}
+						if(distanceArray[centerIndex[i]] != null) {
+							if (distanceArray[centerIndex[i]][centerIndex[i+1] - 1] != null && distanceArray[centerIndex[i]][centerIndex[i+1] - 1] == 0) {
+								distanceArray[centerIndex[i]][centerIndex[i+1] - 1] = count;
+							}
+							if (distanceArray[centerIndex[i]][centerIndex[i+1] + 1] != null && distanceArray[centerIndex[i]][centerIndex[i+1] + 1] == 0) {
+								distanceArray[centerIndex[i]][centerIndex[i+1] + 1] = count;
+							}
+						}
+						if(distanceArray[centerIndex[i] + 1] != null) {
+							if (distanceArray[centerIndex[i] + 1][centerIndex[i+1] - 1] != null && distanceArray[centerIndex[i] + 1][centerIndex[i+1] - 1] == 0) {
+								distanceArray[centerIndex[i] + 1][centerIndex[i+1] - 1] = count;
+							}
+							if (distanceArray[centerIndex[i] + 1][centerIndex[i+1]] != null && distanceArray[centerIndex[i] + 1][centerIndex[i+1]] == 0) {
+								distanceArray[centerIndex[i] + 1][centerIndex[i+1]] = count;
+							}
+							if (distanceArray[centerIndex[i] + 1][centerIndex[i+1] + 1] != null && distanceArray[centerIndex[i] + 1][centerIndex[i+1] + 1] == 0) {
+								distanceArray[centerIndex[i] + 1][centerIndex[i+1] + 1] = count;
+							}
+						}
+					}
+				}
+			}
+			
+			return distanceArray;
+		}
+		
+		////UPDATE
 		override public function update():void {
 			super.update();
+			
+			if (lastPosition[0] != player.getSquare()[0] && lastPosition[1] != player.getSquare()[1]) {
+				distances = distanceCalculator(player);
+				lastPosition = player.getSquare();
+			}
+			kids.members[0].findPath(distances);
+			
 			if (started == false) {
 				playtime.start(map.time);
 				started = true;
@@ -104,14 +203,14 @@ package
 				score += 800;
 				playtime = null;
 			}
-			
+			/*
 			// Collisions kids
 			for each (var k:Kid in kids.members) {
 				if (k != null) {
 					FlxG.overlap(player, k, player.getKid);
 				}
 			}
-			
+			*/
 		}
 		
 	}

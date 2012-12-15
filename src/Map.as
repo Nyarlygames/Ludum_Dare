@@ -36,7 +36,6 @@ package
 					collisionsMap[i][j] = 0;
 				}
 			}
-			trace(collisionsMap[0].length);
 			
 			var build:Buildings;
 			var k:uint = 0;
