@@ -9,7 +9,7 @@ package
 	 * Player
 	 * @author ...
 	 */
-	public class Player extends FlxSprite 
+	public class Player extends Character 
 	{
 		[Embed(source = '../assets/gfx/player.png')] public var ImgPlayer:Class;
 		public var speed:int = 2;

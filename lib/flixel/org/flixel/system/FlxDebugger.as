@@ -11,7 +11,6 @@ package org.flixel.system
 	
 	import org.flixel.FlxG;
 	import org.flixel.system.debug.Log;
-	import org.flixel.system.Log;
 	import org.flixel.system.debug.Perf;
 	import org.flixel.system.debug.VCR;
 	import org.flixel.system.debug.Vis;
