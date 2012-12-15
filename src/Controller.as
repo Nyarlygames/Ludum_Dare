@@ -99,7 +99,7 @@ package
 				distanceArray[j] = [];
 				for (var i:uint = 0 ; i < mazeWidth ; i++) {
 					if(mazeArray[j][i] == 1) {
-						distanceArray[j][i] = 9;
+						distanceArray[j][i] = 999;
 					} else {
 						distanceArray[j][i] = 0;
 					}

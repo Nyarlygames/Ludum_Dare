@@ -18,7 +18,7 @@ package
 		 * Find square of the object from its coordinates
 		 */
 		public function getSquare():Array {
-			return [Math.round(this.x / Constants.NBTILESWIDTH),Math.round(this.y / Constants.NBTILESHEIGHT)];
+			return [Math.round(this.x / Constants.TILESIZE),Math.round(this.y / Constants.TILESIZE)];
 		}
 	}
 
