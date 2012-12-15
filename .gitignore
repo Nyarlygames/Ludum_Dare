@@ -5,7 +5,6 @@
 *.pydevproject
 .project
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -161,3 +160,6 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+ 
+# Win crap
+*.db
