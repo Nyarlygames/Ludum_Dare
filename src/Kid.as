@@ -1,12 +1,11 @@
 package  
 {
-	import org.flixel.FlxSprite;
 	
 	/**
 	 * KID
 	 * @author ...
 	 */
-	public class Kid extends FlxSprite 
+	public class Kid extends Character
 	{
 		
 		[Embed(source = '../assets/gfx/kid.png')] public var ImgKid:Class;

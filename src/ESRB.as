@@ -1,12 +1,10 @@
 package  
-{
-	import org.flixel.FlxSprite;
-	
+{	
 	/**
 	 * ESRB
 	 * @author ...
 	 */
-	public class ESRB extends FlxSprite 
+	public class ESRB extends Character 
 	{
 		
 		[Embed(source = '../assets/gfx/esrb.png')] public var ImgESRB:Class;

@@ -1,13 +1,12 @@
 package 
 {
-	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	/**
 	 * Pathfinders
 	 * @author Jidehem1993
 	 */
-	public class Main extends Sprite 
+	public class Controller
 	{
 		private const squareWidth:uint = 50;
 		private const squareHeight:uint = 50;

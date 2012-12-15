@@ -2,7 +2,6 @@ package
 {
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxRect;
-	import org.flixel.FlxSprite;
 	import org.flixel.FlxG;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
 	import org.flixel.plugin.photonstorm.FlxCollision;
@@ -11,7 +10,7 @@ package
 	 * Player
 	 * @author ...
 	 */
-	public class Player extends FlxSprite 
+	public class Player extends Character 
 	{
 		[Embed(source = '../assets/gfx/ph_pj.png')] public var ImgPlayer:Class;
 		public var speed:int = 15;
