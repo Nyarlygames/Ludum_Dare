@@ -22,24 +22,27 @@ package
 		public var loot:SpawnObjet;
 		private var id:int = 1;
 		private var spawntime:int = 10;
-		private var label:String = "";
+		public var label:String = "";
 		public var validated:Boolean = false;
+		public var lootable:Boolean = false;
 		
-		public function Buildings(x:int, y:int, index:int, lab:String) 
+		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean) 
 		{
 			super(x, y, imgs.assets[index]);
+			lootable = truth;
 			id = index;
 			label = lab;
+			immovable = true;
 		}
 		
 		override public function update():void {
 			super.update();
 			if ((timer != null) && (timer.finished) && (take != null)) {
 				team = !team;
-				if (team)
+				/*if (team)
 					loadGraphic(imgs.assets[id+1]);
 				else
-					loadGraphic(imgs.assets[id]);
+					loadGraphic(imgs.assets[id]);*/
 				timer = null;
 				taken = true;
 				spawnobj();
@@ -47,7 +50,7 @@ package
 			}
 			
 			if ((taken == true) && (timer_spawn.finished)) {
-				if ((loot != null) && (loot.exists == false)) 
+				if ((loot != null) && (loot.exists == false) && (lootable == true)) 
 					spawnobj();
 				timer_spawn.start(spawntime);
 			}
@@ -66,7 +69,7 @@ package
 				timer.start(time);
 				take = source;
 			}
-			else if (/*batiment repris qu'une seule fois--*/(timer != null)/*--*/ && !FlxCollision.pixelPerfectCheck(source, this) && (take == source)) {
+			else if ((timer != null) && !FlxCollision.pixelPerfectCheck(source, this) && (take == source)) {
 				if (timer != null)
 					timer.stop();
 				take = null;

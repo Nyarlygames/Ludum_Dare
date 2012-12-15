@@ -3,6 +3,7 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxRect;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
@@ -39,7 +40,7 @@ package
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
 			add(background);
 			// JOUEUR
-			player = new Player(FlxG.width/2, FlxG.height/2);
+			player = new Player(FlxG.width/2, FlxG.height/2, background.frameWidth, background.frameHeight);
 			add(player);
 			esrbs = map.esrbs;
 			kids = map.kids;
@@ -50,6 +51,14 @@ package
 			ui = new UI(this);
 			add(ui);
 			add(ui.components);
+			FlxG.worldBounds =  new FlxRect(0, 0, background.frameWidth, background.frameHeight);
+			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
+			/*FlxG.camera.bounds = new FlxRect(0, 0, w, h);
+			FlxG.width = w;
+			FlxG.height = h;
+			FlxG.camera.width = w;
+			FlxG.camera.height = h;
+			trace(FlxG.camera.width, FlxG.camera.height);*/
 		}
 		
 		override public function update():void {
@@ -58,9 +67,10 @@ package
 				playtime.start(map.time);
 				started = true;
 			}
+			FlxG.collide(player, builds, player.hit_wall);
 			// Collisions buildings
 			for each (var b:Buildings in builds.members) {
-				if (b != null) {
+				if ((b != null) && (b.lootable == true)){
 					if (b.taken == false) {
 						b.playerGet(player);
 					}
@@ -86,18 +96,12 @@ package
 				playtime = null;
 			}
 			
-			/*// Collisions kids
+			// Collisions kids
 			for each (var k:Kid in kids.members) {
 				if (k != null) {
-					if (b.validated == false) {
-						childcount++;
-						k.validated = true;
-						if (childcount == 3)
-							score += 1000;
-					}
-					FlxG.overlap(player, b.loot, player.getLoot);
+					FlxG.overlap(player, k, player.getKid);
 				}
-			}*/
+			}
 			
 		}
 		

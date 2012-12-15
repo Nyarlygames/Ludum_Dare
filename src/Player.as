@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxRect;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxG;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
@@ -11,22 +12,25 @@ package
 	 */
 	public class Player extends FlxSprite 
 	{
-		[Embed(source = '../assets/gfx/player.png')] public var ImgPlayer:Class;
+		[Embed(source = '../assets/gfx/ph_pj.png')] public var ImgPlayer:Class;
 		public var speed:int = 15;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry;
+		private var w:int = 0;
+		private var h:int = 0;
 		
-		public function Player(x:int, y:int) 
+		public function Player(x:int, y:int, width:int, height:int) 
 		{
 			super(x, y, ImgPlayer);
+			w = width;
+			h = height;
 		}
 		
 		override public function update():void {
 			super.update();
 			FlxG.camera.follow(this);
-			
 			// DROITE
-			if (FlxG.keys.pressed("RIGHT") && (x < imgs.assets[0].frameWidth)) {
+			if (FlxG.keys.pressed("RIGHT") && (x < w - frameWidth)) {
 				x += speed;
 			}
 			// GAUCHE
@@ -38,16 +42,13 @@ package
 				y -= speed;
 			}
 			// BAS
-			if (FlxG.keys.pressed("DOWN") && (y < imgs.assets[0].frameHeight)) {
+			if (FlxG.keys.pressed("DOWN") && (y < h - frameHeight)) {
 				y += speed;
 			}
 		}
 		
 		public function getLoot(obj1:Player, obj2:SpawnObjet):void {
 			switch(obj2.label){
-				case "Info":
-					lives++;
-				break;
 				case "Hopital":
 					if (lives < 3)
 						lives++;
@@ -59,6 +60,27 @@ package
 			}
 			obj2.destroy();
 			obj2.exists = false;
+		}	
+		
+		public function hit_wall(obj1:Player, obj2:Buildings):void {
+			switch(obj2.label){
+				case "Hopital":
+				break;
+				case "Jeu":
+				break;
+				default:
+			}
 		}
+		
+		public function getKid(obj1:Player, obj2:Kid):void {
+		/*	if (k.validated == false) {
+						childcount++;
+						k.validated = true;
+						if (childcount == 3)
+							score += 1000;
+					}
+			obj2.destroy();
+			obj2.exists = false;*/
+		}	
 	}
 } 

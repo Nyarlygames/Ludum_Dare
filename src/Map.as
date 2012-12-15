@@ -24,7 +24,8 @@ package
 			 * ID STAGE
 			 * MAXSCORE
 			 * BG ID
-			 * TYPEENNEMIS VIE X Y SCORE
+			 * Mob/x/y
+			 * Buildings/x/y/imgref
 		 * */
 		public function Map(map:Class) 
 		{
@@ -52,14 +53,23 @@ package
 							case "Kid":
 								kids.add(new Kid(en[1], en[2]));
 							break;
-							case "Info":
-								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
-							break;
 							case "Hopital":
-								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
+								builds.add(new Buildings(en[1], en[2], en[3], en[0], true));
 							break;
 							case "Jeu":
-								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
+								builds.add(new Buildings(en[1], en[2], en[3], en[0], true));
+							break;
+							case "Ecole":
+								builds.add(new Buildings(en[1], en[2], en[3], en[0], false));
+							break;
+							case "Centre":
+								builds.add(new Buildings(en[1], en[2], en[3], en[0], false));
+							break;
+							case "Fontaine":
+								builds.add(new Buildings(en[1], en[2], en[3], en[0], false));
+							break;
+							case "Maison":
+								builds.add(new Buildings(en[1], en[2], en[3], en[0], false));
 							break;
 							default:
 						}
