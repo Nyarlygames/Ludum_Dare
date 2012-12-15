@@ -67,29 +67,29 @@ package
 							case "Hopital":
 								build = new Buildings(en[1], en[2], en[3], en[0], true);
 								builds.add(build);
-								for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
+								/*for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
 									for (k = en[2] / Constants.TILESIZE ; k < (build.frameHeight / Constants.TILESIZE) + (en[2] / Constants.TILESIZE) ; k++) {
 										collisionsMap[k][j] = 1;
 									}
-								}
+								}*/
 							break;
 							case "Jeu":
 								build = new Buildings(en[1], en[2], en[3], en[0], true);
 								builds.add(build);
-								for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
+								/*for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
 									for (k = en[2] / Constants.TILESIZE ; k < (build.frameHeight / Constants.TILESIZE) + (en[2] / Constants.TILESIZE) ; k++) {
 										collisionsMap[k][j] = 1;
 									}
-								}
+								}*/
 							break;
 							default:
 								build = new Buildings(en[1], en[2], en[3], en[0], false);
 								builds.add(build);
-								for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
+								/*for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
 									for (k = en[2] / Constants.TILESIZE ; k < (build.frameHeight / Constants.TILESIZE) + (en[2] / Constants.TILESIZE) ; k++) {
 										collisionsMap[k][j] = 1;
 									}
-								}
+								}*/
 						}
 					}
 			}

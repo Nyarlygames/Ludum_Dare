@@ -22,7 +22,7 @@ package
 		private var esrbs:FlxGroup = new FlxGroup();
 		private var builds:FlxGroup = new FlxGroup();
 		public var map:Map = new Map(map1);
-		private var background:FlxSprite;
+		private var background:FlxSprite = new FlxSprite();
 		private var imgs:ImgRegistry = new ImgRegistry;
 		private var ui:UI;
 		public var score:int = 0;
@@ -37,10 +37,12 @@ package
 		{
 			rating = rat;
 			name = nom;
-			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
+			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);0
 			add(background);
 			// JOUEUR
-			player = new Player(FlxG.width/2, FlxG.height/2, background.frameWidth, background.frameHeight);
+			player = new Player(FlxG.width / 2, FlxG.height / 2, background.frameWidth, background.frameHeight);
+			
+			trace(background.frameWidth, background.frameHeight);
 			esrbs = map.esrbs;
 			kids = map.kids;
 			builds = map.builds;
@@ -49,13 +51,14 @@ package
 					add(z.hitbox);
 				}
 			} 
+			add(builds);
 			add(esrbs);
 			add(kids);
-			add(builds);
 			add(player);
 			ui = new UI(this);
 			add(ui);
 			add(ui.components);
+			//ui.sticktoplayer(player);
 			FlxG.worldBounds =  new FlxRect(0, 0, background.frameWidth, background.frameHeight);
 			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
 		}
@@ -87,6 +90,14 @@ package
 							b.playerGet(e);
 						}
 					}
+				}
+				if ((b.label == "Ecole") && (!b.bspawnkid)) {
+					b.spawntimer.start(b.spawnkid);
+					kids.add(new Kid(b.x, b.y));
+					b.bspawnkid = true;
+				}
+				if (b.spawntimer.finished) {
+					b.bspawnkid = false;
 				}
 			}
 			if ((playtime != null) && (playtime.finished)) {

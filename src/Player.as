@@ -14,7 +14,8 @@ package
 	public class Player extends Character 
 	{
 		[Embed(source = '../assets/gfx/ph_pj.png')] public var ImgPlayer:Class;
-		public var speed:int = 2;
+		public var speed:int = 5.;
+		public var maxspeed:int = 5;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry;
 		private var w:int = 0;
@@ -55,7 +56,7 @@ package
 						lives++;
 				break;
 				case "Jeu":
-					speed = 10;
+					speed = maxspeed;
 				break;
 				default:
 			}
