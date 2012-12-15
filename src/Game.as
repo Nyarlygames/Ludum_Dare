@@ -1,8 +1,8 @@
 package
 {
-	import flash.net.NetStreamPlayOptions;
 	import org.flixel.FlxState;
 	import org.flixel.FlxG;
+	import flash.system.System;
 	
 	/**
 	 * Game
@@ -10,12 +10,14 @@ package
 	 */
 	public class Game extends FlxState
 	{
-		public var state:int = 1;
-		public var onstate:Boolean = true;
+		private var state:int = 1;
+		private var onstate:Boolean = true;
+		private var level:Level;
 		
 		public function Game() 
 		{
-			new Level();
+			level = new Level();
+			add(level);
 		}
 		
 		override public function update():void {
@@ -25,6 +27,11 @@ package
 				
 				state = 2;
 				onstate = true;
+			}
+			
+			// ESCAPE
+			if (FlxG.keys.pressed("ESCAPE")) {
+				System.exit(0);
 			}
 		}
 	}
