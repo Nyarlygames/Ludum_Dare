@@ -20,8 +20,8 @@ package
 		private var take:FlxSprite = null;
 		public var taken:Boolean = false;
 		public var loot:SpawnObjet;
-		private var id:int = 1;
-		private var spawntime:int = 10;
+		public var id:int = 1;
+		private var spawntime:int = 2;
 		public var label:String = "";
 		public var validated:Boolean = false;
 		public var lootable:Boolean = false;
@@ -31,7 +31,7 @@ package
 		{
 			if (truth) {
 				hitbox = new FlxSprite(x, y, imgs.assets[index + 1]);
-				FlxG.state.add(hitbox);
+				hitbox.immovable = true;
 			}
 			super(x, y, imgs.assets[index]);
 			label = lab;

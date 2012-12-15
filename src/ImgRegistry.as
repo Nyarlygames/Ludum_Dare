@@ -20,7 +20,6 @@ package
 		[Embed(source = '../assets/gfx/ph_serb.png')] public var ImgCentre:Class;
 		[Embed(source = '../assets/gfx/ph_fontaine.png')] public var ImgFontaine:Class;
 		[Embed(source = '../assets/gfx/ph_maison.png')] public var ImgMaison:Class;
-		[Embed(source = '../assets/gfx/spawnobjhop.png')] public var Imgtest:Class;
 
 		public var assets:Array = new Array();
 		
@@ -37,7 +36,6 @@ package
 			assets.push(ImgCentre);
 			assets.push(ImgFontaine);
 			assets.push(ImgMaison);
-			assets.push(Imgtest);
 		}
 	}
 

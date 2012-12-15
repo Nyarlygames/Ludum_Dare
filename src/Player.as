@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxRect;
 	import org.flixel.FlxG;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
@@ -13,7 +14,7 @@ package
 	public class Player extends Character 
 	{
 		[Embed(source = '../assets/gfx/ph_pj.png')] public var ImgPlayer:Class;
-		public var speed:int = 15;
+		public var speed:int = 2;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry;
 		private var w:int = 0;
@@ -54,7 +55,7 @@ package
 						lives++;
 				break;
 				case "Jeu":
-					speed *= 2;
+					speed = 2;
 				break;
 				default:
 			}
@@ -73,11 +74,12 @@ package
 				default:
 			}
 		}
+		
 		public function hit_shop(obj1:Player, obj2:Buildings):void {
-				trace(obj2.hitbox.scrollFactor.y, obj2.hitbox.scrollFactor.x, obj2.offset.x, obj2.offset.y, obj1, obj2,FlxG.camera.scroll.x);
-			//if ((obj2.hitbox != null) && (FlxCollision.pixelPerfectCheck(obj1, obj2.hitbox))) {
-			//	FlxG.collide(obj1, obj2.hitbox);
-			//}
+			if ((obj2.hitbox != null) && (FlxCollision.pixelPerfectCheck(obj1, obj2.hitbox))) {
+				FlxG.collide(obj1, obj2.hitbox);
+				obj2.loadGraphic(imgs.assets[obj2.id]);
+			}
 		}
 		
 		public function getKid(obj1:Player, obj2:Kid):void {

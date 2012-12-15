@@ -64,9 +64,11 @@ package
 				started = true;
 			}
 			for each (var b:Buildings in builds.members) {
-				if ((b != null) && (b.lootable == true))
+				if ((b != null) && (b.lootable == true)) {
+					add(b.hitbox);    
 					player.hit_shop(player, b);
-				else
+				}
+				else                                                     
 					FlxG.collide(player, b, player.hit_wall);
 				if ((b != null) && (b.lootable == true)){
 					if (b.taken == false) {
