@@ -45,6 +45,10 @@ package
 			for each (var b:Buildings in builds.members) {
 				if (b != null){
 					b.playerGet(player);
+					// loots
+					if (b.loot != null)
+						FlxG.overlap(player, b.loot, player.getLoot);
+					// Collision building => esrb)
 					for each (var e:ESRB in esrbs.members) {
 						if (e != null){
 							b.playerGet(e);

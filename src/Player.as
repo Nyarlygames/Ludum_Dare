@@ -13,6 +13,7 @@ package
 	{
 		[Embed(source = '../assets/gfx/player.png')] public var ImgPlayer:Class;
 		public var speed:int = 2;
+		public var lifes:int = 3;
 		
 		public function Player(x:int, y:int) 
 		{
@@ -34,6 +35,12 @@ package
 			if (FlxG.keys.pressed("DOWN")) {
 				y += speed;
 			}
+		}
+		
+		public function getLoot(obj1:Player, obj2:SpawnObjet):void {
+			lifes++;
+			obj2.destroy();
+			obj2.exists = false;
 		}
 	}
 } 
