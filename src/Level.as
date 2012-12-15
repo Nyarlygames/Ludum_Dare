@@ -6,7 +6,6 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
-	import org.flixel.plugin.photonstorm.FlxCollision;
 	
 	/**
 	 * Level
@@ -14,6 +13,7 @@ package
 	 */
 	public class Level extends FlxState
 	{	
+			
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		private var player:Player;
 		private var kids:FlxGroup = new FlxGroup();
@@ -41,6 +41,17 @@ package
 		
 		override public function update():void {
 			super.update();
+			// Collisions buildings
+			for each (var b:Buildings in builds.members) {
+				if (b != null){
+					b.playerGet(player);
+					for each (var e:ESRB in esrbs.members) {
+						if (e != null){
+							b.playerGet(e);
+						}
+					}
+				}
+			}
 		}
 		
 	}
