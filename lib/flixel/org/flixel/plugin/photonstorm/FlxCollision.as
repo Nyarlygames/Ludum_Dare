@@ -65,7 +65,7 @@ package org.flixel.plugin.photonstorm
 			{
 				pointA.x = contact.x - int(FlxG.camera.scroll.x * contact.scrollFactor.x) - contact.offset.x;
 				pointA.y = contact.y - int(FlxG.camera.scroll.y * contact.scrollFactor.y) - contact.offset.y;
-				
+				//trace(target.x, int(FlxG.camera.scroll.x), target.scrollFactor.x, target.offset.x);
 				pointB.x = target.x - int(FlxG.camera.scroll.x * target.scrollFactor.x) - target.offset.x;
 				pointB.y = target.y - int(FlxG.camera.scroll.y * target.scrollFactor.y) - target.offset.y;
 			}

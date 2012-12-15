@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxG;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
+	import org.flixel.plugin.photonstorm.FlxCollision;
 	
 	/**
 	 * Player
@@ -65,11 +66,19 @@ package
 		public function hit_wall(obj1:Player, obj2:Buildings):void {
 			switch(obj2.label){
 				case "Hopital":
+					trace("test");
 				break;
 				case "Jeu":
+					trace("test");
 				break;
 				default:
 			}
+		}
+		public function hit_shop(obj1:Player, obj2:Buildings):void {
+				trace(obj2.hitbox.scrollFactor.y, obj2.hitbox.scrollFactor.x, obj2.offset.x, obj2.offset.y, obj1, obj2,FlxG.camera.scroll.x);
+			//if ((obj2.hitbox != null) && (FlxCollision.pixelPerfectCheck(obj1, obj2.hitbox))) {
+			//	FlxG.collide(obj1, obj2.hitbox);
+			//}
 		}
 		
 		public function getKid(obj1:Player, obj2:Kid):void {

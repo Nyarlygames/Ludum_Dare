@@ -53,12 +53,6 @@ package
 			add(ui.components);
 			FlxG.worldBounds =  new FlxRect(0, 0, background.frameWidth, background.frameHeight);
 			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
-			/*FlxG.camera.bounds = new FlxRect(0, 0, w, h);
-			FlxG.width = w;
-			FlxG.height = h;
-			FlxG.camera.width = w;
-			FlxG.camera.height = h;
-			trace(FlxG.camera.width, FlxG.camera.height);*/
 		}
 		
 		override public function update():void {
@@ -67,9 +61,11 @@ package
 				playtime.start(map.time);
 				started = true;
 			}
-			FlxG.collide(player, builds, player.hit_wall);
-			// Collisions buildings
 			for each (var b:Buildings in builds.members) {
+				if ((b != null) && (b.lootable == true))
+					player.hit_shop(player, b);
+				else
+					FlxG.collide(player, b, player.hit_wall);
 				if ((b != null) && (b.lootable == true)){
 					if (b.taken == false) {
 						b.playerGet(player);

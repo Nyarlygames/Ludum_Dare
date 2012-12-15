@@ -25,14 +25,19 @@ package
 		public var label:String = "";
 		public var validated:Boolean = false;
 		public var lootable:Boolean = false;
+		public var hitbox:FlxSprite = null;
 		
 		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean) 
 		{
+			if (truth) {
+				hitbox = new FlxSprite(x, y, imgs.assets[index + 1]);
+				FlxG.state.add(hitbox);
+			}
 			super(x, y, imgs.assets[index]);
-			lootable = truth;
-			id = index;
 			label = lab;
 			immovable = true;
+			lootable = truth;
+			id = index;
 		}
 		
 		override public function update():void {
@@ -48,7 +53,6 @@ package
 				spawnobj();
 				timer_spawn.start(spawntime);
 			}
-			
 			if ((taken == true) && (timer_spawn.finished)) {
 				if ((loot != null) && (loot.exists == false) && (lootable == true)) 
 					spawnobj();
