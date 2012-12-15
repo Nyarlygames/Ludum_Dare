@@ -44,7 +44,8 @@ package
 			super.update();
 			if ((timer != null) && (timer.finished) && (take != null)) {
 				team = !team;
-				/*if (team)
+				/*
+				if (team)
 					loadGraphic(imgs.assets[id+1]);
 				else
 					loadGraphic(imgs.assets[id]);*/

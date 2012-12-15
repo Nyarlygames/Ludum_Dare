@@ -41,13 +41,18 @@ package
 			add(background);
 			// JOUEUR
 			player = new Player(FlxG.width/2, FlxG.height/2, background.frameWidth, background.frameHeight);
-			add(player);
 			esrbs = map.esrbs;
 			kids = map.kids;
 			builds = map.builds;
+			for each (var z:Buildings in builds.members) {
+				if (z.hitbox != null) {
+					add(z.hitbox);
+				}
+			} 
 			add(esrbs);
 			add(kids);
 			add(builds);
+			add(player);
 			ui = new UI(this);
 			add(ui);
 			add(ui.components);
@@ -57,19 +62,12 @@ package
 		
 		override public function update():void {
 			super.update();
-			
-			trace(player.getSquare());
 			if (started == false) {
 				playtime.start(map.time);
 				started = true;
 			}
+			FlxG.collide(player, builds);
 			for each (var b:Buildings in builds.members) {
-				if ((b != null) && (b.lootable == true)) {
-					add(b.hitbox);    
-					player.hit_shop(player, b);
-				}
-				else                                                     
-					FlxG.collide(player, b, player.hit_wall);
 				if ((b != null) && (b.lootable == true)){
 					if (b.taken == false) {
 						b.playerGet(player);

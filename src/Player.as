@@ -55,32 +55,13 @@ package
 						lives++;
 				break;
 				case "Jeu":
-					speed = 2;
+					speed = 10;
 				break;
 				default:
 			}
 			obj2.destroy();
 			obj2.exists = false;
 		}	
-		
-		public function hit_wall(obj1:Player, obj2:Buildings):void {
-			switch(obj2.label){
-				case "Hopital":
-					trace("test");
-				break;
-				case "Jeu":
-					trace("test");
-				break;
-				default:
-			}
-		}
-		
-		public function hit_shop(obj1:Player, obj2:Buildings):void {
-			if ((obj2.hitbox != null) && (FlxCollision.pixelPerfectCheck(obj1, obj2.hitbox))) {
-				FlxG.collide(obj1, obj2.hitbox);
-				obj2.loadGraphic(imgs.assets[obj2.id]);
-			}
-		}
 		
 		public function getKid(obj1:Player, obj2:Kid):void {
 		/*	if (k.validated == false) {
