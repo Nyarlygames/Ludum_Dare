@@ -13,6 +13,13 @@ package
 		{
 			super(x, y, Img);
 		}
+		
+		/*
+		 * Find square of the object from its coordinates
+		 */
+		public function getSquare():Array {
+			return [Math.round(this.x / Constants.NBTILESWIDTH),Math.round(this.y / Constants.NBTILESHEIGHT)];
+		}
 	}
 
 }

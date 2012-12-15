@@ -45,12 +45,7 @@ package
 			return occurences;
 		}
 		
-		/*
-		 * Find square of the object from its coordinates
-		 */
-		private function getSquare(character:Object):Array {
-			return [Math.round(character.x / squareWidth),Math.round(character.y / squareHeight)];
-		}
+		
 		
 		/*
 		 * Display tiles following the maze map

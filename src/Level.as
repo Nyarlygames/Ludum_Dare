@@ -57,6 +57,8 @@ package
 		
 		override public function update():void {
 			super.update();
+			
+			trace(player.getSquare());
 			if (started == false) {
 				playtime.start(map.time);
 				started = true;
