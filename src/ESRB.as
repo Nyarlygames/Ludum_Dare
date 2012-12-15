@@ -6,7 +6,7 @@ package
 	 * ESRB
 	 * @author ...
 	 */
-	public class ESRB extends Character 
+	public class ESRB extends FlxSprite 
 	{
 		
 		[Embed(source = '../assets/gfx/esrb.png')] public var ImgESRB:Class;

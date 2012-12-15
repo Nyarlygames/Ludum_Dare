@@ -27,14 +27,13 @@ package
 		public var score:int = 0;
 		public var name:String = "";
 		public var rating:String = "";
-		public var timecount:FlxTimer;
+		public var playtime:FlxTimer = new FlxTimer();
 		public var shopcount:int = 0;
 		public var childcount:int = 0;
+		public var started:Boolean = false;
 		
 		public function Level(nom:String, rat:String):void
 		{
-			timecount = new FlxTimer();
-			timecount.start(300);
 			rating = rat;
 			name = nom;
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
@@ -55,6 +54,10 @@ package
 		
 		override public function update():void {
 			super.update();
+			if (started == false) {
+				playtime.start(map.time);
+				started = true;
+			}
 			// Collisions buildings
 			for each (var b:Buildings in builds.members) {
 				if (b != null) {
@@ -64,7 +67,7 @@ package
 					else if (b.validated == false) {
 						shopcount++;
 						b.validated = true;
-						if (shopcount == 3)
+						if (shopcount == map.shops)
 							score += 1000;
 					}
 					// loots
@@ -78,8 +81,9 @@ package
 					}
 				}
 			}
-			if ((timecount != null) && (timecount.finished)) {
+			if ((playtime != null) && (playtime.finished)) {
 				score += 800;
+				playtime = null;
 			}
 			
 			/*// Collisions kids

@@ -9,11 +9,12 @@ package
 	 * Player
 	 * @author ...
 	 */
-	public class Player extends Character 
+	public class Player extends FlxSprite 
 	{
 		[Embed(source = '../assets/gfx/player.png')] public var ImgPlayer:Class;
-		public var speed:int = 2;
+		public var speed:int = 15;
 		public var lives:int = 3;
+		private var imgs:ImgRegistry = new ImgRegistry;
 		
 		public function Player(x:int, y:int) 
 		{
@@ -23,16 +24,21 @@ package
 		override public function update():void {
 			super.update();
 			FlxG.camera.follow(this);
-			if (FlxG.keys.pressed("RIGHT")) {
+			
+			// DROITE
+			if (FlxG.keys.pressed("RIGHT") && (x < imgs.assets[0].frameWidth)) {
 				x += speed;
 			}
-			if (FlxG.keys.pressed("LEFT")) {
+			// GAUCHE
+			if (FlxG.keys.pressed("LEFT") && (x > 0)) {
 				x -= speed;
 			}
-			if (FlxG.keys.pressed("UP")) {
+			// HAUT
+			if (FlxG.keys.pressed("UP") && (y > 0)) {
 				y -= speed;
 			}
-			if (FlxG.keys.pressed("DOWN")) {
+			// BAS
+			if (FlxG.keys.pressed("DOWN") && (y < imgs.assets[0].frameHeight)) {
 				y += speed;
 			}
 		}

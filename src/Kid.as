@@ -6,7 +6,7 @@ package
 	 * KID
 	 * @author ...
 	 */
-	public class Kid extends Character 
+	public class Kid extends FlxSprite 
 	{
 		
 		[Embed(source = '../assets/gfx/kid.png')] public var ImgKid:Class;

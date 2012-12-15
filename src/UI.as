@@ -16,6 +16,7 @@ package
 		public var score:FlxText;
 		public var name:FlxText;
 		public var rating:FlxText;
+		public var life:FlxText;
 		public var obje:FlxText;
 		public var objs:FlxText;
 		public var objt:FlxText;
@@ -40,26 +41,22 @@ package
 			
 			// SCORE
 			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy, "Score :");
-			score.x += score.frameWidth /2;
 			score.y += score.frameHeight;
 			score.setFormat(null, 14, 0xADAEAC);
 			components.add(score);
 			
 			// OBJECTIF ENFANTS
-			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy, "");
-			obje.x += obje.frameWidth /2;
+			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy +10, "");
 			obje.y += obje.frameHeight;
 			obje.setFormat(null, 14, 0xADAEAC);
 			components.add(obje);
 			// OBJECTIF SHOPS
 			objs = new FlxText(FlxG.width - 2 * offsetx, 2*score.frameHeight, graphicy, "");
-			objs.x += objs.frameWidth /2;
 			objs.y += objs.frameHeight;
 			objs.setFormat(null, 14, 0xADAEAC);
 			components.add(objs);
 			// OBJECTIF TIME
 			objt = new FlxText(FlxG.width - 2 * offsetx, 3*score.frameHeight, graphicy, "");
-			objt.x += objt.frameWidth /2;
 			objt.y += objt.frameHeight;
 			objt.setFormat(null, 14, 0xADAEAC);
 			components.add(objt);
@@ -76,6 +73,12 @@ package
 			rating.x -= rating.frameWidth / 2;
 			rating.setFormat(null, 14, 0xADAEAC);
 			components.add(rating);
+			
+			// LIVES
+			life = new FlxText(offsetx, graphicy - name.frameHeight, graphicy, "");
+			life.y -= life.frameHeight;
+			life.setFormat(null, 14, 0xADAEAC);
+			components.add(life);
 		}
 		
 		override public function update():void {
@@ -85,12 +88,13 @@ package
 				life.y -= life.frameHeight;
 				components.add(life);
 			}*/
+			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + level.score;
 			name.text = level.name;
 			rating.text = level.rating;
-			obje.text = ""+level.map.childs;
-			objs.text = ""+level.map.shops;
-			objt.text = "" + level.map.time;			
+			obje.text = "Enfants : "+level.map.childs;
+			objs.text = "Shops : " + level.map.shops;
+			objt.text = "Time : " + level.map.time;	
 		}
 	}
 
