@@ -16,8 +16,6 @@ package
 		 */
 		override public function create():void
 		{
-			
-			FlxG.bgColor = 0xaa519CCA;
 			var title:FlxText = new FlxText(FlxG.width / 2 - 50, FlxG.height / 2 - 200, 100, "Ludum Dare #25");
 			title.setFormat(null, 16, 0x044071);
 			add(title);
