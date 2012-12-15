@@ -13,10 +13,11 @@ package
 		private var state:int = 1;
 		private var onstate:Boolean = true;
 		private var level:Level;
+		private var name:String = "Bertrand";
 		
 		public function Game() 
 		{
-			level = new Level();
+			level = new Level(name, "18+");
 			add(level);
 		}
 		

@@ -18,11 +18,12 @@ package
 		private var time:int = 2;
 		private var team:Boolean = false;
 		private var take:FlxSprite = null;
-		private var taken:Boolean = false;
+		public var taken:Boolean = false;
 		public var loot:SpawnObjet;
 		private var id:int = 1;
 		private var spawntime:int = 10;
 		private var label:String = "";
+		public var validated:Boolean = false;
 		
 		public function Buildings(x:int, y:int, index:int, lab:String) 
 		{

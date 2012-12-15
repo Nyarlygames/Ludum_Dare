@@ -39,14 +39,14 @@ package
 		
 		public function getLoot(obj1:Player, obj2:SpawnObjet):void {
 			switch(obj2.label){
-				case "Build":
+				case "Info":
 					lives++;
 				break;
 				case "Hopital":
 					if (lives < 3)
 						lives++;
 				break;
-				case "Autre":
+				case "Jeu":
 					speed *= 2;
 				break;
 				default:

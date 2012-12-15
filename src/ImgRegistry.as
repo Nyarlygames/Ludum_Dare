@@ -9,8 +9,6 @@ package
 	 */
 	public class ImgRegistry
 	{
-		
-		
 		[Embed(source = '../assets/gfx/bg.png')] public var ImgBG1:Class;
 		[Embed(source = '../assets/gfx/building.png')] public var ImgBuilding:Class;
 		[Embed(source = '../assets/gfx/building2.png')] public var ImgBuilding2:Class;

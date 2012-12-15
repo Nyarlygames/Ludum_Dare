@@ -13,6 +13,9 @@ package
 		public var builds:FlxGroup = new FlxGroup();
 		public var maxScore:int = 0;
 		public var id:int = 0;
+		public var childs:int = 0;
+		public var shops:int = 0;
+		public var time:int = 0;
 		public var bg:String = new String("");
 		
 		// Crée le groupe d'ennemis à partir d'un fichier
@@ -38,19 +41,24 @@ package
 					en = lignes[i].split('/');
 					if (en != null) {
 						switch(en[0]){
+							case "Obj":
+								childs = en[1];
+								shops = en[2];
+								time = en[3];
+							break;
 							case "ESRB":
 								esrbs.add(new ESRB(en[1], en[2]));
 							break;
 							case "Kid":
 								kids.add(new Kid(en[1], en[2]));
 							break;
-							case "Build":
+							case "Info":
 								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
 							break;
 							case "Hopital":
 								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
 							break;
-							case "Autre":
+							case "Jeu":
 								builds.add(new Buildings(en[1], en[2], en[3], en[0]));
 							break;
 							default:
