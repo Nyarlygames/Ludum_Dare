@@ -88,6 +88,24 @@ package
 				life.y -= life.frameHeight;
 				components.add(life);
 			}*/
+			life.x = level.player.x - FlxG.width /2;
+			score.x = level.player.x;
+			name.x = level.player.x;
+			rating.x = level.player.x;
+			obje.x = level.player.x;
+			objs.x = level.player.x;
+			objt.x = level.player.x;
+			life.y = level.player.y - FlxG.height;
+			score.y = level.player.y;
+			name.y = level.player.y;
+			rating.y = level.player.y;
+			obje.y = level.player.y;
+			objs.y = level.player.y;
+			objt.y = level.player.y;
+			x = level.player.x;
+			y = level.player.y;
+			objectives.x = level.player.x;
+			objectives.y = level.player.y;
 			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + level.score;
 			name.text = level.name;
