@@ -41,13 +41,15 @@ package
 			rating = rat;
 			name = nom;
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
-			//add(background);
+			add(background);
 			// JOUEUR
 			player = new Player(FlxG.width / 2, FlxG.height / 2, background.frameWidth, background.frameHeight);
 			esrbs = map.esrbs;
 			kids = map.kids;
 			builds = map.builds;
 			for each (var z:Buildings in builds.members) {
+				if (z != null)
+					trace(z.id);
 				if (z.hitbox != null) {
 					add(z.hitbox);
 				}
