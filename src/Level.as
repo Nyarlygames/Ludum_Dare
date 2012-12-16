@@ -32,7 +32,7 @@ package
 		public var shopcount:int = 0;
 		public var childcount:int = 0;
 		public var started:Boolean = false;
-		
+		public var count2:int = 0;
 		private var lastPosition:Array = new Array;
 		private var distances:Array = new Array();
 		
@@ -152,13 +152,18 @@ package
 		////UPDATE
 		override public function update():void {
 			super.update();
-			
-			if (lastPosition[0] != player.getSquare()[0] && lastPosition[1] != player.getSquare()[1]) {
+			count2++;
+			if ((count2 == 30) ) {
 				distances = distanceCalculator(player);
 				lastPosition = player.getSquare();
+				count2 =  0;
 			}
-			kids.members[0].findPath(distances);
-			
+			for each (var child:Kid in kids.members) {
+				if (child != null) {
+					child.findPath(distances);
+				}
+			} 
+			FlxG.collide(kids, kids);
 			if (started == false) {
 				playtime.start(map.time);
 				started = true;
@@ -187,7 +192,7 @@ package
 				}
 				if ((b.label == "Ecole") && (!b.bspawnkid)) {
 					b.spawntimer.start(b.spawnkid);
-					kids.add(new Kid(b.x, b.y));
+					kids.add(new Kid(b.x + b.frameWidth/2, b.y - 50));
 					b.bspawnkid = true;
 				}
 				if (b.spawntimer.finished) {
@@ -195,7 +200,7 @@ package
 				}
 				if ((b.label == "Centre") && (!b.bspawnesrb)) {
 					b.spawntimeresrb.start(b.spawnesrb);
-					esrbs.add(new ESRB(b.x, b.y));
+					esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y - 50));
 					b.bspawnesrb = true;
 				}
 				if (b.spawntimeresrb.finished) {

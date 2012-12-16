@@ -93,7 +93,6 @@ package
 			if (FlxG.keys.any()) {
 				for each (var z:FlxObject in components.members) {
 					if (z != null) {
-						trace(z.x, z.y);
 						z.scrollFactor.x = z.scrollFactor.y =  0;
 						
 					}
