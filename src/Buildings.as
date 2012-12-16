@@ -21,7 +21,7 @@ package
 		public var taken:Boolean = false;
 		public var loot:SpawnObjet;
 		public var id:int = 1;
-		private var spawntime:int = 2;
+		private var spawntime:int = 15;
 		public var label:String = "";
 		public var validated:Boolean = false;
 		public var lootable:Boolean = false;

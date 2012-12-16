@@ -19,8 +19,8 @@ package
 			
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		public var player:Player;
-		private var kids:FlxGroup = new FlxGroup();
-		private var esrbs:FlxGroup = new FlxGroup();
+		public var kids:FlxGroup = new FlxGroup();
+		public var esrbs:FlxGroup = new FlxGroup();
 		private var builds:FlxGroup = new FlxGroup();
 		public var map:Map = new Map(map1);
 		private var background:FlxSprite = new FlxSprite();
@@ -180,7 +180,6 @@ package
 					en.findPath(distances, player)
 					
 					if (FlxCollision.pixelPerfectCheck(player, en)) {
-						trace("test2");
 						player.velocity.x = 0;
 						player.velocity.y = 0;
 					}
@@ -228,17 +227,17 @@ package
 				if (b.spawntimer.finished) {
 					b.bspawnkid = false;
 				}
-				if ((b.label == "Centre") && (!b.bspawnesrb)) {
+				if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
+					b.bspawnesrb = true
 					b.spawntimeresrb.start(b.spawnesrb);
 					esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight));
-					b.bspawnesrb = true;
 				}
 				if (b.spawntimeresrb.finished) {
 					b.bspawnesrb = false;
 				}
 			}
-			if (playtime != null)
-				FlxG.score += (playtime.time - playtime.timeLeft) / 60;
+			if ((playtime != null) && ((playtime.time - playtime.timeLeft) / 60 == 0) && (int (playtime.timeLeft) != int (map.time)))
+				FlxG.score++;
 			// CAPTURE ENFANTS
 			if (FlxG.keys.justReleased("SPACE"))
 				captureKid(player, kids);

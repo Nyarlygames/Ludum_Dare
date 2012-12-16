@@ -18,6 +18,8 @@ package
 		[Embed(source = '../assets/gfx/life.png')] public var ImgLife:Class;
 		public var score:FlxText;
 		public var name:FlxText;
+		public var encount:FlxText;
+		public var kidcount:FlxText;
 		public var rating:FlxText;
 		public var life:FlxText;
 		public var obje:FlxText;
@@ -91,6 +93,22 @@ package
 			life.setFormat(null, 14, 0xADAEAC);
 			life.scrollFactor.x = life.scrollFactor.y = 0;
 			components.add(life);
+			
+			// ENCOUNT
+			encount = new FlxText(FlxG.camera.width, FlxG.camera.height , graphicy + 100, "Nombre d'ennemis :");
+			encount.y -= encount.frameHeight * 3;
+			encount.x -= encount.frameWidth;
+			encount.setFormat(null, 14, 0xADAEAC);
+			encount.scrollFactor.x = encount.scrollFactor.y = 0;
+			components.add(encount);
+			
+			// KIDCOUNT
+			kidcount = new FlxText(FlxG.camera.width, FlxG.camera.height, graphicy + 100, "Nombre d'enfants :");
+			kidcount.y -= kidcount.frameHeight*2;
+			kidcount.x -= kidcount.frameWidth;
+			kidcount.setFormat(null, 14, 0xADAEAC);
+			kidcount.scrollFactor.x = kidcount.scrollFactor.y = 0;
+			components.add(kidcount);
 		}
 		
 		override public function update():void {
@@ -103,6 +121,8 @@ package
 			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + FlxG.score;
 			name.text = level.name;
+			kidcount.text = "Nombre d'enfants : " + level.kids.length;
+			encount.text = "Nombre d'ennemis : " + level.esrbs.length;
 			rating.text = level.rating;
 			if (level.map.childs > 0)
 				obje.text = "Enfants : " + level.map.childs;
