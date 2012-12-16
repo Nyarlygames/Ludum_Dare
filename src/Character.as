@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxG;  
 	/**
@@ -9,6 +10,7 @@ package
 	public class Character extends FlxSprite 
 	{
 		public var Img:Class;
+		public var dir:uint = 8; 
 		
 		public function Character(x:int, y:int, Img:Class) 
 		{
@@ -37,9 +39,9 @@ package
 		/*
 		 * Find path w/ the array of distances
 		 */
-		public function findPath(array:Array):void {
+		public function findPath(array:Array, player:Player):void {
 			var minVal:uint = 1000;
-			var dir:uint = 8;
+			dir = 8;
 			if (array[this.getSquare()[0] - 1] != null) {
 				if (array[this.getSquare()[0] - 1][this.getSquare()[1] - 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] - 1] < minVal) {
 					minVal = array[this.getSquare()[0] - 1][this.getSquare()[1] - 1];
@@ -78,6 +80,7 @@ package
 					dir = 7;
 				}
 			}
+			
 			
 			var speed:int = 1;
 			

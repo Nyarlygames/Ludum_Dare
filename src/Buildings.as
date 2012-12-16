@@ -32,13 +32,15 @@ package
 		public var bspawnesrb:Boolean = false;
 		public var spawntimer:FlxTimer = new FlxTimer();
 		public var spawntimeresrb:FlxTimer = new FlxTimer();
+		public var spawntype:int = 0;
 		
-		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean) 
+		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean, spawn:int) 
 		{
 			super(x, y, imgs.assets[index]);
 			if (truth) {
 				hitbox = new FlxSprite(x, y + frameHeight, imgs.assets[index + 2]);
 				hitbox.immovable = true;
+				spawntype = spawn;
 			}
 			label = lab;
 			immovable = true;
@@ -67,7 +69,7 @@ package
 		}
 		
 		public function spawnobj():void {
-			loot = new SpawnObjet(x + frameWidth / 2, y + frameHeight, label, id);
+			loot = new SpawnObjet(x + frameWidth / 2, y + frameHeight, label, id, spawntype);
 			FlxG.state.add(loot);
 		}
 		

@@ -12,13 +12,14 @@ package
 		public var label:String = "";
 		public var id:int = 0;
 		private var imgs:ImgRegistry = new ImgRegistry;
+		public var spawntype:int = 0;
 		
-		public function SpawnObjet(xpos:int, ypos:int, lab:String, index:int) 
+		public function SpawnObjet(xpos:int, ypos:int, lab:String, index:int, spawn:int) 
 		{
+			spawntype = spawn;
 			id = index;
-			super(xpos, ypos, imgs.assets[id +3]);
+			super(xpos, ypos, imgs.assets[id +3 + spawn]);
 			x -= frameWidth / 2;
-			y += frameHeight / 2;
 			label = lab;
 		}
 		

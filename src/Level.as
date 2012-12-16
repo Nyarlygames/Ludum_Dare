@@ -9,6 +9,7 @@ package
 	import org.flixel.FlxText;
 	import org.flixel.FlxTimer;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
+	import org.flixel.plugin.photonstorm.FlxCollision;
 	/**
 	 * Level
 	 * @author 
@@ -25,10 +26,11 @@ package
 		private var background:FlxSprite = new FlxSprite();
 		private var imgs:ImgRegistry = new ImgRegistry;
 		private var ui:UI;
-		public var score:int = 0;
 		public var name:String = "";
 		public var rating:String = "";
 		public var playtime:FlxTimer = new FlxTimer();
+		public var immunity:FlxTimer;
+		public var immunetime:int = 1;
 		public var shopcount:int = 0;
 		public var childcount:int = 0;
 		public var started:Boolean = false;
@@ -60,7 +62,7 @@ package
 			ui = new UI(this);
 			add(ui);
 			add(ui.components);
-			FlxG.worldBounds =  new FlxRect(0, 0, background.frameWidth, background.frameHeight);
+			FlxG.worldBounds = new FlxRect(0, 0, background.frameWidth, background.frameHeight);
 			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
 			
 			//Create an array with the dimensions of the map array
@@ -173,14 +175,32 @@ package
 				distances = distanceCalculator(player);
 				count2 = 0;
 			}
-			for each (var child:Kid in kids.members) {
-				if (child != null) {
-					child.findPath(distances);
+			for each (var en:ESRB in esrbs.members) {
+				if (en != null) {
+					en.findPath(distances, player)
+					
+					if (FlxCollision.pixelPerfectCheck(player, en)) {
+						trace("test2");
+						player.velocity.x = 0;
+						player.velocity.y = 0;
+					}
+					
+				}
+				if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
+					player.lives--;
+					immunity = null;
+				}
+				else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
+					immunity = new FlxTimer();
+ 					immunity.start(immunetime);
+					player.bump(en);
 				}
 			} 
 			FlxG.collide(kids, kids);
 			FlxG.collide(kids, builds);
 			FlxG.collide(player, kids);
+			FlxG.collide(esrbs, builds);
+			FlxG.collide(esrbs, esrbs);
 			if (started == false) {
 				playtime.start(map.time);
 				started = true;
@@ -193,9 +213,8 @@ package
 					}
 					else if (b.validated == false) {
 						shopcount++;
+						map.shops--;
 						b.validated = true;
-						if (shopcount == map.shops)
-							score += 1000;
 					}
 					// loots
 					if (b.loot != null)
@@ -203,7 +222,7 @@ package
 				}
 				if ((b.label == "Ecole") && (!b.bspawnkid)) {
 					b.spawntimer.start(b.spawnkid);
-					kids.add(new Kid(b.x + b.frameWidth/2, b.y - 50));
+					kids.add(new Kid(b.x + b.frameWidth/2, b.y + b.frameHeight));
 					b.bspawnkid = true;
 				}
 				if (b.spawntimer.finished) {
@@ -211,17 +230,15 @@ package
 				}
 				if ((b.label == "Centre") && (!b.bspawnesrb)) {
 					b.spawntimeresrb.start(b.spawnesrb);
-					esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y - 50));
+					esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight));
 					b.bspawnesrb = true;
 				}
 				if (b.spawntimeresrb.finished) {
 					b.bspawnesrb = false;
 				}
 			}
-			if ((playtime != null) && (playtime.finished)) {
-				score += 800;
-				playtime = null;
-			}
+			if (playtime != null)
+				FlxG.score += (playtime.time - playtime.timeLeft) / 60;
 			// CAPTURE ENFANTS
 			if (FlxG.keys.justReleased("SPACE"))
 				captureKid(player, kids);

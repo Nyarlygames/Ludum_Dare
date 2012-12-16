@@ -80,7 +80,10 @@ package
 		public function getLoot(obj1:Player, obj2:SpawnObjet):void {
 			switch(obj2.label){
 				case "Hopital":
-					if (lives < 3)
+					if (obj2.spawntype == 0)
+						if (lives < 3)
+							lives++;
+					else
 						lives++;
 				break;
 				case "Jeu":
@@ -90,6 +93,27 @@ package
 			}
 			obj2.destroy();
 			obj2.exists = false;
+		}
+		
+		public function bump(en:ESRB):void {
+			var movex:int = 0;
+			var movey:int = 0;
+			var bump:int = Constants.TILESIZE*2;
+			
+			if (en.x + en.frameWidth < x)
+				movex = x + bump;
+			else if (en.x > x + frameWidth)
+				movex = x - bump;
+				else
+					movex = 0;
+				
+			if (en.y + en.frameHeight < y)
+				movey = y + bump;
+			else if (en.y > y + frameHeight)
+				movey = y - bump;
+				else
+					movey = 0;
+			FlxVelocity.moveTowardsPoint(this, new FlxPoint(movex, movey));
 		}	
 	}
 } 

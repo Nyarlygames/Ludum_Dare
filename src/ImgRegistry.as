@@ -18,6 +18,7 @@ package
 		[Embed(source = '../assets/gfx/ph_magjv2.png')] public var ImgJeu2:Class;
 		[Embed(source = '../assets/gfx/Test_Capture.png')] public var ImgJeuHB:Class;
 		[Embed(source = '../assets/gfx/ph_speed.png')] public var ImgSpawnSpeed:Class;
+		[Embed(source = '../assets/gfx/ph_speed.png')] public var ImgSpawnShield:Class;
 		[Embed(source = '../assets/gfx/ph_ecoles.png')] public var ImgEcole:Class;
 		[Embed(source = '../assets/gfx/ph_serb.png')] public var ImgCentre:Class;
 		[Embed(source = '../assets/gfx/ph_fontaine.png')] public var ImgFontaine:Class;
@@ -36,6 +37,7 @@ package
 			assets.push(ImgJeu2);
 			assets.push(ImgJeuHB);
 			assets.push(ImgSpawnSpeed);
+			assets.push(ImgSpawnShield);
 			assets.push(ImgEcole);
 			assets.push(ImgCentre);
 			assets.push(ImgFontaine);

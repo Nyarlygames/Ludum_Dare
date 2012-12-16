@@ -45,20 +45,20 @@ package
 			components.add(objectives);
 			
 			// SCORE
-			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy, "Score :");
+			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy, "Score :" + FlxG.score);
 			score.y += score.frameHeight;
 			score.setFormat(null, 14, 0xADAEAC);
 			score.scrollFactor.x = score.scrollFactor.y = 0;
 			components.add(score);
 			
 			// OBJECTIF ENFANTS
-			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy +10, "");
+			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy + 100, "");
 			obje.y += obje.frameHeight;
 			obje.setFormat(null, 14, 0xADAEAC);
 			obje.scrollFactor.x = obje.scrollFactor.y = 0;
 			components.add(obje);
 			// OBJECTIF SHOPS
-			objs = new FlxText(FlxG.width - 2 * offsetx, 2*score.frameHeight, graphicy, "");
+			objs = new FlxText(FlxG.width - 2 * offsetx, 2*score.frameHeight, graphicy + 100, "");
 			objs.y += objs.frameHeight;
 			objs.setFormat(null, 14, 0xADAEAC);
 			objs.scrollFactor.x = objs.scrollFactor.y = 0;
@@ -101,23 +101,27 @@ package
 				components.add(life);
 			}*/
 			life.text = "Vies : "+level.player.lives;
-			score.text = "Score : " + level.score;
+			score.text = "Score : " + FlxG.score;
 			name.text = level.name;
 			rating.text = level.rating;
-			if (level.map.childs > -1)
+			if (level.map.childs > 0)
 				obje.text = "Enfants : " + level.map.childs;
-			else
+			else {
+				FlxG.score += 500;
 				obje.text = "Enfants validés";
+			}
 			if (level.playtime.timeLeft > -1)
 				objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
-			else
+			else {
+				FlxG.score += 400;
 				objt.text = "Temps validé";
-				
-			if (level.map.shops > -1)
+			}
+			if (level.map.shops > 0)
 				objs.text = "Shops : " + level.map.shops;
-			else
+			else {
+				FlxG.score = 500;
 				objt.text = "Shops validés";
+			}
 		}
 	}
-
 }
