@@ -27,38 +27,43 @@ package
 		public function findPath(array:Array):void {
 			var minVal:uint = 1000;
 			var dir:uint = 8;
-			
-			if (array[this.getSquare()[0]] != null && array[this.getSquare()[0]][this.getSquare()[1] + 1] != null && array[this.getSquare()[0]][this.getSquare()[1] + 1] < minVal) {
-				minVal = array[this.getSquare()[0]][this.getSquare()[1] + 1];
-				dir = 1;
+			if (array[this.getSquare()[0] - 1] != null) {
+				if (array[this.getSquare()[0] - 1][this.getSquare()[1] - 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] - 1] < minVal) {
+					minVal = array[this.getSquare()[0] - 1][this.getSquare()[1] - 1];
+					dir = 0;
+				}
+				if (array[this.getSquare()[0] - 1][this.getSquare()[1]] != null && array[this.getSquare()[0] - 1][this.getSquare()[1]] < minVal) {
+					minVal = array[this.getSquare()[0] - 1][this.getSquare()[1]];
+					dir = 3;
+				}
+				if(array[this.getSquare()[0] - 1][this.getSquare()[1] + 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] + 1] < minVal) {
+					minVal = array[this.getSquare()[0] - 1][this.getSquare()[1] + 1];
+					dir = 2;
+				}
 			}
-			if (array[this.getSquare()[0] - 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] + 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] + 1] < minVal) {
-				minVal = array[this.getSquare()[0] - 1][this.getSquare()[1] + 1];
-				dir = 2;
+			if (array[this.getSquare()[0]] != null) {
+				if (array[this.getSquare()[0]][this.getSquare()[1] - 1] != null && array[this.getSquare()[0]][this.getSquare()[1] - 1] < minVal) {
+					minVal = array[this.getSquare()[0]][this.getSquare()[1] - 1];
+					dir = 6;
+				}
+				if(array[this.getSquare()[0]][this.getSquare()[1] + 1] != null && array[this.getSquare()[0]][this.getSquare()[1] + 1] < minVal) {
+					minVal = array[this.getSquare()[0]][this.getSquare()[1] + 1];
+					dir = 1;
+				}
 			}
-			if (array[this.getSquare()[0] + 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1] - 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1] - 1] < minVal) {
-				minVal = array[this.getSquare()[0] + 1][this.getSquare()[1] - 1];
-				dir = 5;
-			}
-			if (array[this.getSquare()[0] + 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1] + 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1] + 1] < minVal) {
-				minVal = array[this.getSquare()[0] + 1][this.getSquare()[1] + 1];
-				dir = 7;
-			}
-			if (array[this.getSquare()[0] - 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] - 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1] - 1] < minVal) {
-				minVal = array[this.getSquare()[0] - 1][this.getSquare()[1] - 1];
-				dir = 0;
-			}
-			if (array[this.getSquare()[0] - 1] != null && array[this.getSquare()[0] - 1][this.getSquare()[1]] != null && array[this.getSquare()[0] - 1][this.getSquare()[1]] < minVal) {
-				minVal = array[this.getSquare()[0] - 1][this.getSquare()[1]];
-				dir = 3;
-			}
-			if (array[this.getSquare()[0]] != null && array[this.getSquare()[0]][this.getSquare()[1] - 1] != null && array[this.getSquare()[0]][this.getSquare()[1] - 1] < minVal) {
-				minVal = array[this.getSquare()[0]][this.getSquare()[1] - 1];
-				dir = 6;
-			}
-			if (array[this.getSquare()[0] + 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1]] != null && array[this.getSquare()[0] + 1][this.getSquare()[1]] < minVal) {
-				minVal = array[this.getSquare()[0] + 1][this.getSquare()[1]];
-				dir = 4;
+			if (array[this.getSquare()[0] + 1] != null) {
+				if (array[this.getSquare()[0] + 1][this.getSquare()[1] - 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1] - 1] < minVal) {
+					minVal = array[this.getSquare()[0] + 1][this.getSquare()[1] - 1];
+					dir = 5;
+				}
+				if (array[this.getSquare()[0] + 1][this.getSquare()[1]] != null && array[this.getSquare()[0] + 1][this.getSquare()[1]] < minVal) {
+					minVal = array[this.getSquare()[0] + 1][this.getSquare()[1]];
+					dir = 4;
+				}
+				if (array[this.getSquare()[0] + 1][this.getSquare()[1] + 1] != null && array[this.getSquare()[0] + 1][this.getSquare()[1] + 1] < minVal) {
+					minVal = array[this.getSquare()[0] + 1][this.getSquare()[1] + 1];
+					dir = 7;
+				}
 			}
 			
 			var speed:int = 1;
