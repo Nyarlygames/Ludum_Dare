@@ -49,11 +49,11 @@ package
 			kids = map.kids;
 			builds = map.builds;
 			for each (var z:Buildings in builds.members) {
-				if (z.hitbox != null) {
+				if ((z != null) && (z.lootable == true))
+					player.buildings.add(z);
 					add(z.hitbox);
-				}
-			} 
-			add(builds);0
+			}
+			add(builds);
 			add(esrbs);
 			add(kids);
 			add(player);
@@ -189,7 +189,7 @@ package
 			for each (var b:Buildings in builds.members) {
 				if ((b != null) && (b.lootable == true)){
 					if (b.taken == false) {
-						b.playerGet(player);
+						player.getBuild();
 					}
 					else if (b.validated == false) {
 						shopcount++;
@@ -200,12 +200,6 @@ package
 					// loots
 					if (b.loot != null)
 						FlxG.overlap(player, b.loot, player.getLoot);
-					// Collision building => esrb
-					for each (var e:ESRB in esrbs.members) {
-						if (e != null){
-							b.playerGet(e);
-						}
-					}
 				}
 				if ((b.label == "Ecole") && (!b.bspawnkid)) {
 					b.spawntimer.start(b.spawnkid);
@@ -231,20 +225,15 @@ package
 			// CAPTURE ENFANTS
 			if (FlxG.keys.justReleased("SPACE"))
 				captureKid(player, kids);
-			/*
-			// Collisions kids
-			for each (var k:Kid in kids.members) {
-				if (k != null) {
-					FlxG.overlap(player, k, player.getKid);
-				}
-			}
-			*/
 		}
 		
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {
 				if ((child != null) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
 					child.loadGraphic(imgs.assets[3]);
+					if (child.validated == false)
+						map.childs--;
+					child.validated = true;
 				}
 			} 
 		}

@@ -6,6 +6,7 @@ package
 	import org.flixel.FlxText;
 	import org.flixel.FlxG;
 	import org.flixel.FlxTimer;
+	import org.flixel.FlxU;
 	
 	/**
 	 * ...
@@ -28,7 +29,6 @@ package
 		public var objectives:FlxSprite;
 		public var graphicx:int = 200;
 		public var graphicy:int = 100;
-		public var time:FlxTimer = new FlxTimer();
 		
 		public function UI(play:Level) 
 		{
@@ -64,7 +64,7 @@ package
 			objs.scrollFactor.x = objs.scrollFactor.y = 0;
 			components.add(objs);
 			// OBJECTIF TIME
-			objt = new FlxText(FlxG.width - 2 * offsetx, 3*score.frameHeight, graphicy, "");
+			objt = new FlxText(FlxG.width - 2 * offsetx, 3*score.frameHeight, graphicy + 100, "");
 			objt.y += objt.frameHeight;
 			objt.setFormat(null, 14, 0xADAEAC);
 			objt.scrollFactor.x = objt.scrollFactor.y = 0;
@@ -100,14 +100,23 @@ package
 				life.y -= life.frameHeight;
 				components.add(life);
 			}*/
-			trace(objectives.y);
 			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + level.score;
 			name.text = level.name;
 			rating.text = level.rating;
-			obje.text = "Enfants : "+level.map.childs;
-			objt.text = "Time : " + level.map.time;	
-			objs.text = "Shops : " + level.map.shops;
+			if (level.map.childs > -1)
+				obje.text = "Enfants : " + level.map.childs;
+			else
+				obje.text = "Enfants validés";
+			if (level.playtime.timeLeft > -1)
+				objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
+			else
+				objt.text = "Temps validé";
+				
+			if (level.map.shops > -1)
+				objs.text = "Shops : " + level.map.shops;
+			else
+				objt.text = "Shops validés";
 		}
 	}
 

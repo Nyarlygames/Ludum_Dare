@@ -16,9 +16,9 @@ package
 		public function SpawnObjet(xpos:int, ypos:int, lab:String, index:int) 
 		{
 			id = index;
-			super(xpos, ypos, imgs.assets[id +2]);
+			super(xpos, ypos, imgs.assets[id +3]);
 			x -= frameWidth / 2;
-			y -= frameHeight / 2;
+			y += frameHeight / 2;
 			label = lab;
 		}
 		

@@ -13,11 +13,11 @@ package
 	public class Buildings extends FlxSprite
 	{
 		private var imgs:ImgRegistry = new ImgRegistry();
-		private var timer:FlxTimer = new FlxTimer();
+		public var timer:FlxTimer = new FlxTimer();
 		private var timer_spawn:FlxTimer = new FlxTimer();
-		private var time:int = 2;
+		public var time:int = 2;
 		private var team:Boolean = false;
-		private var take:FlxSprite = null;
+		public var take:FlxSprite = null;
 		public var taken:Boolean = false;
 		public var loot:SpawnObjet;
 		public var id:int = 1;
@@ -35,11 +35,11 @@ package
 		
 		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean) 
 		{
+			super(x, y, imgs.assets[index]);
 			if (truth) {
-				hitbox = new FlxSprite(x, y, imgs.assets[index + 1]);
+				hitbox = new FlxSprite(x, y + frameHeight, imgs.assets[index + 2]);
 				hitbox.immovable = true;
 			}
-			super(x, y, imgs.assets[index]);
 			label = lab;
 			immovable = true;
 			lootable = truth;
@@ -50,11 +50,10 @@ package
 			super.update();
 			if ((timer != null) && (timer.finished) && (take != null)) {
 				team = !team;
-				/*
 				if (team)
 					loadGraphic(imgs.assets[id+1]);
 				else
-					loadGraphic(imgs.assets[id]);*/
+					loadGraphic(imgs.assets[id]);
 				timer = null;
 				taken = true;
 				spawnobj();
@@ -65,28 +64,15 @@ package
 					spawnobj();
 				timer_spawn.start(spawntime);
 			}
-			
-			
-			
 		}
 		
 		public function spawnobj():void {
-			loot = new SpawnObjet(x + frameWidth/2, y + frameHeight/2, label, id);
+			loot = new SpawnObjet(x + frameWidth / 2, y + frameHeight, label, id);
 			FlxG.state.add(loot);
 		}
 		
-		
-		public function playerGet(source:FlxSprite):void {
-			if (FlxCollision.pixelPerfectCheck(source, this) && (take != source)) {
-				timer = new FlxTimer();
-				timer.start(time);
-				take = source;
-			}
-			else if ((timer != null) && !FlxCollision.pixelPerfectCheck(source, this) && (take == source)) {
-				if (timer != null)
-					timer.stop();
-				take = null;
-			}
+		public function getTakeCoord(x:int):Array {
+			return [Math.round((this.y + this.frameHeight) / Constants.TILESIZE),Math.round(this.x/ Constants.TILESIZE),Math.round(x/ Constants.TILESIZE)];
 		}
 	}
 
