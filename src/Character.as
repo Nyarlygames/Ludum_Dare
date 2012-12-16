@@ -18,15 +18,16 @@ package
 		}
 		
 		override public function update():void {
-			
-			if (x < 0)
-				x = 0;
-			if (x > FlxG.worldBounds.width - frameWidth)
-				x = FlxG.worldBounds.width - frameWidth;
-			if (y < 0)
-				y = 0;
-			if (y > FlxG.worldBounds.height - frameHeight)
-				y = FlxG.worldBounds.height - frameHeight;
+			if(!Game.paused) {
+				if (x < 0)
+					x = 0;
+				if (x > FlxG.worldBounds.width - frameWidth)
+					x = FlxG.worldBounds.width - frameWidth;
+				if (y < 0)
+					y = 0;
+				if (y > FlxG.worldBounds.height - frameHeight)
+					y = FlxG.worldBounds.height - frameHeight;
+			}
 		}
 		
 		/*

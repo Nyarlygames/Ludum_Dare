@@ -112,35 +112,37 @@ package
 		}
 		
 		override public function update():void {
-			/*for (var i:int = 0; i < level.player.lives; i++) {
-				var life:FlxSprite = new FlxSprite(offsetx, graphicy - name.frameHeight, ImgLife);
-				life.x += i * life.frameWidth;
-				life.y -= life.frameHeight;
-				components.add(life);
-			}*/
-			life.text = "Vies : "+level.player.lives;
-			score.text = "Score : " + FlxG.score;
-			name.text = level.name;
-			kidcount.text = "Nombre d'enfants : " + level.kids.length;
-			encount.text = "Nombre d'ennemis : " + level.esrbs.length;
-			rating.text = level.rating;
-			if (level.map.childs > 0)
-				obje.text = "Enfants : " + level.map.childs;
-			else {
-				FlxG.score += 500;
-				obje.text = "Enfants validés";
-			}
-			if (level.playtime.timeLeft > -1)
-				objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
-			else {
-				FlxG.score += 400;
-				objt.text = "Temps validé";
-			}
-			if (level.map.shops > 0)
-				objs.text = "Shops : " + level.map.shops;
-			else {
-				FlxG.score = 500;
-				objt.text = "Shops validés";
+			if (!Game.paused) {
+				/*for (var i:int = 0; i < level.player.lives; i++) {
+					var life:FlxSprite = new FlxSprite(offsetx, graphicy - name.frameHeight, ImgLife);
+					life.x += i * life.frameWidth;
+					life.y -= life.frameHeight;
+					components.add(life);
+				}*/
+				life.text = "Vies : "+level.player.lives;
+				score.text = "Score : " + FlxG.score;
+				name.text = level.name;
+				kidcount.text = "Nombre d'enfants : " + level.kids.length;
+				encount.text = "Nombre d'ennemis : " + level.esrbs.length;
+				rating.text = level.rating;
+				if (level.map.childs > 0)
+					obje.text = "Enfants : " + level.map.childs;
+				else {
+					FlxG.score += 500;
+					obje.text = "Enfants validés";
+				}
+				if (level.playtime.timeLeft > -1)
+					objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
+				else {
+					FlxG.score += 400;
+					objt.text = "Temps validé";
+				}
+				if (level.map.shops > 0)
+					objs.text = "Shops : " + level.map.shops;
+				else {
+					FlxG.score = 500;
+					objt.text = "Shops validés";
+				}
 			}
 		}
 	}

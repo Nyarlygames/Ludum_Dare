@@ -14,7 +14,7 @@ package
 	{
 		private var imgs:ImgRegistry = new ImgRegistry();
 		public var timer:FlxTimer = new FlxTimer();
-		private var timer_spawn:FlxTimer = new FlxTimer();
+		public var timer_spawn:FlxTimer = new FlxTimer();
 		public var time:int = 2;
 		private var team:Boolean = false;
 		public var take:FlxSprite = null;

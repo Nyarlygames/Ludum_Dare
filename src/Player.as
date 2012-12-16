@@ -19,7 +19,7 @@ package
 		public var speed:int = 5;
 		public var maxspeed:int = 8;
 		public var lives:int = 3;
-		private var imgs:ImgRegistry = new ImgRegistry;
+		private var imgs:ImgRegistry = new ImgRegistry();
 		private var w:int = 0;
 		private var h:int = 0;
 		public var buildings:FlxGroup = new FlxGroup();
@@ -37,22 +37,22 @@ package
 			super.update();
 			FlxG.camera.follow(this);
 			// DROITE
-			if ((FlxG.keys.pressed("RIGHT") || (FlxG.keys.pressed("D"))) && (x < w - frameWidth)) {
+			if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
 				x += speed;
 				play("walk");
 			}
 			// GAUCHE
-			if ((FlxG.keys.pressed("LEFT") || (FlxG.keys.pressed("A"))) && (x > 0)) {
+			if ((FlxG.keys.pressed("LEFT") || FlxG.keys.pressed("A")) && x > 0) {
 				x -= speed;
 				play("walk");
 			}
 			// HAUT
-			if ((FlxG.keys.pressed("UP") || (FlxG.keys.pressed("W"))) && (y > 0)) {
+			if ((FlxG.keys.pressed("UP") || FlxG.keys.pressed("W")) && y > 0) {
 				y -= speed;	
 				play("walk");
 			}
 			// BAS
-			if ((FlxG.keys.pressed("DOWN") || (FlxG.keys.pressed("Z"))) && (y < h - frameHeight)) {
+			if ((FlxG.keys.pressed("DOWN") || FlxG.keys.pressed("Z")) && y < h - frameHeight) {
 				y += speed;
 				play("walk");
 			}

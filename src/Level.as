@@ -21,7 +21,7 @@ package
 		public var player:Player;
 		public var kids:FlxGroup = new FlxGroup();
 		public var esrbs:FlxGroup = new FlxGroup();
-		private var builds:FlxGroup = new FlxGroup();
+		public var builds:FlxGroup = new FlxGroup();
 		public var map:Map = new Map(map1);
 		private var background:FlxSprite = new FlxSprite();
 		private var imgs:ImgRegistry = new ImgRegistry;
@@ -169,78 +169,80 @@ package
 		
 		////UPDATE
 		override public function update():void {
-			super.update();
-			count2++;
-			if ((count2 == 30) ) {
-				distances = distanceCalculator(player);
-				count2 = 0;
-			}
-			for each (var en:ESRB in esrbs.members) {
-				if (en != null) {
-					en.findPath(distances, player)
-					
-					if (FlxCollision.pixelPerfectCheck(player, en)) {
-						player.velocity.x = 0;
-						player.velocity.y = 0;
+			if(!Game.paused) {
+				super.update();
+				count2++;
+				if ((count2 == 30) ) {
+					distances = distanceCalculator(player);
+					count2 = 0;
+				}
+				for each (var en:ESRB in esrbs.members) {
+					if (en != null) {
+						en.findPath(distances, player)
+						
+						if (FlxCollision.pixelPerfectCheck(player, en)) {
+							player.velocity.x = 0;
+							player.velocity.y = 0;
+						}
+						
 					}
-					
-				}
-				if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
-					player.lives--;
-					immunity = null;
-				}
-				else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
-					immunity = new FlxTimer();
- 					immunity.start(immunetime);
-					player.bump(en);
-				}
-			} 
-			FlxG.collide(kids, kids);
-			FlxG.collide(kids, builds);
-			FlxG.collide(player, kids);
-			FlxG.collide(esrbs, builds);
-			FlxG.collide(esrbs, esrbs);
-			if (started == false) {
-				playtime.start(map.time);
-				started = true;
-			}
-			FlxG.collide(player, builds);
-			for each (var b:Buildings in builds.members) {
-				if ((b != null) && (b.lootable == true)){
-					if (b.taken == false) {
-						player.getBuild();
+					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
+						player.lives--;
+						immunity = null;
 					}
-					else if (b.validated == false) {
-						shopcount++;
-						map.shops--;
-						b.validated = true;
+					else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
+						immunity = new FlxTimer();
+						immunity.start(immunetime);
+						player.bump(en);
 					}
-					// loots
-					if (b.loot != null)
-						FlxG.overlap(player, b.loot, player.getLoot);
+				} 
+				FlxG.collide(kids, kids);
+				FlxG.collide(kids, builds);
+				FlxG.collide(player, kids);
+				FlxG.collide(esrbs, builds);
+				FlxG.collide(esrbs, esrbs);
+				if (started == false) {
+					playtime.start(map.time);
+					started = true;
 				}
-				if ((b.label == "Ecole") && (!b.bspawnkid)) {
-					b.spawntimer.start(b.spawnkid);
-					kids.add(new Kid(b.x + b.frameWidth/2, b.y + b.frameHeight));
-					b.bspawnkid = true;
+				FlxG.collide(player, builds);
+				for each (var b:Buildings in builds.members) {
+					if ((b != null) && (b.lootable == true)){
+						if (b.taken == false) {
+							player.getBuild();
+						}
+						else if (b.validated == false) {
+							shopcount++;
+							map.shops--;
+							b.validated = true;
+						}
+						// loots
+						if (b.loot != null)
+							FlxG.overlap(player, b.loot, player.getLoot);
+					}
+					if ((b.label == "Ecole") && (!b.bspawnkid)) {
+						b.spawntimer.start(b.spawnkid);
+						kids.add(new Kid(b.x + b.frameWidth/2, b.y + b.frameHeight));
+						b.bspawnkid = true;
+					}
+					if (b.spawntimer.finished) {
+						b.bspawnkid = false;
+					}
+					if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
+						b.bspawnesrb = true
+						b.spawntimeresrb.start(b.spawnesrb);
+						esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight));
+					}
+					if (b.spawntimeresrb.finished) {
+						b.bspawnesrb = false;
+					}
 				}
-				if (b.spawntimer.finished) {
-					b.bspawnkid = false;
-				}
-				if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
-					b.bspawnesrb = true
-					b.spawntimeresrb.start(b.spawnesrb);
-					esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight));
-				}
-				if (b.spawntimeresrb.finished) {
-					b.bspawnesrb = false;
-				}
+				if ((playtime != null) && ((playtime.time - playtime.timeLeft) / 60 == 0) && (int (playtime.timeLeft) != int (map.time)))
+					FlxG.score++;
+				// CAPTURE ENFANTS
+				if (FlxG.keys.justReleased("SPACE"))
+					captureKid(player, kids);
 			}
-			if ((playtime != null) && ((playtime.time - playtime.timeLeft) / 60 == 0) && (int (playtime.timeLeft) != int (map.time)))
-				FlxG.score++;
-			// CAPTURE ENFANTS
-			if (FlxG.keys.justReleased("SPACE"))
-				captureKid(player, kids);
 		}
 		
 		public function captureKid(player:Player, kids:FlxGroup):void {
