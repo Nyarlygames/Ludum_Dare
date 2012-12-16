@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
 	import org.flixel.FlxG;
@@ -88,24 +89,34 @@ package
 				life.y -= life.frameHeight;
 				components.add(life);
 			}*/
-			life.x = level.player.x - FlxG.width /2;
-			score.x = level.player.x;
-			name.x = level.player.x;
-			rating.x = level.player.x;
-			obje.x = level.player.x;
-			objs.x = level.player.x;
-			objt.x = level.player.x;
-			life.y = level.player.y - FlxG.height;
-			score.y = level.player.y;
-			name.y = level.player.y;
-			rating.y = level.player.y;
-			obje.y = level.player.y;
-			objs.y = level.player.y;
-			objt.y = level.player.y;
-			x = level.player.x;
-			y = level.player.y;
-			objectives.x = level.player.x;
-			objectives.y = level.player.y;
+			if (FlxG.keys.any()) {
+				for each (var z:FlxObject in components.members) {
+					if (z != null) {
+						trace(z.x, z.y);
+						
+					}
+				}
+				life.x = level.player.x + level.player.frameWidth  - FlxG.width /2 + life.frameWidth/2 ;
+				score.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + score.frameWidth/2;
+				name.x = level.player.x + level.player.frameWidth  - FlxG.width /2 + name.frameWidth/2;
+				rating.x = level.player.x + level.player.frameWidth - FlxG.width /2+ rating.frameWidth/2;
+				obje.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + obje.frameWidth/2;
+				objs.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + objs.frameWidth/2;
+				objt.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + objt.frameWidth/2;
+				x = level.player.x + level.player.frameWidth - FlxG.width/2;
+				objectives.x = level.player.x + level.player.frameWidth - FlxG.width / 2;
+				
+				
+				life.y = level.player.y   - FlxG.height/2 + life.frameHeight/2;
+				score.y = level.player.y  - FlxG.height/2;
+				name.y = level.player.y - FlxG.height/2;
+				rating.y = level.player.y  - FlxG.height/2;
+				obje.y = level.player.y  - FlxG.height/2;
+				objs.y = level.player.y - FlxG.height/2;
+				objt.y = level.player.y - FlxG.height/2;
+				y = level.player.y - FlxG.height/2;
+				objectives.y = level.player.y - FlxG.height / 2;
+			}
 			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + level.score;
 			name.text = level.name;

@@ -48,20 +48,17 @@ package
 			kids = map.kids;
 			builds = map.builds;
 			for each (var z:Buildings in builds.members) {
-				if (z != null)
-					trace(z.id);
 				if (z.hitbox != null) {
 					add(z.hitbox);
 				}
 			} 
-			add(builds);
+			add(builds);0
 			add(esrbs);
 			add(kids);
 			add(player);
 			ui = new UI(this);
 			add(ui);
 			add(ui.components);
-			//ui.sticktoplayer(player);
 			FlxG.worldBounds =  new FlxRect(0, 0, background.frameWidth, background.frameHeight);
 			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
 			
@@ -149,7 +146,6 @@ package
 					}
 				}
 			}
-			
 			return distanceArray;
 		}
 		
@@ -196,6 +192,14 @@ package
 				}
 				if (b.spawntimer.finished) {
 					b.bspawnkid = false;
+				}
+				if ((b.label == "Centre") && (!b.bspawnesrb)) {
+					b.spawntimeresrb.start(b.spawnesrb);
+					esrbs.add(new ESRB(b.x, b.y));
+					b.bspawnesrb = true;
+				}
+				if (b.spawntimeresrb.finished) {
+					b.bspawnesrb = false;
 				}
 			}
 			if ((playtime != null) && (playtime.finished)) {

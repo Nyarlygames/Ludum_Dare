@@ -27,8 +27,11 @@ package
 		public var lootable:Boolean = false;
 		public var hitbox:FlxSprite = null;
 		public var spawnkid:int = 2;
+		public var spawnesrb:int = 2;
 		public var bspawnkid:Boolean = false;
+		public var bspawnesrb:Boolean = false;
 		public var spawntimer:FlxTimer = new FlxTimer();
+		public var spawntimeresrb:FlxTimer = new FlxTimer();
 		
 		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean) 
 		{
@@ -62,6 +65,9 @@ package
 					spawnobj();
 				timer_spawn.start(spawntime);
 			}
+			
+			
+			
 		}
 		
 		public function spawnobj():void {
