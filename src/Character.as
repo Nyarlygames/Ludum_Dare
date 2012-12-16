@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxG;  
 	/**
 	 * Mother class of every character class
 	 * @author Jidehem1993
@@ -12,6 +13,18 @@ package
 		public function Character(x:int, y:int, Img:Class) 
 		{
 			super(x, y, Img);
+		}
+		
+		override public function update():void {
+			
+			if (x < 0)
+				x = 0;
+			if (x > FlxG.worldBounds.width - frameWidth)
+				x = FlxG.worldBounds.width - frameWidth;
+			if (y < 0)
+				y = 0;
+			if (y > FlxG.worldBounds.height - frameHeight)
+				y = FlxG.worldBounds.height - frameHeight;
 		}
 		
 		/*

@@ -19,7 +19,7 @@ package
 		[Embed(source = '../assets/gfx/ph_ecoles.png')] public var ImgEcole:Class;
 		[Embed(source = '../assets/gfx/ph_serb.png')] public var ImgCentre:Class;
 		[Embed(source = '../assets/gfx/ph_fontaine.png')] public var ImgFontaine:Class;
-		[Embed(source = '../assets/gfx/test_maison.png')] public var ImgMaison:Class;
+		[Embed(source = '../assets/gfx/ph_maison.png')] public var ImgMaison:Class;
 
 		public var assets:Array = new Array();
 		

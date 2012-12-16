@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
 	import org.flixel.FlxG;
+	import org.flixel.FlxTimer;
 	
 	/**
 	 * ...
@@ -27,6 +28,7 @@ package
 		public var objectives:FlxSprite;
 		public var graphicx:int = 200;
 		public var graphicy:int = 100;
+		public var time:FlxTimer = new FlxTimer();
 		
 		public function UI(play:Level) 
 		{
@@ -37,36 +39,42 @@ package
 			scrollFactor.x = scrollFactor.y =  0;
 			
 			// DEUXIEME OVERLAY
-			objectives = new FlxSprite(FlxG.width - 2*offsetx, 0);
+			objectives = new FlxSprite(FlxG.width - 2*offsetx,0 );
 			objectives.makeGraphic(graphicx, graphicy, 0xaa4E4F4D, true);
+			objectives.scrollFactor.x = objectives.scrollFactor.y = 0;
 			components.add(objectives);
 			
 			// SCORE
 			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy, "Score :");
 			score.y += score.frameHeight;
 			score.setFormat(null, 14, 0xADAEAC);
+			score.scrollFactor.x = score.scrollFactor.y = 0;
 			components.add(score);
 			
 			// OBJECTIF ENFANTS
 			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy +10, "");
 			obje.y += obje.frameHeight;
 			obje.setFormat(null, 14, 0xADAEAC);
+			obje.scrollFactor.x = obje.scrollFactor.y = 0;
 			components.add(obje);
 			// OBJECTIF SHOPS
 			objs = new FlxText(FlxG.width - 2 * offsetx, 2*score.frameHeight, graphicy, "");
 			objs.y += objs.frameHeight;
 			objs.setFormat(null, 14, 0xADAEAC);
+			objs.scrollFactor.x = objs.scrollFactor.y = 0;
 			components.add(objs);
 			// OBJECTIF TIME
 			objt = new FlxText(FlxG.width - 2 * offsetx, 3*score.frameHeight, graphicy, "");
 			objt.y += objt.frameHeight;
 			objt.setFormat(null, 14, 0xADAEAC);
+			objt.scrollFactor.x = objt.scrollFactor.y = 0;
 			components.add(objt);
 			
 			// NAME
 			name = new FlxText(offsetx, 0, graphicy, "Nom :");
 			name.y += name.frameHeight;
 			name.setFormat(null, 14, 0xADAEAC);
+			name.scrollFactor.x = name.scrollFactor.y = 0;
 			components.add(name);
 			
 			// RATING
@@ -74,12 +82,14 @@ package
 			rating.y -= rating.frameHeight;
 			rating.x -= rating.frameWidth / 2;
 			rating.setFormat(null, 14, 0xADAEAC);
+			rating.scrollFactor.x = rating.scrollFactor.y = 0;
 			components.add(rating);
 			
 			// LIVES
 			life = new FlxText(offsetx, graphicy - name.frameHeight, graphicy, "");
 			life.y -= life.frameHeight;
 			life.setFormat(null, 14, 0xADAEAC);
+			life.scrollFactor.x = life.scrollFactor.y = 0;
 			components.add(life);
 		}
 		
@@ -90,21 +100,14 @@ package
 				life.y -= life.frameHeight;
 				components.add(life);
 			}*/
-			if (FlxG.keys.any()) {
-				for each (var z:FlxObject in components.members) {
-					if (z != null) {
-						z.scrollFactor.x = z.scrollFactor.y =  0;
-						
-					}
-				}
-			}
+			trace(objectives.y);
 			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + level.score;
 			name.text = level.name;
 			rating.text = level.rating;
 			obje.text = "Enfants : "+level.map.childs;
-			objs.text = "Shops : " + level.map.shops;
 			objt.text = "Time : " + level.map.time;	
+			objs.text = "Shops : " + level.map.shops;
 		}
 	}
 

@@ -8,7 +8,7 @@ package
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	import org.flixel.FlxTimer;
-	
+	import org.flixel.plugin.photonstorm.FlxVelocity;
 	/**
 	 * Level
 	 * @author 
@@ -179,6 +179,8 @@ package
 				}
 			} 
 			FlxG.collide(kids, kids);
+			FlxG.collide(kids, builds);
+			FlxG.collide(player, kids);
 			if (started == false) {
 				playtime.start(map.time);
 				started = true;
@@ -226,6 +228,9 @@ package
 				score += 800;
 				playtime = null;
 			}
+			// CAPTURE ENFANTS
+			if (FlxG.keys.justReleased("SPACE"))
+				captureKid(player, kids);
 			/*
 			// Collisions kids
 			for each (var k:Kid in kids.members) {
@@ -234,6 +239,14 @@ package
 				}
 			}
 			*/
+		}
+		
+		public function captureKid(player:Player, kids:FlxGroup):void {
+			for each (var child:Kid in kids.members) {
+				if ((child != null) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
+					child.loadGraphic(imgs.assets[3]);
+				}
+			} 
 		}
 		
 	}
