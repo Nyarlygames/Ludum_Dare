@@ -25,8 +25,8 @@ package
 		 * Find path w/ the array of distances
 		 */
 		public function findPath(array:Array):void {
-		/*	if ((this.getSquare() != null) && (this.getSquare()[0] != null) && (this.getSquare()[1] != null)
-				&& (array != null) && ((array[this.getSquare()[0] - 1]) != null) && (array[this.getSquare()[0] - 1][this.getSquare()[1] - 1])){*/
+			if ((this.getSquare() != null) && (this.getSquare()[0] != null) && (this.getSquare()[1] != null)
+				&& (array != null) && ((array[this.getSquare()[0] - 1]) != null) && (array[this.getSquare()[0] - 1][this.getSquare()[1] - 1])){
 			var minVal:uint = array[this.getSquare()[0] - 1][this.getSquare()[1] - 1];
 			var dir:uint = 0;
 			if (array[this.getSquare()[0] - 1][this.getSquare()[1] + 1] <= minVal) {
@@ -90,6 +90,7 @@ package
 					this.y += speed;
 					break;
 			}
+		}
 		}
 	}
 

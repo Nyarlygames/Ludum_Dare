@@ -34,6 +34,7 @@ package
 			// Premier overlay
 			super(offsetx, 0)
 			makeGraphic(graphicx, graphicy, 0xaa4E4F4D, true);
+			scrollFactor.x = scrollFactor.y =  0;
 			
 			// DEUXIEME OVERLAY
 			objectives = new FlxSprite(FlxG.width - 2*offsetx, 0);
@@ -93,29 +94,10 @@ package
 				for each (var z:FlxObject in components.members) {
 					if (z != null) {
 						trace(z.x, z.y);
+						z.scrollFactor.x = z.scrollFactor.y =  0;
 						
 					}
 				}
-				life.x = level.player.x + level.player.frameWidth  - FlxG.width /2 + life.frameWidth/2 ;
-				score.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + score.frameWidth/2;
-				name.x = level.player.x + level.player.frameWidth  - FlxG.width /2 + name.frameWidth/2;
-				rating.x = level.player.x + level.player.frameWidth - FlxG.width /2+ rating.frameWidth/2;
-				obje.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + obje.frameWidth/2;
-				objs.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + objs.frameWidth/2;
-				objt.x = level.player.x  + level.player.frameWidth - FlxG.width /2 + objt.frameWidth/2;
-				x = level.player.x + level.player.frameWidth - FlxG.width/2;
-				objectives.x = level.player.x + level.player.frameWidth - FlxG.width / 2;
-				
-				
-				life.y = level.player.y   - FlxG.height/2 + life.frameHeight/2;
-				score.y = level.player.y  - FlxG.height/2;
-				name.y = level.player.y - FlxG.height/2;
-				rating.y = level.player.y  - FlxG.height/2;
-				obje.y = level.player.y  - FlxG.height/2;
-				objs.y = level.player.y - FlxG.height/2;
-				objt.y = level.player.y - FlxG.height/2;
-				y = level.player.y - FlxG.height/2;
-				objectives.y = level.player.y - FlxG.height / 2;
 			}
 			life.text = "Vies : "+level.player.lives;
 			score.text = "Score : " + level.score;
