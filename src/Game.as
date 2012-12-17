@@ -20,7 +20,9 @@ package
 		
 		public function Game() 
 		{
-			level = new Level(name, "7");
+			FlxG.flashFramerate = 30;
+			FlxG.framerate = 30;
+			level = new Level(name, 0);
 			add(level);
 			paused = false;
 			pauseMenu = new FlxGroup();

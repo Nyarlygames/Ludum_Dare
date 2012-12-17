@@ -29,7 +29,7 @@ package
 			super(x, y, ImgPlayer);
 			w = width;
 			h = height;
-			speed = 5;
+			speed = 15;
 			loadGraphic(ImgPlayer, true, false, 64, 64);
 			addAnimation("walk", [0, 1, 2, 3, 4], 5, false);
 		}

@@ -22,7 +22,6 @@ package
 			super(x, y, img);
 			health = 100;
 			attack = 20;
-			
 		}
 		
 		override public function update():void {

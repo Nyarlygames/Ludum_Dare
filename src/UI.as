@@ -118,7 +118,7 @@ package
 				name.text = level.name;
 				kidcount.text = "Nombre d'enfants : " + level.kids.length;
 				encount.text = "Nombre d'ennemis : " + level.esrbs.length;
-				rating.text = level.rating;
+				rating.text = "7";
 				if (level.map.childs > 0)
 					obje.text = "Enfants : " + level.map.childs;
 				else if (level.map.childs > -1) {

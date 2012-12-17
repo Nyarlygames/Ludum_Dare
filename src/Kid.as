@@ -23,6 +23,8 @@ package
 		public var blocked:Boolean = false;
 		public var bisounours:int = 14;
 		public var infect:int = 14;
+		public var rating:Array = null
+		public var ratid:int = 0;
 		public var INFECTED_MODE:FlxSound = new FlxSound();
 		
 		public function Kid(x:int, y:int) 
@@ -32,6 +34,21 @@ package
 			health = 10;
 			speed = 1;
 			INFECTED_MODE.loadStream("../assets/sfx/ENFANT/INFECTED_MODE.mp3", false, false);
+		}
+		
+		override public function update():void {
+			if (rating != null) {
+				switch (rating[ratid][2]) {
+					case "Kick":
+						break;
+					case "Gun":
+						break;
+					case "MG":
+						break;
+					default:
+						break;
+				}
+			}
 		}
 		
 		

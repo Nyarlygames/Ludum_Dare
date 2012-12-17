@@ -29,7 +29,8 @@ package
 		private var imgs:ImgRegistry = new ImgRegistry;
 		private var ui:UI;
 		public var name:String = "";
-		public var rating:String = "";
+		public var rating:Array = new Array();
+		public var ratid:int = 0;
 		public var playtime:FlxTimer = new FlxTimer();
 		public var totaltime:FlxTimer = new FlxTimer();
 		public var immunity:FlxTimer;
@@ -42,30 +43,34 @@ package
 		public var music:FlxSound = new FlxSound();
 		private var distances:Array;
 		
-		public function Level(nom:String, rat:String):void
+		public function Level(nom:String, rat:int):void
 		{
 			/*FORMAT RATING
+			 * 0 => 7		| 15 kid
+			 * 1=> 12		| 30
+			 * 2 => 18		| 40
+			 * _________________
 			 * --- KID ---
 			 * Attack Fou/Agressif/meurtrier
 			 * KID PV 20/40/60
 			 * --- ECOLE ---
 			 * SPAWNTIME 30/20/10
-			 * SPAWNTIME EXTENDS SI LENGTH > LIM
+			 * SPAWNTIME EXTENDS SI LENGTH > LIM 60/40/10
 			 * --- SERB ---
 			 * SPAWNTIME 90/60/30
 			 * SPAWNTIME EXTENDS 180/120/60
 			 * --- SPAWN WHO? ----
-			 * 7-12, 0 obj => PEGI
-			 * 12+, 1 obj => PEGI SERB
-			 * 12+, 2 obj => SERB
+			 * 7-12, 0 obj => PEGI XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+			 * 12+, 1 obj => PEGI SERB XXXXXXXXXXXXXXXXXXXXXXXXXX NON RENSEIGNE
+			 * 12+, 2 obj => SERB XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 			 */
+			ratid = rat;
+			rating = new Array();
+			rating.push(new Array(15, "Kick", 20, 30, 60, 90, 180));
+			rating.push(new Array(30, "Gun", 40, 20, 40, 60, 120));
+			rating.push(new Array(40, "MG", 60, 10, 10, 30, 60));
+			trace(rating);
 			
-			
-			
-			rating = rat;
-			//FlxG.stream("../assets/sfx/mort_2.mp3", 1, true);
-			//FlxG.loadSound(Sound7, 1, true, false, true);
-			//FlxG.playMusic(Sound7,1);
 			
 			FlxG.playMusic(Sound7,1);
 			
@@ -76,6 +81,12 @@ package
 			player = new Player(FlxG.width / 2, FlxG.height / 2, background.frameWidth, background.frameHeight);
 			esrbs = map.esrbs;
 			kids = map.kids;
+			for each (var k:Kid in kids.members) {
+				if (k != null) {
+					k.rating = rating;
+					k.ratid = ratid;
+				}
+			}
 			builds = map.builds;
 			for each (var z:Buildings in builds.members) {
 				if ((z != null) && (z.lootable == true)) {
@@ -200,8 +211,11 @@ package
 				FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
 				FlxG.camera.follow(player);
 				super.update();
+
+				if (childcount > rating[ratid][0])
+					ratid++;
 				count2++;
-				if ((count2 == 30) ) {
+				if ((count2 == 60) ) {
 					distances = distanceCalculator(player);
 					count2 = 0;
 				}
@@ -282,6 +296,7 @@ package
 				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
 					child.loadGraphic(imgs.assets[child.infect]);
 					map.childs--;
+					childcount++;
 					child.INFECTED_MODE.play(true);
 					FlxG.score += 10;
 					child.validated = true; 
