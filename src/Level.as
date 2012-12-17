@@ -51,9 +51,11 @@ package
 			kids = map.kids;
 			builds = map.builds;
 			for each (var z:Buildings in builds.members) {
-				if ((z != null) && (z.lootable == true))
+				if ((z != null) && (z.lootable == true)) {
 					player.buildings.add(z);
 					add(z.hitbox);
+					trace(z.x, z.y);
+				}
 			}
 			add(builds);
 			add(esrbs);
@@ -179,12 +181,6 @@ package
 				for each (var en:ESRB in esrbs.members) {
 					if (en != null) {
 						en.findPath(distances, player)
-						
-						if (FlxCollision.pixelPerfectCheck(player, en)) {
-							player.velocity.x = 0;
-							player.velocity.y = 0;
-						}
-						
 					}
 					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
 						player.lives--;
@@ -193,7 +189,7 @@ package
 					else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
 						immunity = new FlxTimer();
 						immunity.start(immunetime);
-						player.bump(en);
+						//player.bump(en);
 					}
 				} 
 				FlxG.collide(kids, kids);

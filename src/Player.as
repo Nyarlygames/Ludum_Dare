@@ -23,6 +23,7 @@ package
 		private var w:int = 0;
 		private var h:int = 0;
 		public var buildings:FlxGroup = new FlxGroup();
+		public var shield:int = 0;
 		
 		public function Player(x:int, y:int, width:int, height:int) 
 		{
@@ -79,15 +80,17 @@ package
 		
 		public function getLoot(obj1:Player, obj2:SpawnObjet):void {
 			switch(obj2.label){
-				case "Hopital":
-					if (obj2.spawntype == 0)
-						if (lives < 3)
-							lives++;
-					else
-						lives++;
-				break;
 				case "Jeu":
-					speed = maxspeed;
+					if (obj2.spawntype == 1) {
+						if (shield < 1)
+							shield++;
+					}
+					else
+						speed = maxspeed;
+				break;
+				case "Hopital":
+					if (lives < 3)
+						lives++;
 				break;
 				default:
 			}

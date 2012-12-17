@@ -14,9 +14,9 @@ package
 		private var state:int = 1;
 		private var onstate:Boolean = true;
 		private var level:Level;
-		private var name:String = "GROSSE BITE QUI PUE";
+		private var name:String = "";
 		public static var paused:Boolean;
-		public var pauseGroup:FlxGroup;
+		public var pauseMenu:FlxGroup;
 		
 		public function Game() 
 		{

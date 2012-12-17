@@ -36,9 +36,17 @@ package
 		
 		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean, spawn:int) 
 		{
-			super(x, y, imgs.assets[index]);
+			super(x, y);
+			if (lab == "Fontaine") {
+				loadGraphic(imgs.assets[index], true, false, 352, 224);
+				addAnimation("fontaine", [0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25], 26, true);
+				play("fontaine");
+			}
+			else
+				loadGraphic(imgs.assets[index]);
 			if (truth) {
 				hitbox = new FlxSprite(x, y + frameHeight, imgs.assets[index + 2]);
+				trace(hitbox.x, hitbox.y);
 				hitbox.immovable = true;
 				spawntype = spawn;
 			}

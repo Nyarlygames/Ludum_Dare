@@ -64,7 +64,7 @@ package
 								kids.add(new Kid(en[1], en[2]));
 							break;
 							case "Hopital":
-								build = new Buildings(en[1], en[2], en[3], en[0], true, 0);
+								build = new Buildings(en[1], en[2], 1, en[0], true, 0);
 								builds.add(build);
 								for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
 									for (k = en[2] / Constants.TILESIZE ; k < (build.frameHeight / Constants.TILESIZE) + (en[2] / Constants.TILESIZE) ; k++) {
@@ -74,7 +74,7 @@ package
 								}
 							break;
 							case "Jeu":
-								build = new Buildings(en[1], en[2], en[3], en[0], true, en[4]);
+								build = new Buildings(en[1], en[2], 5, en[0], true, en[3]);
 								builds.add(build);
 								for (j = en[1] / Constants.TILESIZE ; j < (build.frameWidth / Constants.TILESIZE) + (en[1] / Constants.TILESIZE) ; j++) {
 									for (k = en[2] / Constants.TILESIZE ; k < (build.frameHeight / Constants.TILESIZE) + (en[2] / Constants.TILESIZE) ; k++) {

@@ -113,13 +113,7 @@ package
 		
 		override public function update():void {
 			if (!Game.paused) {
-				/*for (var i:int = 0; i < level.player.lives; i++) {
-					var life:FlxSprite = new FlxSprite(offsetx, graphicy - name.frameHeight, ImgLife);
-					life.x += i * life.frameWidth;
-					life.y -= life.frameHeight;
-					components.add(life);
-				}*/
-				life.text = "Vies : "+level.player.lives;
+				life.text = "Vies : "+ (level.player.lives + level.player.shield);
 				score.text = "Score : " + FlxG.score;
 				name.text = level.name;
 				kidcount.text = "Nombre d'enfants : " + level.kids.length;
@@ -141,7 +135,7 @@ package
 					objs.text = "Shops : " + level.map.shops;
 				else {
 					FlxG.score = 500;
-					objt.text = "Shops validés";
+					objs.text = "Shops validés";
 				}
 			}
 		}
