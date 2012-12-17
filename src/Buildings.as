@@ -15,13 +15,13 @@ package
 		private var imgs:ImgRegistry = new ImgRegistry();
 		public var timer:FlxTimer = new FlxTimer();
 		public var timer_spawn:FlxTimer = new FlxTimer();
-		public var time:int = 2;
+		public var time:int = 10;
 		private var team:Boolean = false;
 		public var take:FlxSprite = null;
 		public var taken:Boolean = false;
 		public var loot:SpawnObjet;
 		public var id:int = 1;
-		private var spawntime:int = 15;
+		private var spawntime:int = 60;
 		public var label:String = "";
 		public var validated:Boolean = false;
 		public var lootable:Boolean = false;

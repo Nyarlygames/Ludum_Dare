@@ -19,16 +19,18 @@ package
 		[Embed(source = '../assets/gfx/kid.png')] public var ImgKid:Class;
 		public var validated:Boolean = false;
 		public var moving:FlxTimer = new FlxTimer();
-		private var speed:int = 2;
 		public var rand:int = -1;
 		public var blocked:Boolean = false;
 		public var bisounours:int = 14;
+		public var infect:int = 14;
 		public var INFECTED_MODE:FlxSound = new FlxSound();
 		
 		public function Kid(x:int, y:int) 
 		{
 			super(x, y, ImgKid);
 			moving.start(1);
+			health = 10;
+			speed = 1;
 			INFECTED_MODE.loadStream("../assets/sfx/ENFANT/INFECTED_MODE.mp3", false, false);
 		}
 		

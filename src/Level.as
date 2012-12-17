@@ -44,6 +44,24 @@ package
 		
 		public function Level(nom:String, rat:String):void
 		{
+			/*FORMAT RATING
+			 * --- KID ---
+			 * Attack Fou/Agressif/meurtrier
+			 * KID PV 20/40/60
+			 * --- ECOLE ---
+			 * SPAWNTIME 30/20/10
+			 * SPAWNTIME EXTENDS SI LENGTH > LIM
+			 * --- SERB ---
+			 * SPAWNTIME 90/60/30
+			 * SPAWNTIME EXTENDS 180/120/60
+			 * --- SPAWN WHO? ----
+			 * 7-12, 0 obj => PEGI
+			 * 12+, 1 obj => PEGI SERB
+			 * 12+, 2 obj => SERB
+			 */
+			
+			
+			
 			rating = rat;
 			//FlxG.stream("../assets/sfx/mort_2.mp3", 1, true);
 			//FlxG.loadSound(Sound7, 1, true, false, true);
@@ -204,13 +222,15 @@ package
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
 				FlxG.collide(player, esrbs);
+				FlxG.collide(player, builds);
 				FlxG.collide(esrbs, builds);
 				FlxG.collide(esrbs, esrbs);
+				
+				
 				if (started == false) {
 					playtime.start(map.time);
 					started = true;
 				}
-				FlxG.collide(player, builds);
 				for each (var b:Buildings in builds.members) {
 					if ((b != null) && (b.lootable == true)){
 						if (b.taken == false) {
@@ -236,7 +256,7 @@ package
 					if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
 						b.bspawnesrb = true
 						b.spawntimeresrb.start(b.spawnesrb);
-						esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight));
+						esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight, null));
 					}
 					if (b.spawntimeresrb.finished) {
 						b.bspawnesrb = false;
@@ -260,9 +280,10 @@ package
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {
 				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
-					child.loadGraphic(imgs.assets[child.bisounours]);
+					child.loadGraphic(imgs.assets[child.infect]);
 					map.childs--;
 					child.INFECTED_MODE.play(true);
+					FlxG.score += 10;
 					child.validated = true; 
 				}
 			} 

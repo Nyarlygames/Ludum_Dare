@@ -16,7 +16,6 @@ package
 	public class Player extends Character 
 	{
 		[Embed(source = '../assets/gfx/Test_Annim.png')] public var ImgPlayer:Class;
-		public var speed:int = 5;
 		public var maxspeed:int = 8;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry();
@@ -30,6 +29,7 @@ package
 			super(x, y, ImgPlayer);
 			w = width;
 			h = height;
+			speed = 5;
 			loadGraphic(ImgPlayer, true, false, 64, 64);
 			addAnimation("walk", [0, 1, 2, 3, 4], 5, false);
 		}

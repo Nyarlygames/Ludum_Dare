@@ -6,7 +6,6 @@ package
 	 */
 	public class ESRB extends Character 
 	{
-		
 		[Embed(source = '../assets/gfx/esrb.png')] public var ImgESRB:Class;
 		[Embed(source = '../assets/gfx/SRB_GB.png')] public var ImgESRBGB:Class;
 		[Embed(source = '../assets/gfx/SRB_GH.png')] public var ImgESRBGH:Class;
@@ -16,9 +15,14 @@ package
 		[Embed(source = '../assets/gfx/SRB_D_at.png')] public var ImgESRBDAT:Class;
 		public var lastdir:uint = 8;
 		
-		public function ESRB(x:int, y:int) 
+		public function ESRB(x:int, y:int, img:Class) 
 		{
-			super(x, y, ImgESRB);
+			if (img == null)
+				img = ImgESRB;
+			super(x, y, img);
+			health = 100;
+			attack = 20;
+			
 		}
 		
 		override public function update():void {

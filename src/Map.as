@@ -61,7 +61,7 @@ package
 								time = en[3];
 							break;
 							case "ESRB":
-								esrbs.add(new ESRB(en[1], en[2]));
+								esrbs.add(new ESRB(en[1], en[2], null));
 							break;
 							case "Kid":
 								kids.add(new Kid(en[1], en[2]));

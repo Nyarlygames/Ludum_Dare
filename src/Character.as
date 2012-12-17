@@ -12,6 +12,9 @@ package
 		public var Img:Class;
 		public var dir:uint = 8; 
 		[Embed(source = '../assets/gfx/Test_Annim.png')] public var ImgChar:Class;
+		public var speed:int = 1;
+		public var attack:int = 0;
+		
 		
 		public function Character(x:int, y:int, Img:Class) 
 		{
@@ -84,9 +87,6 @@ package
 					dir = 7;
 				}
 			}
-			
-			
-			var speed:int = 1;
 			
 			switch(dir) {
 				case 0:
