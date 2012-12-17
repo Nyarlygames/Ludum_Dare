@@ -126,12 +126,12 @@ package
 					obje.text = "Enfants validés";
 					level.map.childs = -1;
 				}
-				if (level.playtime.timeLeft > -1)
+				if ((level.playtime != null) && (level.playtime.timeLeft > -1))
 					objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
-				else if (level.playtime.timeLeft > -2) {
+				else{
 					FlxG.score += 400;
 					objt.text = "Temps validé";
-					level.playtime.timeLeft = -2;
+					level.playtime = null;
 				}
 				if (level.map.shops > 0)
 					objs.text = "Shops : " + level.map.shops;

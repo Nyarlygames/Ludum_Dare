@@ -29,6 +29,7 @@ package
 		public var name:String = "";
 		public var rating:String = "";
 		public var playtime:FlxTimer = new FlxTimer();
+		public var totaltime:FlxTimer = new FlxTimer();
 		public var immunity:FlxTimer;
 		public var immunetime:int = 1;
 		public var shopcount:int = 0;
@@ -191,9 +192,7 @@ package
 						immunity.start(immunetime);
 						//player.bump(en);
 					}
-				} 
-				var test = distanceCalculator(new FlxPoint(0, 0));
-				trace(test);
+				}
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
 				FlxG.collide(player, kids);
@@ -240,6 +239,12 @@ package
 				// CAPTURE ENFANTS
 				if (FlxG.keys.justReleased("SPACE"))
 					captureKid(player, kids);
+				
+				for each (var child:Kid in kids.members) {
+					if (child != null) {
+						child.behave(distances);
+					}
+				} 
 			}
 		}
 		

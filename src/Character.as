@@ -11,9 +11,12 @@ package
 	{
 		public var Img:Class;
 		public var dir:uint = 8; 
+		[Embed(source = '../assets/gfx/Test_Annim.png')] public var ImgChar:Class;
 		
 		public function Character(x:int, y:int, Img:Class) 
 		{
+			if (Img == null)
+				Img = ImgChar;
 			super(x, y, Img);
 		}
 		

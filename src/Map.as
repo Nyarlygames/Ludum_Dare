@@ -54,7 +54,6 @@ package
 				if (lignes[i] != null)
 					en = lignes[i].split('/');
 					if (en != null) {
-							trace(en[0]);
 						switch(en[0]) {
 							case "Obj":
 								childs = en[1];
