@@ -22,7 +22,7 @@ package
 
 		public var maxspeed:int = 20;
 		public var normalspeed:int = 15;
-		public var lives:int = 3;
+		public var lives:int = 3;                                                              
 		private var imgs:ImgRegistry = new ImgRegistry();
 		private var w:int = 0;
 		private var h:int = 0;

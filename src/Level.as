@@ -19,11 +19,14 @@ package
 	{	
 			
 		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound7:Class;
+		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound12:Class;
+		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound18:Class;
 		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_12.mp3")] public  var Sound7_12:Class;
 		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_18.mp3")] public  var Sound12_18:Class;
 		[Embed(source="../assets/SOUNDS/ENFANT/CHILD_SPAWN.mp3")] public  var Kid_Spawn:Class;
 		[Embed(source="../assets/SOUNDS/ENNEMIS/SERB_SPAWN.mp3")] public  var Serb_Spawn:Class;
 		[Embed(source="../assets/SOUNDS/ENNEMIS/PIG_SPAWN.mp3")] public  var Pig_Spawn:Class;
+		[Embed(source = '../assets/IMAGES/GAME_OVER/game_over.png')] public var ImgGameOver:Class;
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		public var player:Player;
 		public var kids:FlxGroup = new FlxGroup();
@@ -224,12 +227,15 @@ package
 				if ((childcount > rating[ratid][1]) && (ratid < 2)) {
 					if (ratid == 0) {
 						sfx_trans.play();
-						FlxG.playMusic(Sound7, 1);
+						FlxG.playMusic(Sound12, 1);
+						ui.loadGraphic(ui.Img12);
 					}
-					if (ratid == 1)
+					if (ratid == 1) {
 						sfx_trans.loadEmbedded(Sound12_18, false, true);
 						sfx_trans.play();
-						FlxG.playMusic(Sound7, 1);
+						FlxG.playMusic(Sound18, 1);
+						ui.loadGraphic(ui.Img18);
+					}
 					ratid++;
 				}
 				count2++;
@@ -245,7 +251,8 @@ package
 						player.lives--;
 						if (player.lives > 0)
 							immunity = null;
-							// else/// GAMEOVER MENU §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+						else
+							add(new FlxSprite(0, 0, ImgGameOver));
 					}
 					else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
 						immunity = new FlxTimer();

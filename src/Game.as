@@ -16,7 +16,7 @@ package
 		private var level:Level;
 		private var name:String = "";
 		public static var paused:Boolean;
-		private var pauseMenu:Pause;
+		public static var pauseMenu:Pause;
 		
 		public function Game() 
 		{
@@ -29,7 +29,7 @@ package
 		
 		override public function update():void {
 			// PAUSE
-			if((FlxG.keys.justPressed("P") || FlxG.keys.justPressed("ESCAPE")) || (pauseMenu != null && (FlxG.keys.justPressed("ENTER") || FlxG.keys.justPressed("SPACE")) && pauseMenu.current == 0)) {
+			if(FlxG.keys.justPressed("P") || (pauseMenu != null && FlxG.keys.justPressed("ENTER") && pauseMenu.current == 0)) {
 				paused = !paused;
 				if (paused) {
 					pauseMenu = new Pause();
@@ -40,7 +40,10 @@ package
 						if(build.timer != null)build.timer.paused = true;
 						if(build.timer_spawn != null)build.timer_spawn.paused = true;
 						if(build.spawntimer != null)build.spawntimer.paused = true;
-						if(build.spawntimeresrb != null)build.spawntimeresrb.paused = true;
+						if (build.spawntimeresrb != null) build.spawntimeresrb.paused = true;
+						if (level.player.pw_speed_timer != null) level.player.pw_speed_timer.paused = true;
+						if (level.totaltime != null)  level.totaltime.paused = true;
+						
 					}
 				} else {
 					remove(pauseMenu);
@@ -52,11 +55,13 @@ package
 						if(build2.timer_spawn != null)build2.timer_spawn.start();
 						if(build2.spawntimer != null)build2.spawntimer.start();
 						if(build2.spawntimeresrb != null)build2.spawntimeresrb.start();
+						if (level.player.pw_speed_timer != null) level.player.pw_speed_timer.start();
+						if (level.totaltime != null) level.totaltime.start();
 					}
 				}
 			}
 			//Pause menu management
-			if (pauseMenu != null && (FlxG.keys.justPressed("ENTER") || FlxG.keys.justPressed("SPACE"))) {
+			if (pauseMenu != null && FlxG.keys.justPressed("ENTER")) {
 				if (pauseMenu.current == 1) {
 					FlxG.mute = !FlxG.mute;
 				} else if (pauseMenu.current == 2) {
@@ -64,12 +69,17 @@ package
 				}
 			}
 			if (paused) {
-				return pauseMenu.update();//update() finishes here if paused
+				return pauseMenu.update(); //update() finishes here if paused
 			}
 			super.update();
 			if ((state == 1) && (onstate == false)) {
 				state = 2;
 				onstate = true;
+			}
+			
+			// ESCAPE
+			if (FlxG.keys.justPressed("ESCAPE")) {
+				System.exit(0);
 			}
 		}
 	}
