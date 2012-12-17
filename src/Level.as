@@ -26,7 +26,6 @@ package
 		[Embed(source="../assets/SOUNDS/ENFANT/CHILD_SPAWN.mp3")] public  var Kid_Spawn:Class;
 		[Embed(source="../assets/SOUNDS/ENNEMIS/SERB_SPAWN.mp3")] public  var Serb_Spawn:Class;
 		[Embed(source="../assets/SOUNDS/ENNEMIS/PIG_SPAWN.mp3")] public  var Pig_Spawn:Class;
-		[Embed(source = '../assets/IMAGES/GAME_OVER/game_over.png')] public var ImgGameOver:Class;
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		public var player:Player;
 		public var kids:FlxGroup = new FlxGroup();
@@ -251,8 +250,9 @@ package
 						player.lives--;
 						if (player.lives > 0)
 							immunity = null;
-						else
-							add(new FlxSprite(0, 0, ImgGameOver));
+						else { ///////  ------ END GAME -------- //////////////
+							FlxG.switchState(new GameOver());
+						}
 					}
 					else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
 						immunity = new FlxTimer();
@@ -347,7 +347,7 @@ package
 		// TRANSFORME EN BISOUNOURS
 		public function trans_bisou(esrb:ESRB, k:Kid):void {
 			if (FlxCollision.pixelPerfectCheck(esrb, k)) {
-				//k = new Kid(k.x, k.y);
+
 				k.loadGraphic(k.ImgBisounours, true, false, 64, 64);
 				k.transformed == true;
 			}

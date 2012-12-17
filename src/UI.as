@@ -27,7 +27,6 @@ package
 		public var name:FlxText;
 		public var encount:FlxText;
 		public var kidcount:FlxText;
-		public var rating:FlxText;
 		public var life:FlxText;
 		public var obje:FlxText;
 		public var objs:FlxText;
@@ -56,16 +55,16 @@ package
 			components.add(objectives);
 			
 			// SCORE
-			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy + 200, "Score :" + FlxG.score);
+			score = new FlxText(157, 21, FlxG.width, "Score :" + FlxG.score);
 			score.y += score.frameHeight;
-			score.setFormat(null, 14, 0xADAEAC);
+			score.setFormat(null, 14, 0xa10000);
 			score.scrollFactor.x = score.scrollFactor.y = 0;
 			components.add(score);
 			
 			// OBJECTIF ENFANTS
-			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy + 100, "");
+			obje = new FlxText(740, 18, FlxG.width, "");
 			obje.y += obje.frameHeight;
-			obje.setFormat(null, 14, 0xADAEAC);
+			obje.setFormat(null, 14, 0xa10000);
 			obje.scrollFactor.x = obje.scrollFactor.y = 0;
 			components.add(obje);
 			// OBJECTIF SHOPS
@@ -87,15 +86,7 @@ package
 			name.setFormat(null, 14, 0xADAEAC);
 			name.scrollFactor.x = name.scrollFactor.y = 0;
 			components.add(name);
-			
-			// RATING
-			rating = new FlxText(offsetx + graphicx, graphicy - name.frameHeight, graphicy, "");
-			rating.y -= rating.frameHeight;
-			rating.x -= rating.frameWidth / 2;
-			rating.setFormat(null, 14, 0xADAEAC);
-			rating.scrollFactor.x = rating.scrollFactor.y = 0;
-			components.add(rating);
-			
+						
 			// LIVES
 			life = new FlxText(offsetx, graphicy - name.frameHeight, graphicy, "");
 			life.y -= life.frameHeight;
@@ -119,7 +110,7 @@ package
 			kidcount.scrollFactor.x = kidcount.scrollFactor.y = 0;
 			components.add(kidcount);
 			
-			rating_sprite = new FlxSprite(0, 0, Img7);
+			rating_sprite = new FlxSprite(64, 8, Img7);
 		}
 		
 		override public function update():void {

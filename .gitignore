@@ -17,6 +17,7 @@ local.properties
 obj/
 *.old
 *.xml
+*.swf
 
 # External tool builders
 .externalToolBuilders/
