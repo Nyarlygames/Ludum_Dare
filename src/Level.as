@@ -127,7 +127,6 @@ package
 					}
 				}
 			}
-			
 			distances = distanceCalculator(player);
 		}
 		
@@ -160,7 +159,6 @@ package
 					copiedArray[i][j] = array[i][j];
 				}
 			}
-			
 			return copiedArray;
 		}
 
@@ -223,7 +221,6 @@ package
 				FlxG.camera.follow(player);
 				super.update();
 
-				trace("CHILD : ", childcount, " RATING : ",rating[ratid][2]);
 				if ((childcount > rating[ratid][1]) && (ratid < 2)) {
 					if (ratid == 0) {
 						sfx_trans.play();
@@ -259,7 +256,7 @@ package
 				FlxG.overlap(player, esrbs, get_hurt);
 				FlxG.collide(player, builds);
 				FlxG.collide(esrbs, builds);
-				FlxG.collide(esrbs, kids);;
+				FlxG.collide(esrbs, kids);
 				FlxG.overlap(esrbs, kids, trans_bisou);
 				
 				if (started == false) {

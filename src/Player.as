@@ -8,6 +8,7 @@ package
 	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxTimer;
+	import org.flixel.FlxSound;
 	
 	/**
 	 * Player
@@ -16,12 +17,20 @@ package
 	public class Player extends Character 
 	{
 		[Embed(source = '../assets/ANIMATIONS/PLAYER/player_move.png')] public var ImgPlayer:Class;
-		public var maxspeed:int = 8;
+		[Embed(source="../assets/SOUNDS/POWERUPS/GET_LIFE.mp3")] public  var Get_Life:Class;
+		[Embed(source="../assets/SOUNDS/POWERUPS/GOT_SHIELD.mp3")] public  var Got_shield:Class;
+
+		public var maxspeed:int = 20;
+		public var normalspeed:int = 20;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry();
 		private var w:int = 0;
 		private var h:int = 0;
 		public var buildings:FlxGroup = new FlxGroup();
+		public var pw_life:FlxSound = new FlxSound();
+		public var pw_shield:FlxSound = new FlxSound();
+		public var pw_speed_timer:FlxTimer = new FlxTimer();
+		public var pw_speed_time:int = 2;
 		public var shield:int = 0;
 		
 		public function Player(x:int, y:int, width:int, height:int) 
@@ -32,6 +41,8 @@ package
 			speed = 15;
 			loadGraphic(ImgPlayer, true, false, 64, 64);
 			addAnimation("walk", [0, 1, 2, 3, 4], 5, false);
+			pw_life.loadEmbedded(Get_Life, false, true);
+			pw_shield.loadEmbedded(Got_shield, false, true);
 		}
 		
 		override public function update():void {
@@ -59,6 +70,12 @@ package
 			if (FlxG.keys.justReleasedAny() != -1) {
 				frame = 0;
 			}
+			
+			if ((pw_speed_timer != null) &&(pw_speed_timer.finished)) {
+				speed = normalspeed;
+				trace(speed);
+				pw_speed_timer = null;
+			}
 		}
 		
 		public function getBuild():void {
@@ -81,15 +98,23 @@ package
 			switch(obj2.label){
 				case "Jeu":
 					if (obj2.spawntype == 1) {
-						if (shield < 1)
+						if (shield < 1) {
 							shield++;
+							pw_shield.play();
+						}
 					}
-					else
+					else {
+						trace(speed);
 						speed = maxspeed;
+						trace(speed);
+						pw_speed_timer.start(pw_speed_time);
+					}
 				break;
 				case "Hopital":
-					if (lives < 3)
+					if (lives < 3) {
 						lives++;
+						pw_life.play();
+					}
 				break;
 				default:
 			}
