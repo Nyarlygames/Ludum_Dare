@@ -3,8 +3,6 @@ package
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	import org.flixel.FlxSprite;
-	import flash.system.System;
-	import flash.display.Sprite;
 	
 	/**
 	 * Pause menu
