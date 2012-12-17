@@ -66,8 +66,6 @@ package
 		}
 		
 		override public function update():void {
-			super.update();
-			
 			var modified:Boolean = false;
 			// HAUT
 			if (FlxG.keys.justPressed("UP") || FlxG.keys.justPressed("W")) {
@@ -98,6 +96,8 @@ package
 						resume.loadGraphic(resumeU);
 						mute.loadGraphic(muteU);
 						quit.loadGraphic(quitS);
+						break;
+					default:
 				}
 				resume.x = (FlxG.width - resume.width) / 2;
 				resume.y = FlxG.height / 2 - resume.height;
@@ -105,11 +105,6 @@ package
 				mute.y = resume.y + spacing;
 				quit.x = (FlxG.width - quit.width) / 2;
 				quit.y = mute.y + spacing;
-			}
-			
-			// ESCAPE
-			if (FlxG.keys.justPressed("ESCAPE")) {
-				System.exit(0);
 			}
 		}
 	}

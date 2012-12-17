@@ -16,7 +16,7 @@ package
 		private var level:Level;
 		private var name:String = "";
 		public static var paused:Boolean;
-		public static var pauseMenu:Pause;
+		private var pauseMenu:Pause;
 		
 		public function Game() 
 		{
@@ -29,7 +29,7 @@ package
 		
 		override public function update():void {
 			// PAUSE
-			if(FlxG.keys.justPressed("P") || (pauseMenu != null && FlxG.keys.justPressed("ENTER") && pauseMenu.current == 0)) {
+			if((FlxG.keys.justPressed("P") || FlxG.keys.justPressed("ESCAPE")) || (pauseMenu != null && (FlxG.keys.justPressed("ENTER") || FlxG.keys.justPressed("SPACE")) && pauseMenu.current == 0)) {
 				paused = !paused;
 				if (paused) {
 					pauseMenu = new Pause();
@@ -56,7 +56,7 @@ package
 				}
 			}
 			//Pause menu management
-			if (pauseMenu != null && FlxG.keys.justPressed("ENTER")) {
+			if (pauseMenu != null && (FlxG.keys.justPressed("ENTER") || FlxG.keys.justPressed("SPACE"))) {
 				if (pauseMenu.current == 1) {
 					FlxG.mute = !FlxG.mute;
 				} else if (pauseMenu.current == 2) {
@@ -64,17 +64,12 @@ package
 				}
 			}
 			if (paused) {
-				return pauseMenu.update(); //update() finishes here if paused
+				return pauseMenu.update();//update() finishes here if paused
 			}
 			super.update();
 			if ((state == 1) && (onstate == false)) {
 				state = 2;
 				onstate = true;
-			}
-			
-			// ESCAPE
-			if (FlxG.keys.justPressed("ESCAPE")) {
-				System.exit(0);
 			}
 		}
 	}
