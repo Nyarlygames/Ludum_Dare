@@ -228,7 +228,6 @@ package
 						sfx_trans.play();
 						FlxG.playMusic(Sound12, 1);
 						ui.rating_sprite.loadGraphic(ui.Img12);
-						FlxG.paused = true;
 					}
 					if (ratid == 1) {
 						sfx_trans.loadEmbedded(Sound12_18, false, true);
@@ -250,7 +249,7 @@ package
 					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
 						// SI BOUCLIER
 						if (player.shield == 1) {
-							ui.lives.members[3].exists = false;
+							ui.lives.members[this.player.lives].exists = false;
 							player.shield = 0;
 						}
 						// SI VIES

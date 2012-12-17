@@ -113,8 +113,8 @@ package
 						if (shield == 0) {
 							shield++;
 							pw_shield.play();
-							niveau.ui.lives.members[3] = new FlxSprite(niveau.ui.lives.members[3].x, niveau.ui.lives.members[3].y, niveau.ui.ImgShield);
-							niveau.ui.lives.members[3].scrollFactor.x = niveau.ui.lives.members[3].scrollFactor.y = 0;
+							niveau.ui.lives.members[obj1.lives] = new FlxSprite(niveau.ui.lives.members[obj1.lives].x, niveau.ui.lives.members[obj1.lives].y, niveau.ui.ImgShield);
+							niveau.ui.lives.members[obj1.lives].scrollFactor.x = niveau.ui.lives.members[obj1.lives].scrollFactor.y = 0;
 						}
 					}
 					else {

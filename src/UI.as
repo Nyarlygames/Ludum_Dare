@@ -18,7 +18,7 @@ package
 		[Embed(source = '../assets/IMAGES/HUD/current_rating_7.png')] public var Img7:Class;
 		[Embed(source = '../assets/IMAGES/HUD/current_rating_12.png')] public var Img12:Class;
 		[Embed(source = '../assets/IMAGES/HUD/current_rating_18.png')] public var Img18:Class;
-		[Embed(source = '../assets/IMAGES/POWERUP/life_floor.png')] public var ImgLife:Class;
+		[Embed(source = '../assets/IMAGES/HUD/life.png')] public var ImgLife:Class;
 		[Embed(source = '../assets/IMAGES/HUD/life_empty.png')] public var ImgLifeEmpty:Class;
 		[Embed(source = '../assets/IMAGES/POWERUP/shield_floor.png')] public var ImgShield:Class;
 		[Embed(source = '../assets/IMAGES/HUD/objective_check.png')] public var ImgObjCheck:Class;
