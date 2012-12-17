@@ -20,17 +20,18 @@ package
 		[Embed(source = '../assets/IMAGES/HUD/current_rating_18.png')] public var Img18:Class;
 		[Embed(source = '../assets/IMAGES/HUD/life.png')] public var ImgLife:Class;
 		[Embed(source = '../assets/IMAGES/HUD/life_empty.png')] public var ImgLifeEmpty:Class;
-		[Embed(source = '../assets/IMAGES/HUD/shield.png')] public var ImgShield:Class;
+		[Embed(source = '../assets/IMAGES/POWERUP/shield_floor.png')] public var ImgShield:Class;
 		[Embed(source = '../assets/IMAGES/HUD/objective_check.png')] public var ImgObjCheck:Class;
 		[Embed(source = '../assets/IMAGES/HUD/objective_uncheck.png')] public var ImgObjUncheck:Class;
 		public var score:FlxText;
-		public var name:FlxText;
 		public var encount:FlxText;
 		public var kidcount:FlxText;
 		public var life:FlxText;
 		public var obje:FlxText;
 		public var objs:FlxText;
 		public var objt:FlxText;
+		public var nben:FlxText;
+		public var nbch:FlxText;
 		public var components:FlxGroup = new FlxGroup();
 		public var level:Level;
 		public var offsetx:int = 200;
@@ -39,6 +40,8 @@ package
 		public var graphicx:int = 100;
 		public var graphicy:int =  100;
 		public var rating_sprite:FlxSprite;
+		public var lives:FlxGroup = new FlxGroup();
+		public var objects:FlxGroup = new FlxGroup;
 		
 		public function UI(play:Level) 
 		{
@@ -55,95 +58,99 @@ package
 			components.add(objectives);
 			
 			// SCORE
-			score = new FlxText(157, 21, FlxG.width, "Score :" + FlxG.score);
-			score.y += score.frameHeight;
+			score = new FlxText(157, 21, FlxG.width, "Score " + FlxG.score);
 			score.setFormat(null, 14, 0xa10000);
 			score.scrollFactor.x = score.scrollFactor.y = 0;
 			components.add(score);
 			
 			// OBJECTIF ENFANTS
 			obje = new FlxText(740, 18, FlxG.width, "");
-			obje.y += obje.frameHeight;
 			obje.setFormat(null, 14, 0xa10000);
 			obje.scrollFactor.x = obje.scrollFactor.y = 0;
 			components.add(obje);
 			// OBJECTIF SHOPS
-			objs = new FlxText(FlxG.width - 2 * offsetx, 2*score.frameHeight, graphicy + 100, "");
-			objs.y += objs.frameHeight;
-			objs.setFormat(null, 14, 0xADAEAC);
+			objs = new FlxText(740, 47, FlxG.width, "");
+			objs.setFormat(null, 14, 0xa10000);
 			objs.scrollFactor.x = objs.scrollFactor.y = 0;
 			components.add(objs);
 			// OBJECTIF TIME
-			objt = new FlxText(FlxG.width - 2 * offsetx, 3*score.frameHeight, graphicy + 100, "");
-			objt.y += objt.frameHeight;
-			objt.setFormat(null, 14, 0xADAEAC);
+			objt = new FlxText(740, 75, FlxG.width, "");
+			objt.setFormat(null, 14, 0xa10000);
 			objt.scrollFactor.x = objt.scrollFactor.y = 0;
 			components.add(objt);
 			
-			// NAME
-			name = new FlxText(offsetx, 0, graphicy, "Nom :");
-			name.y += name.frameHeight;
-			name.setFormat(null, 14, 0xADAEAC);
-			name.scrollFactor.x = name.scrollFactor.y = 0;
-			components.add(name);
-						
-			// LIVES
-			life = new FlxText(offsetx, graphicy - name.frameHeight, graphicy, "");
-			life.y -= life.frameHeight;
-			life.setFormat(null, 14, 0xADAEAC);
-			life.scrollFactor.x = life.scrollFactor.y = 0;
-			components.add(life);
 			
-			// ENCOUNT
-			encount = new FlxText(FlxG.camera.width, FlxG.camera.height , graphicy + 150, "Nombre d'ennemis :");
-			encount.y -= encount.frameHeight * 3;
-			encount.x -= encount.frameWidth;
-			encount.setFormat(null, 14, 0xADAEAC);
-			encount.scrollFactor.x = encount.scrollFactor.y = 0;
-			components.add(encount);
+			var objectif:FlxSprite = new FlxSprite (700, 0, ImgObjUncheck);
+			objectif.scrollFactor.x = objectif.scrollFactor.y = 0;
+			objects.add(objectif);
+			objectif = new FlxSprite (700, 48, ImgObjUncheck);
+			objectif.scrollFactor.x = objectif.scrollFactor.y = 0;
+			objects.add(objectif);
+			objectif = new FlxSprite (700, 96, ImgObjUncheck);
+			objectif.scrollFactor.x = objectif.scrollFactor.y = 0;
+			objects.add(objectif);
 			
-			// KIDCOUNT
-			kidcount = new FlxText(FlxG.camera.width, FlxG.camera.height, graphicy + 100, "Nombre d'enfants :");
-			kidcount.y -= kidcount.frameHeight*2;
-			kidcount.x -= kidcount.frameWidth;
-			kidcount.setFormat(null, 14, 0xADAEAC);
-			kidcount.scrollFactor.x = kidcount.scrollFactor.y = 0;
-			components.add(kidcount);
+			var vie:FlxSprite = new FlxSprite(157, 53, ImgLife);
+			vie.scrollFactor.x = vie.scrollFactor.y = 0;
+			lives.add(vie);
+			vie = new FlxSprite(205, 53, ImgLife);
+			vie.scrollFactor.x = vie.scrollFactor.y = 0;
+			lives.add(vie);
+			vie = new FlxSprite(251, 53, ImgLife);
+			vie.scrollFactor.x = vie.scrollFactor.y = 0;
+			lives.add(vie);
 			
+			components.add(objects);
+			components.add(lives);
 			rating_sprite = new FlxSprite(64, 8, Img7);
+			rating_sprite.scrollFactor.x = rating_sprite.scrollFactor.y = 0;
+			components.add(rating_sprite);
+			
+			// DEBUG NB ENNEMIS
+			nben = new FlxText(FlxG.width - 300, FlxG.height  - 200,  FlxG.width, "NB ENNEMIS : " + level.esrbs.length);
+			nben.setFormat(null, 14, 0xa10000);
+			nben.scrollFactor.x = nben.scrollFactor.y = 0;
+			components.add(nben);
+			// DEBUG NB KID
+			nbch = new FlxText(FlxG.width - 300, FlxG.height  - 100,  FlxG.width, "NB CHILD : " + level.kids.length);
+			nbch.setFormat(null, 14, 0xa10000);
+			nbch.scrollFactor.x = nbch.scrollFactor.y = 0;
+			components.add(nbch);
 		}
 		
 		override public function update():void {
 			if (!Game.paused) {
-				life.text = "Vies : "+ (level.player.lives + level.player.shield);
-				score.text = "Score : " + FlxG.score;
-				name.text = level.name;
-				kidcount.text = "Nombre d'enfants : " + level.kids.length;
-				encount.text = "Nombre d'ennemis : " + level.esrbs.length;
-			
+				score.text = "Score " + FlxG.score;
 				
 				if (level.map.childs > 0)
-					obje.text = "Enfants : " + level.map.childs;
+					obje.text = "CONVERT " + level.map.childs + " CHILDREN";
 				else if (level.map.childs == 0) {
 					FlxG.score += 500;
+					obje.text = "CHILDREN CONVERTED.";
 					nbobjs++;
-					obje.text = "Enfants validés";
+					objects.members[0] = new FlxSprite(objects.members[0].x, objects.members[0].y, ImgObjCheck);
+					objects.members[0].scrollFactor.x = objects.members[0].scrollFactor.y = 0;
 					level.map.childs = -1;
 				}
+				
 				if ((level.playtime != null) && (level.playtime.finished == false))
-					objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
+					objt.text = "SURVIVE : " + FlxU.formatTime	(level.playtime.timeLeft) + " MINUTES.";	
 				else if ((level.playtime != null) && (level.playtime.finished)) {
 					FlxG.score += 400;
-					objt.text = "Temps validé";
+					objt.text = "TIME SURVIVED.";	
 					nbobjs++;
+					objects.members[2] = new FlxSprite(objects.members[2].x, objects.members[2].y, ImgObjCheck);
+					objects.members[2].scrollFactor.x = objects.members[2].scrollFactor.y = 0;
 					level.playtime = null;
 				}
-					
+				
 				if (level.map.shops > 0)
-					objs.text = "Shops : " + level.map.shops;
+					objs.text = "CAPTURE " + level.map.shops + " SHOPS.";
 				else if (level.map.shops > -1) {
+					objs.text = "SHOP CAPTURED.";
 					FlxG.score += 500;
-					objs.text = "Shops validés";
+					objects.members[1] = new FlxSprite(objects.members[1].x, objects.members[1].y, ImgObjCheck);
+					objects.members[1].scrollFactor.x = objects.members[1].scrollFactor.y = 0;
 					nbobjs++;
 					level.map.shops = -1;
 				}

@@ -35,6 +35,7 @@ package
 			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
 			health = 100;
 			attack = 20;
+			speed = 8;
 		}
 		
 		override public function update():void {

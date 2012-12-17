@@ -9,6 +9,8 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxSound;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxSound;
 	
 	/**
 	 * Player
@@ -19,6 +21,8 @@ package
 		[Embed(source = '../assets/ANIMATIONS/PLAYER/player.png')] public var ImgPlayer:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/GET_LIFE.mp3")] public  var Get_Life:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/GOT_SHIELD.mp3")] public  var Got_shield:Class;
+		[Embed(source="../assets/SOUNDS/POWERUPS/SPEED_UP.mp3")] public  var Speed_UP:Class;
+		[Embed(source="../assets/SOUNDS/POWERUPS/SPEED_DOWN.mp3")] public  var Speed_DOWN:Class;
 
 		public var maxspeed:int = 20;
 		public var normalspeed:int = 15;
@@ -33,9 +37,13 @@ package
 		public var pw_speed_time:int = 2;
 		public var shield:int = 0;
 		public var nbanim:int = 0;
+		public var niveau:Level = null;
+		public var SUP:FlxSound = new FlxSound();
+		public var SDOWN:FlxSound = new FlxSound();
 		
-		public function Player(x:int, y:int, width:int, height:int) 
+		public function Player(x:int, y:int, width:int, height:int, lvl:Level) 
 		{
+			niveau = lvl;
 			super(x, y, ImgPlayer);
 			w = width;
 			h = height;
@@ -51,6 +59,8 @@ package
 			addAnimation("walkhd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
 			pw_life.loadEmbedded(Get_Life, false, true);
 			pw_shield.loadEmbedded(Got_shield, false, true);
+			SUP.loadEmbedded(Speed_UP, false, true);
+			SDOWN.loadEmbedded(Speed_DOWN, false, true);
 		}
 		
 		override public function update():void {
@@ -82,6 +92,7 @@ package
 				
 				if ((pw_speed_timer != null) && (pw_speed_timer.finished)) {
 					speed = normalspeed;
+					SDOWN.play();
 					pw_speed_timer = null;
 				}
 			}
@@ -94,11 +105,13 @@ package
 						z.timer = new FlxTimer();
 						z.timer.start(z.time);
 						z.take = this;
+						z.sfx_getting.play();
 					}
 				}
 				else if (z.timer != null) {
 					z.timer.stop();
 					z.take = null;
+					z.sfx_getting.stop();
 				}
 			}
 		}
@@ -107,20 +120,26 @@ package
 			switch(obj2.label){
 				case "Jeu":
 					if (obj2.spawntype == 1) {
-						if (shield < 1) {
+						if (shield == 0) {
 							shield++;
 							pw_shield.play();
+							niveau.ui.lives.members[obj1.lives-1 ] = new FlxSprite(niveau.ui.lives.members[obj1.lives-1].x, niveau.ui.lives.members[obj1.lives-1].y, niveau.ui.ImgShield);
+							niveau.ui.lives.members[obj1.lives-1].scrollFactor.x = niveau.ui.lives.members[obj1.lives-1].scrollFactor.y = 0;
 						}
 					}
 					else {
 						speed = maxspeed;
+						SUP.play(); 
 						pw_speed_timer = new FlxTimer();
 						pw_speed_timer.start(pw_speed_time);
 					}
 				break;
 				case "Hopital":
-					if (lives < 3)
+					if (lives < 3) {
+						niveau.ui.lives.members[lives] = new FlxSprite(niveau.ui.lives.members[lives].x, niveau.ui.lives.members[lives].y, niveau.ui.ImgLife);
+						niveau.ui.lives.members[lives].scrollFactor.x = niveau.ui.lives.members[lives].scrollFactor.y = 0;
 						lives++;
+					}
 					pw_life.play();
 				break;
 				default:
