@@ -21,13 +21,13 @@ package
 		public var taken:Boolean = false;
 		public var loot:SpawnObjet;
 		public var id:int = 1;
-		private var spawntime:int = 2;
+		private var spawntime:int = 7;
 		public var label:String = "";
 		public var validated:Boolean = false;
 		public var lootable:Boolean = false;
 		public var hitbox:FlxSprite = null;
-		public var spawnkid:int = 2;
-		public var spawnesrb:int = 2;
+		public var spawnkid:int = 1.5;
+		public var spawnesrb:int = 1.5;
 		public var bspawnkid:Boolean = false;
 		public var bspawnesrb:Boolean = false;
 		public var spawntimer:FlxTimer = new FlxTimer();

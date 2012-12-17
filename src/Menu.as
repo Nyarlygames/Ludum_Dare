@@ -7,7 +7,7 @@ package
 	import flash.display.Sprite;
 	
 	/**
-	 * Pause menu
+	 * Main menu
 	 * @author Jidehem1993
 	 */
 	public class Menu extends FlxState
@@ -32,20 +32,14 @@ package
 		override public function create():void
 		{
 			background = new FlxSprite(0, 0, bgPause);
-			background.scrollFactor.x = 0;
-			background.scrollFactor.y = 0;
 			add(background);
 			
 			newG = new FlxSprite(0, 0, newGS);
-			newG.scrollFactor.x = 0;
-			newG.scrollFactor.y = 0;
 			newG.x = (FlxG.width - newG.width) / 2;
 			newG.y = FlxG.height / 2;
 			add(newG);
 			
 			how = new FlxSprite(0, 0, howU);
-			how.scrollFactor.x = 0;
-			how.scrollFactor.y = 0;
 			how.x = (FlxG.width - how.width) / 2;
 			how.y = newG.y + spacing;
 			add(how);
@@ -92,7 +86,7 @@ package
 						FlxG.switchState(game);
 						break;
 					case 1:
-						//FlxG.switchState(new HowToPlay());
+						FlxG.switchState(new HowToPlay());
 						break;
 					default:
 				}
