@@ -20,7 +20,7 @@ package
 			
 		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound7:Class;
 		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_12.mp3")] public  var Sound7_12:Class;
-		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_18.R.mp3")] public  var Sound12_18:Class;
+		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_18.mp3")] public  var Sound12_18:Class;
 		[Embed(source="../assets/SOUNDS/ENFANT/CHILD_SPAWN.mp3")] public  var Kid_Spawn:Class;
 		[Embed(source="../assets/SOUNDS/ENNEMIS/SERB_SPAWN.mp3")] public  var Serb_Spawn:Class;
 		[Embed(source="../assets/SOUNDS/ENNEMIS/PIG_SPAWN.mp3")] public  var Pig_Spawn:Class;
@@ -243,7 +243,9 @@ package
 					}//  HERE COLLISIONS ESRB / PLAYER
 					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
 						player.lives--;
-						immunity = null;
+						if (player.lives > 0)
+							immunity = null;
+							// else/// GAMEOVER MENU §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 					}
 					else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
 						immunity = new FlxTimer();
@@ -253,10 +255,12 @@ package
 				}
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
-				FlxG.overlap(player, esrbs, get_hurt);
+				FlxG.overlap(player, esrbs);
 				FlxG.collide(player, builds);
 				FlxG.collide(esrbs, builds);
 				FlxG.collide(esrbs, kids);
+				FlxG.collide(esrbs, esrbs);
+				FlxG.collide(kids, kids);
 				FlxG.overlap(esrbs, kids, trans_bisou);
 				
 				if (started == false) {
@@ -274,6 +278,7 @@ package
 							shopcount++;
 							map.shops--;
 							b.validated = true;
+							b.hitbox = null;
 						}
 						// loots
 						if (b.loot != null)
@@ -323,33 +328,27 @@ package
 				
 				for each (var child:Kid in kids.members) {
 					if (child != null) {
-						child.behave(builds);
+						if (child.transformed == true)
+							child.goAway();
+						else 
+							child.behave(builds);
 					}
 				} 
 			}
 		}
-		
-		public function get_hurt(player:Player, esrb:ESRB):void {
-			/*for each (var child:Kid in kids.members) {
-				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
-					child.loadGraphic(imgs.assets[child.infect]);
-					map.childs--;
-					childcount++;
-					child.INFECTED_MODE.play(true);
-					FlxG.score += 10;
-					child.validated = true; 
-				}
-			} */
-		}
+
+		// TRANSFORME EN BISOUNOURS
 		public function trans_bisou(esrb:ESRB, k:Kid):void {
-			/*for each (var child:Kid in kids.members) {
-				if (child != null){} 
-			} */
+			if (FlxCollision.pixelPerfectCheck(esrb, k)) {
+				k.loadGraphic(k.ImgBisounours, true, false, 64, 64);
+				k.transformed == true;
+			}
 		}
+		
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {
 				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
-					child.loadGraphic(imgs.assets[child.infect]);
+					child.loadGraphic(child.getImg(ratid), true, false, 64, 64);
 					map.childs--;
 					childcount++;
 					child.INFECTED_MODE.play(true);

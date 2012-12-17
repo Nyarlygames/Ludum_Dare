@@ -16,7 +16,11 @@ package
 	public class Kid extends Character
 	{
 		
-		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid.png')] public var ImgKid:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_gris.png')] public var ImgKidGrey:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_bleu.png')] public var ImgKidBlue:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_orange.png')] public var ImgKidOrange:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_rouge.png')] public var ImgKidRed:Class;
+		[Embed(source = '../assets/IMAGES/bisounours1.png')] public var ImgBisounours:Class;
 		[Embed(source = '../assets/SOUNDS/ENFANT/INFECTED_MODE.mp3')] public var Sfx_INFECTED:Class;
 		public var validated:Boolean = false;
 		public var moving:FlxTimer = new FlxTimer();
@@ -29,28 +33,31 @@ package
 		public var nbanim:int = 1;
 		public var lastdir:uint = 8;
 		public var INFECTED_MODE:FlxSound = new FlxSound();
+		public var transformed:Boolean = false;
 		
 		public function Kid(x:int, y:int) 
 		{
 			moving.start(1);
 			super(x, y, null);
-			loadGraphic(ImgKid, true, false, 64, 64);
-			addAnimation("walkhd", [0, 1, 2, 3, 4], 10, true);
-			addAnimation("walkh", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
-			addAnimation("walkhg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
-			addAnimation("walkbg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true); // ICI BAS FOIRE
-			addAnimation("walkb", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
+			loadGraphic(ImgKidGrey, true, false, 64, 64);
+			addAnimation("walkg", [0, 1, 2, 3, 4], 10, true);
+			addAnimation("walkbg", [0, 1, 2, 3, 4], 10, true);
+			addAnimation("walkb", [0, 1, 2, 3, 4], 10, true);
+			nbanim += 5;
+			addAnimation("walkd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
 			addAnimation("walkbd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
+			nbanim+= 5;
+			addAnimation("walkhd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			addAnimation("walkh", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
+			addAnimation("walkhg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
 			addAnimation("attack_hd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
+			nbanim += 5;
 			addAnimation("attack_hg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
+			nbanim += 5;
 			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
-			nbanim++;
+			nbanim += 5;
 			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
 			health = 10;
 			speed = 5;
@@ -178,6 +185,20 @@ package
 						play("walkhg");
 					}
 		}
+		
+		public function getImg(rate:int):Class {
+			if (rate == 0)
+				return (ImgKidBlue);
+			if (rate == 1)
+				return (ImgKidOrange);
+			if (rate == 2)
+				return (ImgKidRed);
+			else return(ImgKidGrey);
+		}
+		
+		public function goAway():void {
+		}
+		
 	}
 
 }

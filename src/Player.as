@@ -16,12 +16,12 @@ package
 	 */
 	public class Player extends Character 
 	{
-		[Embed(source = '../assets/ANIMATIONS/PLAYER/player_move.png')] public var ImgPlayer:Class;
+		[Embed(source = '../assets/ANIMATIONS/PLAYER/player.png')] public var ImgPlayer:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/GET_LIFE.mp3")] public  var Get_Life:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/GOT_SHIELD.mp3")] public  var Got_shield:Class;
 
 		public var maxspeed:int = 20;
-		public var normalspeed:int = 20;
+		public var normalspeed:int = 15;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry();
 		private var w:int = 0;
@@ -32,6 +32,7 @@ package
 		public var pw_speed_timer:FlxTimer = new FlxTimer();
 		public var pw_speed_time:int = 2;
 		public var shield:int = 0;
+		public var nbanim:int = 0;
 		
 		public function Player(x:int, y:int, width:int, height:int) 
 		{
@@ -40,7 +41,14 @@ package
 			h = height;
 			speed = 15;
 			loadGraphic(ImgPlayer, true, false, 64, 64);
-			addAnimation("walk", [0, 1, 2, 3, 4], 5, false);
+			nbanim++;
+			addAnimation("walkd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			nbanim += 5;
+			addAnimation("walkg", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			nbanim += 5;
+			addAnimation("walkhg", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			nbanim += 5;
+			addAnimation("walkhd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
 			pw_life.loadEmbedded(Get_Life, false, true);
 			pw_shield.loadEmbedded(Got_shield, false, true);
 		}
@@ -50,30 +58,29 @@ package
 			// DROITE
 			if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
 				x += speed;
-				play("walk");
+				play("walkd");
 			}
 			// GAUCHE
 			if ((FlxG.keys.pressed("LEFT") || FlxG.keys.pressed("A")) && x > 0) {
 				x -= speed;
-				play("walk");
+				play("walkg");
 			}
 			// HAUT
 			if ((FlxG.keys.pressed("UP") || FlxG.keys.pressed("W")) && y > 0) {
 				y -= speed;	
-				play("walk");
+				play("walkh");
 			}
 			// BAS
 			if ((FlxG.keys.pressed("DOWN") || FlxG.keys.pressed("Z")) && y < h - frameHeight) {
 				y += speed;
-				play("walk");
+				play("walkb");
 			}
 			if (FlxG.keys.justReleasedAny() != -1) {
 				frame = 0;
 			}
 			
-			if ((pw_speed_timer != null) &&(pw_speed_timer.finished)) {
+			if ((pw_speed_timer != null) && (pw_speed_timer.finished)) {
 				speed = normalspeed;
-				trace(speed);
 				pw_speed_timer = null;
 			}
 		}
@@ -104,17 +111,15 @@ package
 						}
 					}
 					else {
-						trace(speed);
 						speed = maxspeed;
-						trace(speed);
+						pw_speed_timer = new FlxTimer();
 						pw_speed_timer.start(pw_speed_time);
 					}
 				break;
 				case "Hopital":
-					if (lives < 3) {
+					if (lives < 3)
 						lives++;
-						pw_life.play();
-					}
+					pw_life.play();
 				break;
 				default:
 			}
@@ -123,7 +128,7 @@ package
 		}
 		
 		public function bump(en:ESRB):void {
-			var movex:int = 0;
+		/*	var movex:int = 0;
 			var movey:int = 0;
 			var bump:int = Constants.TILESIZE*2;
 			
@@ -140,7 +145,7 @@ package
 				movey = y - bump;
 				else
 					movey = 0;
-			FlxVelocity.moveTowardsPoint(this, new FlxPoint(movex, movey));
+			FlxVelocity.moveTowardsPoint(this, new FlxPoint(movex, movey));*/
 		}	
 	}
 } 

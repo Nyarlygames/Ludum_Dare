@@ -12,23 +12,25 @@ package
 		{
 			super(x, y, null);
 			loadGraphic(ImgPig, true, false, 64, 64);
-			addAnimation("walkhd", [0, 1, 2, 3, 4], 10, true);
-			addAnimation("walkh", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			nbanim++;
-			addAnimation("walkhg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			nbanim++;
-			addAnimation("walkbg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			addAnimation("walkb", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			nbanim++;
-			addAnimation("walkbd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			nbanim++;
-			addAnimation("attack_hd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true); // ICI HAUT FOIRE
-			nbanim++;
-			addAnimation("attack_hg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			nbanim++;
-			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
-			nbanim++;
-			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			addAnimation("walkg", [0, 1, 2, 3, 4], 10, true);
+			addAnimation("walkbg", [0, 1, 2, 3, 4], 10, true);
+			addAnimation("walkb", [0, 1, 2, 3, 4], 10, true);
+			nbanim += 5;
+			addAnimation("walkd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			addAnimation("walkbd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim+= 5;
+			addAnimation("walkhd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			addAnimation("walkh", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
+			addAnimation("walkhg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
+			addAnimation("attack_hd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
+			addAnimation("attack_hg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
+			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
+			nbanim += 5;
+			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
 			health = 50;
 			attack = 10;	
 		}
