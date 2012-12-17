@@ -18,8 +18,8 @@ package
 	public class Level extends FlxState
 	{	
 			
-		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound7:Class;
-		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound12:Class;
+		[Embed(source="../assets/MUSIC/music_rating_7.mp3")] public  var Sound7:Class;
+		[Embed(source="../assets/MUSIC/music_rating_12.mp3")] public  var Sound12:Class;
 		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound18:Class;
 		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_12.mp3")] public  var Sound7_12:Class;
 		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_18.mp3")] public  var Sound12_18:Class;
@@ -34,7 +34,7 @@ package
 		public var map:Map = new Map(map1);
 		private var background:FlxSprite = new FlxSprite();
 		private var imgs:ImgRegistry = new ImgRegistry;
-		private var ui:UI;
+		public var ui:UI;
 		public var name:String = "";
 		public var rating:Array = new Array();
 		public var ratid:int = 0;
@@ -84,12 +84,12 @@ package
 			rating.push(new Array("18+", -1, "MG", 60, 10, 10, 30, 60));
 			
 			FlxG.playMusic(Sound7, 1);
+			FlxG.music.getActualVolume();
 			sfx_trans.loadEmbedded(Sound7_12, false, true);
 			name = nom;
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
 			add(background);
 			// JOUEUR
-			player = new Player(FlxG.width / 2, FlxG.height / 2, background.frameWidth, background.frameHeight);
 			esrbs = map.esrbs;
 			kids = map.kids;
 			for each (var k:Kid in kids.members) {
@@ -99,8 +99,11 @@ package
 				}
 			}
 			builds = map.builds;
-			for each (var z:Buildings in builds.members) {
-				if ((z != null) && (z.lootable == true)) {
+			add(esrbs);
+			add(kids);
+			ui = new UI(this);
+			player = new Player(FlxG.width / 2, FlxG.height / 2, background.frameWidth, background.frameHeight, this);			for each (var z:Buildings in builds.members) {
+			if ((z != null) && (z.lootable == true)) {
 					z.rating = rating;
 					z.ratid = ratid;
 					player.buildings.add(z);
@@ -108,10 +111,7 @@ package
 				}
 			}
 			add(builds);
-			add(esrbs);
-			add(kids);
 			add(player);
-			ui = new UI(this);
 			add(ui);
 			add(ui.components);
 			
@@ -227,13 +227,14 @@ package
 					if (ratid == 0) {
 						sfx_trans.play();
 						FlxG.playMusic(Sound12, 1);
-						ui.loadGraphic(ui.Img12);
+						ui.rating_sprite.loadGraphic(ui.Img12);
+						FlxG.paused = true;
 					}
 					if (ratid == 1) {
 						sfx_trans.loadEmbedded(Sound12_18, false, true);
 						sfx_trans.play();
 						FlxG.playMusic(Sound18, 1);
-						ui.loadGraphic(ui.Img18);
+						ui.rating_sprite.loadGraphic(ui.Img18);
 					}
 					ratid++;
 				}
@@ -247,19 +248,34 @@ package
 						en.findPath(distances, player);
 					}//  HERE COLLISIONS ESRB / PLAYER
 					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
-						player.lives--;
+						// SI BOUCLIER
+						if (player.shield == 1) {
+							ui.lives.members[3].exists = false;
+							player.shield = 0;
+						}
+						// SI VIES
+						else {
+							player.lives--;
+							ui.lives.members[player.lives] = new FlxSprite(ui.lives.members[player.lives].x, ui.lives.members[player.lives].y, ui.ImgLifeEmpty);
+							ui.lives.members[player.lives].scrollFactor.x = ui.lives.members[player.lives].scrollFactor.y = 0;
+						}
+						// SI STILL ALIVE
 						if (player.lives > 0)
 							immunity = null;
-						else { ///////  ------ END GAME -------- //////////////
+							
+						// SI MORT
+						else {
 							FlxG.switchState(new GameOver());
 						}
 					}
+					// SI VIENT DE TOUCHER => IMMUNE
 					else if (FlxCollision.pixelPerfectCheck(en, player) && (immunity == null)) {
 						immunity = new FlxTimer();
 						immunity.start(immunetime);
 						//player.bump(en);
 					}
 				}
+				
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
 				FlxG.overlap(player, esrbs);

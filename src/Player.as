@@ -9,6 +9,7 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxSound;
+	import org.flixel.FlxSprite;
 	
 	/**
 	 * Player
@@ -33,9 +34,11 @@ package
 		public var pw_speed_time:int = 2;
 		public var shield:int = 0;
 		public var nbanim:int = 0;
+		public var niveau:Level = null;
 		
-		public function Player(x:int, y:int, width:int, height:int) 
+		public function Player(x:int, y:int, width:int, height:int, lvl:Level) 
 		{
+			niveau = lvl;
 			super(x, y, ImgPlayer);
 			w = width;
 			h = height;
@@ -107,9 +110,11 @@ package
 			switch(obj2.label){
 				case "Jeu":
 					if (obj2.spawntype == 1) {
-						if (shield < 1) {
+						if (shield == 0) {
 							shield++;
 							pw_shield.play();
+							niveau.ui.lives.members[3] = new FlxSprite(niveau.ui.lives.members[3].x, niveau.ui.lives.members[3].y, niveau.ui.ImgShield);
+							niveau.ui.lives.members[3].scrollFactor.x = niveau.ui.lives.members[3].scrollFactor.y = 0;
 						}
 					}
 					else {
@@ -119,8 +124,11 @@ package
 					}
 				break;
 				case "Hopital":
-					if (lives < 3)
+					if (lives < 3) {
+						niveau.ui.lives.members[lives] = new FlxSprite(niveau.ui.lives.members[lives].x, niveau.ui.lives.members[lives].y, niveau.ui.ImgLife);
+						niveau.ui.lives.members[lives].scrollFactor.x = niveau.ui.lives.members[lives].scrollFactor.y = 0;
 						lives++;
+					}
 					pw_life.play();
 				break;
 				default:
