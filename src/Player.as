@@ -15,7 +15,7 @@ package
 	 */
 	public class Player extends Character 
 	{
-		[Embed(source = '../assets/gfx/Test_Annim.png')] public var ImgPlayer:Class;
+		[Embed(source = '../assets/ANIMATIONS/PLAYER/player_move.png')] public var ImgPlayer:Class;
 		public var maxspeed:int = 8;
 		public var lives:int = 3;
 		private var imgs:ImgRegistry = new ImgRegistry();

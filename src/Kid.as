@@ -16,7 +16,8 @@ package
 	public class Kid extends Character
 	{
 		
-		[Embed(source = '../assets/gfx/anim_kid.png')] public var ImgKid:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid.png')] public var ImgKid:Class;
+		[Embed(source = '../assets/SOUNDS/ENFANT/INFECTED_MODE.mp3')] public var Sfx_INFECTED:Class;
 		public var validated:Boolean = false;
 		public var moving:FlxTimer = new FlxTimer();
 		public var rand:int = -1;
@@ -53,7 +54,7 @@ package
 			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 20, true);
 			health = 10;
 			speed = 5;
-			INFECTED_MODE.loadStream("../assets/sfx/ENFANT/INFECTED_MODE.mp3", false, false);
+			INFECTED_MODE.loadEmbedded(Sfx_INFECTED, false, true);
 		}
 		
 		override public function update():void {

@@ -6,20 +6,31 @@ package
 	 */
 	public class ESRB extends Character 
 	{
-		[Embed(source = '../assets/gfx/esrb.png')] public var ImgESRB:Class;
-		[Embed(source = '../assets/gfx/SRB_GB.png')] public var ImgESRBGB:Class;
-		[Embed(source = '../assets/gfx/SRB_GH.png')] public var ImgESRBGH:Class;
-		[Embed(source = '../assets/gfx/SRB_DB.png')] public var ImgESRBDB:Class;
-		[Embed(source = '../assets/gfx/SRB_DH.png')] public var ImgESRBDH:Class;
-		[Embed(source = '../assets/gfx/SRB_G_at.png')] public var ImgESRBGAT:Class;
-		[Embed(source = '../assets/gfx/SRB_D_at.png')] public var ImgESRBDAT:Class;
+		[Embed(source = '../assets/ANIMATIONS/ENNEMIS/anim_esrb.png')] public var ImgESRB:Class;
 		public var lastdir:uint = 8;
+		public var nbanim:int = 1;
 		
 		public function ESRB(x:int, y:int, img:Class) 
 		{
-			if (img == null)
-				img = ImgESRB;
-			super(x, y, img);
+			super(x, y, null);
+			loadGraphic(ImgESRB, true, false, 64, 64);
+			addAnimation("walkhd", [0, 1, 2, 3, 4], 10, true);
+			addAnimation("walkh", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			nbanim++;
+			addAnimation("walkhg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			nbanim++;
+			addAnimation("walkbg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			addAnimation("walkb", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			nbanim++;
+			addAnimation("walkbd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			nbanim++;
+			addAnimation("attack_hd", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true); // ICI HAUT FOIRE
+			nbanim++;
+			addAnimation("attack_hg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			nbanim++;
+			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
+			nbanim++;
+			addAnimation("attack_bg", [nbanim + 0, nbanim + 1, nbanim + 2, nbanim + 3, nbanim + 4], 10, true);
 			health = 100;
 			attack = 20;
 		}
@@ -27,59 +38,35 @@ package
 		override public function update():void {
 			if (lastdir != dir) {
 				switch(dir) {
-					//HAUT
 					case 0:
-						loadGraphic(ImgESRBGH, true, false, 64, 64);
-						addAnimation("walkhg", [0, 1, 2, 3, 4], 10, true);
 						play("walkhg");
-					break;
+						break;
 					case 1:
-						loadGraphic(ImgESRBDH, true, false, 64, 64);
-						addAnimation("walkh", [0, 1, 2, 3, 4], 10, true);
 						play("walkh");
-					break;
+						break;
 					case 2:
-						loadGraphic(ImgESRBDH, true, false, 64, 64);
-						addAnimation("walkhd", [0, 1, 2, 3, 4], 10, true);
 						play("walkhd");
-					break;
-					
-					// G/D
+						break;
 					case 3:
-						loadGraphic(ImgESRBGB, true, false, 64, 64);
-						addAnimation("walkg", [0, 1, 2, 3, 4], 10, true);
 						play("walkg");
-					break;
+						break;
 					case 4:
-						loadGraphic(ImgESRBDB, true, false, 64, 64);
-						addAnimation("walkd", [0, 1, 2, 3, 4], 10, true);
 						play("walkd");
-					break;
-					
-					// BAS
+						break;
 					case 5:
-						loadGraphic(ImgESRBGB, true, false, 64, 64);
-						addAnimation("walkbg", [0, 1, 2, 3, 4], 10, true);
 						play("walkbg");
-					break;
+						break;
 					case 6:
-						loadGraphic(ImgESRBGB, true, false, 64, 64);
-						addAnimation("walkb", [0, 1, 2, 3, 4], 10, true);
 						play("walkb");
-					break;
+						break;
 					case 7:
-						loadGraphic(ImgESRBDB, true, false, 64, 64);
-						addAnimation("walkbd", [0, 1, 2, 3, 4], 10,true);
 						play("walkbd");
-					break;
+						break;
 					default:
-						frame = 1;
-						trace("ERREUR");
-					break;
+						break;
 				}
 			}
-			lastdir = dir;
-
+			lastdir= dir;
 		}
 		
 	}

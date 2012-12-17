@@ -6,8 +6,7 @@ package
 	 */
 	public class PIG extends ESRB 
 	{
-		[Embed(source = '../assets/gfx/anim_pig.png')] public var ImgPig:Class;
-		public var nbanim:int = 0;
+		[Embed(source = '../assets/ANIMATIONS/ENNEMIS/anim_pig.png')] public var ImgPig:Class;
 		
 		public function PIG(x:int, y:int) 
 		{

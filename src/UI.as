@@ -15,7 +15,7 @@ package
 	public class UI extends FlxSprite 
 	{
 		
-		[Embed(source = '../assets/gfx/life.png')] public var ImgLife:Class;
+		[Embed(source = '../assets/IMAGES/HUD/life.png')] public var ImgLife:Class;
 		public var score:FlxText;
 		public var name:FlxText;
 		public var encount:FlxText;

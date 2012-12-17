@@ -11,7 +11,7 @@ package
 	{
 		public var Img:Class;
 		public var dir:uint = 8; 
-		[Embed(source = '../assets/gfx/Test_Annim.png')] public var ImgChar:Class;
+		[Embed(source = '../assets/ANIMATIONS/PLAYER/player_move.png')] public var ImgChar:Class;
 		public var speed:int = 11;
 		public var attack:int = 0;
 		

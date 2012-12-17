@@ -18,9 +18,12 @@ package
 	public class Level extends FlxState
 	{	
 			
-		[Embed(source="../assets/sfx/7.mp3")] public  var Sound7:Class;
-		[Embed(source="../assets/sfx/RATING/SFX_RATING_12.mp3")] public  var Sound7_12:Class;
-		[Embed(source="../assets/sfx/RATING/SFX_RATING_18.R.mp3")] public  var Sound12_18:Class;
+		[Embed(source="../assets/MUSIC/7.mp3")] public  var Sound7:Class;
+		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_12.mp3")] public  var Sound7_12:Class;
+		[Embed(source="../assets/SOUNDS/RATING/SFX_RATING_18.R.mp3")] public  var Sound12_18:Class;
+		[Embed(source="../assets/SOUNDS/ENFANT/CHILD_SPAWN.mp3")] public  var Kid_Spawn:Class;
+		[Embed(source="../assets/SOUNDS/ENNEMIS/SERB_SPAWN.mp3")] public  var Serb_Spawn:Class;
+		[Embed(source="../assets/SOUNDS/ENNEMIS/PIG_SPAWN.mp3")] public  var Pig_Spawn:Class;
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		public var player:Player;
 		public var kids:FlxGroup = new FlxGroup();
@@ -42,7 +45,10 @@ package
 		public var started:Boolean = false;
 		public var count2:int = 0;
 		private var mazeArray:Array;
-		public var sfx:FlxSound = new FlxSound();
+		public var sfx_trans:FlxSound = new FlxSound();
+		public var sfx_spawn:FlxSound = new FlxSound();
+		public var sfx_spawnesrb:FlxSound = new FlxSound();
+		public var sfx_spawnpig:FlxSound = new FlxSound();
 		private var distances:Array;
 		public var other:Boolean = true;
 		
@@ -76,7 +82,7 @@ package
 			rating.push(new Array("18+", -1, "MG", 60, 10, 10, 30, 60));
 			
 			FlxG.playMusic(Sound7, 1);
-			sfx.loadEmbedded(Sound7_12, false, true);
+			sfx_trans.loadEmbedded(Sound7_12, false, true);
 			name = nom;
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
 			add(background);
@@ -220,12 +226,12 @@ package
 				trace("CHILD : ", childcount, " RATING : ",rating[ratid][2]);
 				if ((childcount > rating[ratid][1]) && (ratid < 2)) {
 					if (ratid == 0) {
-						sfx.play();
+						sfx_trans.play();
 						FlxG.playMusic(Sound7, 1);
 					}
 					if (ratid == 1)
-						sfx.loadEmbedded(Sound12_18, false, true);
-						sfx.play();
+						sfx_trans.loadEmbedded(Sound12_18, false, true);
+						sfx_trans.play();
 						FlxG.playMusic(Sound7, 1);
 					ratid++;
 				}
@@ -278,7 +284,9 @@ package
 					}
 					if ((b.label == "Ecole") && (!b.bspawnkid)) {
 						b.spawntimer.start(b.spawnkid);
-						kids.add(new Kid(b.x + b.frameWidth/2, b.y + b.frameHeight));
+						kids.add(new Kid(b.x + b.frameWidth / 2, b.y + b.frameHeight));
+						sfx_spawn.loadEmbedded(Kid_Spawn, false, true);
+						sfx_spawn.play();
 						b.bspawnkid = true;
 					}
 					if (b.spawntimer.finished) {
@@ -287,15 +295,22 @@ package
 					if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
 						b.bspawnesrb = true
 						b.spawntimeresrb.start(b.spawnesrb);
-						if (rating[ratid][0] == "18+")
+						if (rating[ratid][0] == "18+") {
 							esrbs.add(new ESRB(b.x + b.frameWidth / 2, b.y + b.frameHeight, null));
+							sfx_spawnesrb.loadEmbedded(Serb_Spawn, false, true);
+							sfx_spawnesrb.play();
+						}
 						else if (other) {
 							esrbs.add(new ESRB(b.x + b.frameWidth / 2, b.y + b.frameHeight, null));
 							other = !other;
+							sfx_spawnesrb.loadEmbedded(Serb_Spawn, false, true);
+							sfx_spawnesrb.play();
 						}
 						else {
 							esrbs.add(new PIG(b.x + b.frameWidth / 2, b.y + b.frameHeight));
 							other = !other;
+							sfx_spawnpig.loadEmbedded(Pig_Spawn, false, true);
+							sfx_spawnpig.play();
 						}
 					}
 					if (b.spawntimeresrb.finished) {
