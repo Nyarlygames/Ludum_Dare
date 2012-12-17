@@ -22,6 +22,7 @@ package
 		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_rouge.png')] public var ImgKidRed:Class;
 		[Embed(source = '../assets/IMAGES/bisounours1.png')] public var ImgBisounours:Class;
 		[Embed(source = '../assets/SOUNDS/ENFANT/INFECTED_MODE.mp3')] public var Sfx_INFECTED:Class;
+		[Embed(source = '../assets/SOUNDS/ENFANT/BISOUNOURS_MODE.mp3')] public var Sfx_TRANSFORMED:Class;
 		public var validated:Boolean = false;
 		public var moving:FlxTimer = new FlxTimer();
 		public var rand:int = -1;
@@ -33,6 +34,7 @@ package
 		public var nbanim:int = 1;
 		public var lastdir:uint = 8;
 		public var INFECTED_MODE:FlxSound = new FlxSound();
+		public var TRANSFORMED_MODE:FlxSound = new FlxSound();
 		public var transformed:Boolean = false;
 		
 		public function Kid(x:int, y:int) 
@@ -62,6 +64,7 @@ package
 			health = 10;
 			speed = 5;
 			INFECTED_MODE.loadEmbedded(Sfx_INFECTED, false, true);
+			TRANSFORMED_MODE.loadEmbedded(Sfx_TRANSFORMED, false, true);
 		}
 		
 		override public function update():void {

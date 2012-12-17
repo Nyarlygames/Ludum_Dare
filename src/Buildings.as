@@ -5,6 +5,7 @@ package
 	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxG;
+	import org.flixel.FlxSound;
 	
 	/**
 	 * Bâtiments
@@ -12,6 +13,9 @@ package
 	 */
 	public class Buildings extends FlxSprite
 	{
+		[Embed(source="../assets/SOUNDS/SHOP/POP_POWERUP.mp3")] public  var POP:Class;
+		[Embed(source="../assets/SOUNDS/SHOP/GETTING_BUILDING.mp3")] public  var GETTING:Class;
+		[Embed(source="../assets/SOUNDS/SHOP/GOT_BUILDING.mp3")] public  var GOT:Class;
 		private var imgs:ImgRegistry = new ImgRegistry();
 		public var timer:FlxTimer = new FlxTimer();
 		public var timer_spawn:FlxTimer = new FlxTimer();
@@ -26,8 +30,8 @@ package
 		public var validated:Boolean = false;
 		public var lootable:Boolean = false;
 		public var hitbox:FlxSprite = null;
-		public var spawnkid:int = 1.5;
-		public var spawnesrb:int = 1.5;
+		public var spawnkid:int = 10;
+		public var spawnesrb:int = 10;
 		public var bspawnkid:Boolean = false;
 		public var bspawnesrb:Boolean = false;
 		public var spawntimer:FlxTimer = new FlxTimer();
@@ -35,6 +39,9 @@ package
 		public var spawntype:int = 0;
 		public var rating:Array = null;
 		public var ratid:int = 0;
+		public var sfx_got:FlxSound = new FlxSound();
+		public var sfx_getting:FlxSound = new FlxSound();
+		public var sfx_pop:FlxSound = new FlxSound();
 		
 		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean, spawn:int) 
 		{
@@ -62,11 +69,16 @@ package
 			immovable = true;
 			lootable = truth;
 			id = index;
+			sfx_getting.loadEmbedded(GETTING, true, true);
+			sfx_got.loadEmbedded(GOT, false, true);
+			sfx_pop.loadEmbedded(POP, false, true);
 		}
 		
 		override public function update():void {
 			super.update();
 			if ((timer != null) && (timer.finished) && (take != null)) {
+				sfx_getting.stop();
+				sfx_got.play();
 				team = !team;
 				if (team)
 					loadGraphic(imgs.assets[id+1]);
@@ -86,6 +98,7 @@ package
 		
 		public function spawnobj():void {
 			loot = new SpawnObjet(x + frameWidth / 2, y + frameHeight, label, id, spawntype);
+			sfx_pop.play();
 			FlxG.state.add(loot);
 		}
 		

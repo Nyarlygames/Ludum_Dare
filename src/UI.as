@@ -30,6 +30,8 @@ package
 		public var obje:FlxText;
 		public var objs:FlxText;
 		public var objt:FlxText;
+		public var nben:FlxText;
+		public var nbch:FlxText;
 		public var components:FlxGroup = new FlxGroup();
 		public var level:Level;
 		public var offsetx:int = 200;
@@ -103,6 +105,17 @@ package
 			rating_sprite = new FlxSprite(64, 8, Img7);
 			rating_sprite.scrollFactor.x = rating_sprite.scrollFactor.y = 0;
 			components.add(rating_sprite);
+			
+			// DEBUG NB ENNEMIS
+			nben = new FlxText(FlxG.width - 300, FlxG.height  - 200,  FlxG.width, "NB ENNEMIS : " + level.esrbs.length);
+			nben.setFormat(null, 14, 0xa10000);
+			nben.scrollFactor.x = nben.scrollFactor.y = 0;
+			components.add(nben);
+			// DEBUG NB KID
+			nbch = new FlxText(FlxG.width - 300, FlxG.height  - 100,  FlxG.width, "NB CHILD : " + level.kids.length);
+			nbch.setFormat(null, 14, 0xa10000);
+			nbch.scrollFactor.x = nbch.scrollFactor.y = 0;
+			components.add(nbch);
 		}
 		
 		override public function update():void {
@@ -113,6 +126,7 @@ package
 					obje.text = "CONVERT " + level.map.childs + " CHILDREN";
 				else if (level.map.childs == 0) {
 					FlxG.score += 500;
+					obje.text = "CHILDREN CONVERTED.";
 					nbobjs++;
 					objects.members[0] = new FlxSprite(objects.members[0].x, objects.members[0].y, ImgObjCheck);
 					objects.members[0].scrollFactor.x = objects.members[0].scrollFactor.y = 0;
@@ -123,18 +137,20 @@ package
 					objt.text = "SURVIVE : " + FlxU.formatTime	(level.playtime.timeLeft) + " MINUTES.";	
 				else if ((level.playtime != null) && (level.playtime.finished)) {
 					FlxG.score += 400;
+					objt.text = "TIME SURVIVED.";	
 					nbobjs++;
-					objects.members[1] = new FlxSprite(objects.members[1].x, objects.members[1].y, ImgObjCheck);
-					objects.members[1].scrollFactor.x = objects.members[1].scrollFactor.y = 0;
+					objects.members[2] = new FlxSprite(objects.members[2].x, objects.members[2].y, ImgObjCheck);
+					objects.members[2].scrollFactor.x = objects.members[2].scrollFactor.y = 0;
 					level.playtime = null;
 				}
 				
 				if (level.map.shops > 0)
-					objs.text = "CAPTURE " + level.map.shops + "  SHOPS.";
+					objs.text = "CAPTURE " + level.map.shops + " SHOPS.";
 				else if (level.map.shops > -1) {
+					objs.text = "SHOP CAPTURED.";
 					FlxG.score += 500;
-					objects.members[2] = new FlxSprite(objects.members[2].x, objects.members[2].y, ImgObjCheck);
-					objects.members[2].scrollFactor.x = objects.members[2].scrollFactor.y = 0;
+					objects.members[1] = new FlxSprite(objects.members[1].x, objects.members[1].y, ImgObjCheck);
+					objects.members[1].scrollFactor.x = objects.members[1].scrollFactor.y = 0;
 					nbobjs++;
 					level.map.shops = -1;
 				}
