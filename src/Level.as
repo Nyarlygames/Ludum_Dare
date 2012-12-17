@@ -19,6 +19,8 @@ package
 	{	
 			
 		[Embed(source="../assets/sfx/7.mp3")] public  var Sound7:Class;
+		[Embed(source="../assets/sfx/RATING/SFX_RATING_12.mp3")] public  var Sound7_12:Class;
+		[Embed(source="../assets/sfx/RATING/SFX_RATING_18.R.mp3")] public  var Sound12_18:Class;
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		public var player:Player;
 		public var kids:FlxGroup = new FlxGroup();
@@ -40,7 +42,7 @@ package
 		public var started:Boolean = false;
 		public var count2:int = 0;
 		private var mazeArray:Array;
-		public var music:FlxSound = new FlxSound();
+		public var sfx:FlxSound = new FlxSound();
 		private var distances:Array;
 		public var other:Boolean = true;
 		
@@ -69,12 +71,12 @@ package
 			 */
 			ratid = rat;
 			rating = new Array();
-			rating.push(new Array("7+", 15, "Kick", 20, 30, 60, 90, 180));
-			rating.push(new Array("12+", 30, "Gun", 40, 20, 40, 60, 120));
+			rating.push(new Array("7+", 2, "Kick", 20, 30, 60, 90, 180));
+			rating.push(new Array("12+", 4, "Gun", 40, 20, 40, 60, 120));
 			rating.push(new Array("18+", -1, "MG", 60, 10, 10, 30, 60));
 			
-			FlxG.playMusic(Sound7,1);
-			
+			FlxG.playMusic(Sound7, 1);
+			sfx.loadEmbedded(Sound7_12, false, true);
 			name = nom;
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
 			add(background);
@@ -216,8 +218,17 @@ package
 				super.update();
 
 				trace("CHILD : ", childcount, " RATING : ",rating[ratid][2]);
-				if (childcount > rating[ratid][1])
-					ratid++;	
+				if ((childcount > rating[ratid][1]) && (ratid < 2)) {
+					if (ratid == 0) {
+						sfx.play();
+						FlxG.playMusic(Sound7, 1);
+					}
+					if (ratid == 1)
+						sfx.loadEmbedded(Sound12_18, false, true);
+						sfx.play();
+						FlxG.playMusic(Sound7, 1);
+					ratid++;
+				}
 				count2++;
 				if ((count2 == 60) ) {
 					distances = distanceCalculator(player);
@@ -276,7 +287,7 @@ package
 					if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
 						b.bspawnesrb = true
 						b.spawntimeresrb.start(b.spawnesrb);
-						if ((rating[ratid][0] == "12+") || (rating[ratid][0] == "18+"))
+						if (rating[ratid][0] == "18+")
 							esrbs.add(new ESRB(b.x + b.frameWidth / 2, b.y + b.frameHeight, null));
 						else if (other) {
 							esrbs.add(new ESRB(b.x + b.frameWidth / 2, b.y + b.frameHeight, null));
