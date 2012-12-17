@@ -54,7 +54,6 @@ package
 				if ((z != null) && (z.lootable == true)) {
 					player.buildings.add(z);
 					add(z.hitbox);
-					trace(z.x, z.y);
 				}
 			}
 			add(builds);
@@ -64,8 +63,6 @@ package
 			ui = new UI(this);
 			add(ui);
 			add(ui.components);
-			FlxG.worldBounds = new FlxRect(0, 0, background.frameWidth, background.frameHeight);
-			FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
 			
 			//Create an array with the dimensions of the map array
 			mazeArray = new Array();
@@ -117,7 +114,7 @@ package
 			
 			return copiedArray;
 		}
-		
+
 		/*
 		 * Determines the distance between the player and every other square
 		 * Returns a two-dimensionnal array corresponding with the map
@@ -172,6 +169,9 @@ package
 		////UPDATE
 		override public function update():void {
 			if(!Game.paused) {
+				FlxG.worldBounds = new FlxRect(0, 0, background.frameWidth, background.frameHeight);
+				FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
+				FlxG.camera.follow(player);
 				super.update();
 				count2++;
 				if ((count2 == 30) ) {
@@ -180,7 +180,7 @@ package
 				}
 				for each (var en:ESRB in esrbs.members) {
 					if (en != null) {
-						en.findPath(distances, player)
+						en.findPath(distances, player);
 					}
 					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
 						player.lives--;
@@ -192,6 +192,8 @@ package
 						//player.bump(en);
 					}
 				} 
+				var test = distanceCalculator(new FlxPoint(0, 0));
+				trace(test);
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
 				FlxG.collide(player, kids);

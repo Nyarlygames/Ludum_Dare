@@ -121,21 +121,24 @@ package
 				rating.text = level.rating;
 				if (level.map.childs > 0)
 					obje.text = "Enfants : " + level.map.childs;
-				else {
+				else if (level.map.childs > -1) {
 					FlxG.score += 500;
 					obje.text = "Enfants validés";
+					level.map.childs = -1;
 				}
 				if (level.playtime.timeLeft > -1)
 					objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
-				else {
+				else if (level.playtime.timeLeft > -2) {
 					FlxG.score += 400;
 					objt.text = "Temps validé";
+					level.playtime.timeLeft = -2;
 				}
 				if (level.map.shops > 0)
 					objs.text = "Shops : " + level.map.shops;
-				else {
-					FlxG.score = 500;
+				else if (level.map.shops > -1) {
+					FlxG.score += 500;
 					objs.text = "Shops validés";
+					level.map.shops = -1;
 				}
 			}
 		}

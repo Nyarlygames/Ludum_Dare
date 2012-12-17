@@ -36,7 +36,6 @@ package
 		
 		override public function update():void {
 			super.update();
-			FlxG.camera.follow(this);
 			// DROITE
 			if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
 				x += speed;

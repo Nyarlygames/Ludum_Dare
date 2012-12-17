@@ -46,7 +46,6 @@ package
 				loadGraphic(imgs.assets[index]);
 			if (truth) {
 				hitbox = new FlxSprite(x, y + frameHeight, imgs.assets[index + 2]);
-				trace(hitbox.x, hitbox.y);
 				hitbox.immovable = true;
 				spawntype = spawn;
 			}
