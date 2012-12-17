@@ -65,7 +65,6 @@ package
 		}
 		
 		override public function update():void {
-			
 			if(!Game.paused) {
 				if (x < 0)
 					x = 0;

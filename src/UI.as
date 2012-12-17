@@ -15,12 +15,18 @@ package
 	public class UI extends FlxSprite 
 	{
 		
+		[Embed(source = '../assets/IMAGES/HUD/current_rating_7.png')] public var Img7:Class;
+		[Embed(source = '../assets/IMAGES/HUD/current_rating_12.png')] public var Img12:Class;
+		[Embed(source = '../assets/IMAGES/HUD/current_rating_18.png')] public var Img18:Class;
 		[Embed(source = '../assets/IMAGES/HUD/life.png')] public var ImgLife:Class;
+		[Embed(source = '../assets/IMAGES/HUD/life_empty.png')] public var ImgLifeEmpty:Class;
+		[Embed(source = '../assets/IMAGES/HUD/shield.png')] public var ImgShield:Class;
+		[Embed(source = '../assets/IMAGES/HUD/objective_check.png')] public var ImgObjCheck:Class;
+		[Embed(source = '../assets/IMAGES/HUD/objective_uncheck.png')] public var ImgObjUncheck:Class;
 		public var score:FlxText;
 		public var name:FlxText;
 		public var encount:FlxText;
 		public var kidcount:FlxText;
-		public var rating:FlxText;
 		public var life:FlxText;
 		public var obje:FlxText;
 		public var objs:FlxText;
@@ -29,35 +35,36 @@ package
 		public var level:Level;
 		public var offsetx:int = 200;
 		public var objectives:FlxSprite;
-		public var graphicx:int = 200;
-		public var graphicy:int = 100;
 		public var nbobjs:int = 0;
+		public var graphicx:int = 100;
+		public var graphicy:int =  100;
+		public var rating_sprite:FlxSprite;
 		
 		public function UI(play:Level) 
 		{
 			level = play;
 			// Premier overlay
-			super(offsetx, 0)
-			makeGraphic(graphicx, graphicy, 0xaa4E4F4D, true);
+			super(55, 0);
+			makeGraphic(298, 105, 0xfafe9f9f, true);
 			scrollFactor.x = scrollFactor.y =  0;
 			
 			// DEUXIEME OVERLAY
-			objectives = new FlxSprite(FlxG.width - 2*offsetx,0 );
-			objectives.makeGraphic(graphicx, graphicy, 0xaa4E4F4D, true);
+			objectives = new FlxSprite(685,0 );
+			objectives.makeGraphic(298, 105, 0xfafe9f9f, true);
 			objectives.scrollFactor.x = objectives.scrollFactor.y = 0;
 			components.add(objectives);
 			
 			// SCORE
-			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy + 200, "Score :" + FlxG.score);
+			score = new FlxText(157, 21, FlxG.width, "Score :" + FlxG.score);
 			score.y += score.frameHeight;
-			score.setFormat(null, 14, 0xADAEAC);
+			score.setFormat(null, 14, 0xa10000);
 			score.scrollFactor.x = score.scrollFactor.y = 0;
 			components.add(score);
 			
 			// OBJECTIF ENFANTS
-			obje = new FlxText(FlxG.width - 2 * offsetx, score.frameHeight, graphicy + 100, "");
+			obje = new FlxText(740, 18, FlxG.width, "");
 			obje.y += obje.frameHeight;
-			obje.setFormat(null, 14, 0xADAEAC);
+			obje.setFormat(null, 14, 0xa10000);
 			obje.scrollFactor.x = obje.scrollFactor.y = 0;
 			components.add(obje);
 			// OBJECTIF SHOPS
@@ -79,15 +86,7 @@ package
 			name.setFormat(null, 14, 0xADAEAC);
 			name.scrollFactor.x = name.scrollFactor.y = 0;
 			components.add(name);
-			
-			// RATING
-			rating = new FlxText(offsetx + graphicx, graphicy - name.frameHeight, graphicy, "");
-			rating.y -= rating.frameHeight;
-			rating.x -= rating.frameWidth / 2;
-			rating.setFormat(null, 14, 0xADAEAC);
-			rating.scrollFactor.x = rating.scrollFactor.y = 0;
-			components.add(rating);
-			
+						
 			// LIVES
 			life = new FlxText(offsetx, graphicy - name.frameHeight, graphicy, "");
 			life.y -= life.frameHeight;
@@ -110,6 +109,8 @@ package
 			kidcount.setFormat(null, 14, 0xADAEAC);
 			kidcount.scrollFactor.x = kidcount.scrollFactor.y = 0;
 			components.add(kidcount);
+			
+			rating_sprite = new FlxSprite(64, 8, Img7);
 		}
 		
 		override public function update():void {
@@ -119,7 +120,8 @@ package
 				name.text = level.name;
 				kidcount.text = "Nombre d'enfants : " + level.kids.length;
 				encount.text = "Nombre d'ennemis : " + level.esrbs.length;
-				rating.text = level.rating[level.ratid][0];
+			
+				
 				if (level.map.childs > 0)
 					obje.text = "Enfants : " + level.map.childs;
 				else if (level.map.childs == 0) {

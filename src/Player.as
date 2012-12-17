@@ -22,7 +22,7 @@ package
 
 		public var maxspeed:int = 20;
 		public var normalspeed:int = 15;
-		public var lives:int = 3;
+		public var lives:int = 3;                                                              
 		private var imgs:ImgRegistry = new ImgRegistry();
 		private var w:int = 0;
 		private var h:int = 0;
@@ -56,32 +56,34 @@ package
 		override public function update():void {
 			super.update();
 			// DROITE
-			if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
-				x += speed;
-				play("walkd");
-			}
-			// GAUCHE
-			if ((FlxG.keys.pressed("LEFT") || FlxG.keys.pressed("A")) && x > 0) {
-				x -= speed;
-				play("walkg");
-			}
-			// HAUT
-			if ((FlxG.keys.pressed("UP") || FlxG.keys.pressed("W")) && y > 0) {
-				y -= speed;	
-				play("walkh");
-			}
-			// BAS
-			if ((FlxG.keys.pressed("DOWN") || FlxG.keys.pressed("Z")) && y < h - frameHeight) {
-				y += speed;
-				play("walkb");
-			}
-			if (FlxG.keys.justReleasedAny() != -1) {
-				frame = 0;
-			}
-			
-			if ((pw_speed_timer != null) && (pw_speed_timer.finished)) {
-				speed = normalspeed;
-				pw_speed_timer = null;
+			if (lives >= 0) {
+				if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
+					x += speed;
+					play("walkd");
+				}
+				// GAUCHE
+				if ((FlxG.keys.pressed("LEFT") || FlxG.keys.pressed("A")) && x > 0) {
+					x -= speed;
+					play("walkg");
+				}
+				// HAUT
+				if ((FlxG.keys.pressed("UP") || FlxG.keys.pressed("W")) && y > 0) {
+					y -= speed;	
+					play("walkh");
+				}
+				// BAS
+				if ((FlxG.keys.pressed("DOWN") || FlxG.keys.pressed("Z")) && y < h - frameHeight) {
+					y += speed;
+					play("walkb");
+				}
+				if (FlxG.keys.justReleasedAny() != -1) {
+					frame = 0;
+				}
+				
+				if ((pw_speed_timer != null) && (pw_speed_timer.finished)) {
+					speed = normalspeed;
+					pw_speed_timer = null;
+				}
 			}
 		}
 		
