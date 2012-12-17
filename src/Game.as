@@ -20,7 +20,7 @@ package
 		
 		public function Game() 
 		{
-			level = new Level(name, "18+");
+			level = new Level(name, "7");
 			add(level);
 			paused = false;
 			pauseMenu = new FlxGroup();

@@ -4,6 +4,7 @@ package
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxRect;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
@@ -17,6 +18,7 @@ package
 	public class Level extends FlxState
 	{	
 			
+		[Embed(source="../assets/sfx/7.mp3")] public  var Sound7:Class;
 		[Embed(source = "../maps/map01.txt", mimeType = "application/octet-stream")] public var map1:Class;
 		public var player:Player;
 		public var kids:FlxGroup = new FlxGroup();
@@ -36,13 +38,19 @@ package
 		public var childcount:int = 0;
 		public var started:Boolean = false;
 		public var count2:int = 0;
-		
 		private var mazeArray:Array;
+		public var music:FlxSound = new FlxSound();
 		private var distances:Array;
 		
 		public function Level(nom:String, rat:String):void
 		{
 			rating = rat;
+			//FlxG.stream("../assets/sfx/mort_2.mp3", 1, true);
+			//FlxG.loadSound(Sound7, 1, true, false, true);
+			//FlxG.playMusic(Sound7,1);
+			
+			FlxG.playMusic(Sound7,1);
+			
 			name = nom;
 			background = new FlxSprite(0, 0, imgs.assets[int (map.bg)]);
 			add(background);
@@ -195,7 +203,7 @@ package
 				}
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
-				FlxG.collide(player, kids);
+				FlxG.collide(player, esrbs);
 				FlxG.collide(esrbs, builds);
 				FlxG.collide(esrbs, esrbs);
 				if (started == false) {
@@ -237,12 +245,13 @@ package
 				if ((playtime != null) && ((playtime.time - playtime.timeLeft) / 60 == 0) && (int (playtime.timeLeft) != int (map.time)))
 					FlxG.score++;
 				// CAPTURE ENFANTS
-				if (FlxG.keys.justReleased("SPACE"))
+				if (FlxG.keys.justReleased("SPACE")) {
 					captureKid(player, kids);
+				}
 				
 				for each (var child:Kid in kids.members) {
 					if (child != null) {
-						child.behave(distances);
+						child.behave(builds);
 					}
 				} 
 			}
@@ -250,11 +259,11 @@ package
 		
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {
-				if ((child != null) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
-					child.loadGraphic(imgs.assets[3]);
-					if (child.validated == false)
-						map.childs--;
-					child.validated = true;
+				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
+					child.loadGraphic(imgs.assets[child.bisounours]);
+					map.childs--;
+					child.INFECTED_MODE.play(true);
+					child.validated = true; 
 				}
 			} 
 		}

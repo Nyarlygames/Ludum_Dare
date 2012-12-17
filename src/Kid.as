@@ -2,11 +2,13 @@ package
 {
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxG;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
 	import org.flixel.plugin.photonstorm.FlxCollision;
+	import org.flixel.FlxSound;
 	/**
 	 * KID
 	 * @author ...
@@ -20,11 +22,14 @@ package
 		private var speed:int = 2;
 		public var rand:int = -1;
 		public var blocked:Boolean = false;
+		public var bisounours:int = 14;
+		public var INFECTED_MODE:FlxSound = new FlxSound();
 		
 		public function Kid(x:int, y:int) 
 		{
 			super(x, y, ImgKid);
 			moving.start(1);
+			INFECTED_MODE.loadStream("../assets/sfx/ENFANT/INFECTED_MODE.mp3", false, false);
 		}
 		
 		

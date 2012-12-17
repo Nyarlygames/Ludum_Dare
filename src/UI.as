@@ -47,7 +47,7 @@ package
 			components.add(objectives);
 			
 			// SCORE
-			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy, "Score :" + FlxG.score);
+			score = new FlxText(FlxG.width - 2 * offsetx, 0, graphicy + 200, "Score :" + FlxG.score);
 			score.y += score.frameHeight;
 			score.setFormat(null, 14, 0xADAEAC);
 			score.scrollFactor.x = score.scrollFactor.y = 0;
@@ -126,13 +126,14 @@ package
 					obje.text = "Enfants validés";
 					level.map.childs = -1;
 				}
-				if ((level.playtime != null) && (level.playtime.timeLeft > -1))
+				if ((level.playtime != null) && (level.playtime.finished == false))
 					objt.text = "Time : " + FlxU.formatTime	(level.playtime.timeLeft);	
-				else{
+				else if ((level.playtime != null) && (level.playtime.finished)) {
 					FlxG.score += 400;
 					objt.text = "Temps validé";
 					level.playtime = null;
 				}
+					
 				if (level.map.shops > 0)
 					objs.text = "Shops : " + level.map.shops;
 				else if (level.map.shops > -1) {
