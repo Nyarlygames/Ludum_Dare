@@ -46,12 +46,12 @@ package
 			level = play;
 			// Premier overlay
 			super(55, 0);
-			makeGraphic(298, 105, 0xaafe9f9f, true);
+			makeGraphic(298, 105, 0xfafe9f9f, true);
 			scrollFactor.x = scrollFactor.y =  0;
 			
 			// DEUXIEME OVERLAY
-			objectives = new FlxSprite(FlxG.width - 2*offsetx,0 );
-			objectives.makeGraphic(graphicx, graphicy, 0xaa4E4F4D, true);
+			objectives = new FlxSprite(685,0 );
+			objectives.makeGraphic(298, 105, 0xfafe9f9f, true);
 			objectives.scrollFactor.x = objectives.scrollFactor.y = 0;
 			components.add(objectives);
 			

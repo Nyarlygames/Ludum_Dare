@@ -347,6 +347,7 @@ package
 		// TRANSFORME EN BISOUNOURS
 		public function trans_bisou(esrb:ESRB, k:Kid):void {
 			if (FlxCollision.pixelPerfectCheck(esrb, k)) {
+				//k = new Kid(k.x, k.y);
 				k.loadGraphic(k.ImgBisounours, true, false, 64, 64);
 				k.transformed == true;
 			}

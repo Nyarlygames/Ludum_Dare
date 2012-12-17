@@ -47,7 +47,14 @@ package
 			else
 				loadGraphic(imgs.assets[index]);
 			if (truth) {
-				hitbox = new FlxSprite(x, y + frameHeight, imgs.assets[index + 2]);
+				var offsety:int = 20;
+				hitbox = new FlxSprite(x, y + frameHeight + offsety);
+				if (lab == "Jeu")
+					hitbox.loadGraphic(imgs.assets[index +2], true, false, 384, 64);
+				else if (lab == "Hopital")
+					hitbox.loadGraphic(imgs.assets[index +2], true, false, 320, 64);
+				hitbox.addAnimation("animhb", [0, 1, 2, 3, 4, 5, 6], 15, true);
+				hitbox.play("animhb");
 				hitbox.immovable = true;
 				spawntype = spawn;
 			}
