@@ -31,6 +31,7 @@ package
 		public var objectives:FlxSprite;
 		public var graphicx:int = 200;
 		public var graphicy:int = 100;
+		public var nbobjs:int = 0;
 		
 		public function UI(play:Level) 
 		{
@@ -95,7 +96,7 @@ package
 			components.add(life);
 			
 			// ENCOUNT
-			encount = new FlxText(FlxG.camera.width, FlxG.camera.height , graphicy + 100, "Nombre d'ennemis :");
+			encount = new FlxText(FlxG.camera.width, FlxG.camera.height , graphicy + 150, "Nombre d'ennemis :");
 			encount.y -= encount.frameHeight * 3;
 			encount.x -= encount.frameWidth;
 			encount.setFormat(null, 14, 0xADAEAC);
@@ -118,11 +119,12 @@ package
 				name.text = level.name;
 				kidcount.text = "Nombre d'enfants : " + level.kids.length;
 				encount.text = "Nombre d'ennemis : " + level.esrbs.length;
-				rating.text = "7";
+				rating.text = level.rating[level.ratid][0];
 				if (level.map.childs > 0)
 					obje.text = "Enfants : " + level.map.childs;
-				else if (level.map.childs > -1) {
+				else if (level.map.childs == 0) {
 					FlxG.score += 500;
+					nbobjs++;
 					obje.text = "Enfants validés";
 					level.map.childs = -1;
 				}
@@ -131,6 +133,7 @@ package
 				else if ((level.playtime != null) && (level.playtime.finished)) {
 					FlxG.score += 400;
 					objt.text = "Temps validé";
+					nbobjs++;
 					level.playtime = null;
 				}
 					
@@ -139,6 +142,7 @@ package
 				else if (level.map.shops > -1) {
 					FlxG.score += 500;
 					objs.text = "Shops validés";
+					nbobjs++;
 					level.map.shops = -1;
 				}
 			}

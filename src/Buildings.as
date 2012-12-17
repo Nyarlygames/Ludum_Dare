@@ -33,6 +33,8 @@ package
 		public var spawntimer:FlxTimer = new FlxTimer();
 		public var spawntimeresrb:FlxTimer = new FlxTimer();
 		public var spawntype:int = 0;
+		public var rating:Array = null;
+		public var ratid:int = 0;
 		
 		public function Buildings(x:int, y:int, index:int, lab:String, truth:Boolean, spawn:int) 
 		{
@@ -78,6 +80,24 @@ package
 		public function spawnobj():void {
 			loot = new SpawnObjet(x + frameWidth / 2, y + frameHeight, label, id, spawntype);
 			FlxG.state.add(loot);
+		}
+		
+		public function updateRating(lvl:Level):void {
+			var esrbr:int = 0;
+			var kidr:int = 0;
+			
+			if ((label == "Ecole") && (rating != null)) {
+				if (lvl.kids.length > kidr)
+					this.spawnkid = rating[ratid][5];
+				else
+					this.spawnkid = rating[ratid][4];
+			}
+			else if ((label == "Centre") && (rating != null)) {
+				if (lvl.esrbs.length > esrbr)
+					this.spawnesrb = rating[ratid][5];
+				else
+					this.spawnesrb = rating[ratid][4];
+			}
 		}
 		
 		public function getTakeCoord(x:int):Array {

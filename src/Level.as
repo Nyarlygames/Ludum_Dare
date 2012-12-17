@@ -42,10 +42,13 @@ package
 		private var mazeArray:Array;
 		public var music:FlxSound = new FlxSound();
 		private var distances:Array;
+		public var other:Boolean = true;
 		
 		public function Level(nom:String, rat:int):void
 		{
 			/*FORMAT RATING
+			 * 
+			 * 	  1		 		2
 			 * 0 => 7		| 15 kid
 			 * 1=> 12		| 30
 			 * 2 => 18		| 40
@@ -66,11 +69,9 @@ package
 			 */
 			ratid = rat;
 			rating = new Array();
-			rating.push(new Array(15, "Kick", 20, 30, 60, 90, 180));
-			rating.push(new Array(30, "Gun", 40, 20, 40, 60, 120));
-			rating.push(new Array(40, "MG", 60, 10, 10, 30, 60));
-			trace(rating);
-			
+			rating.push(new Array("7+", 15, "Kick", 20, 30, 60, 90, 180));
+			rating.push(new Array("12+", 30, "Gun", 40, 20, 40, 60, 120));
+			rating.push(new Array("18+", -1, "MG", 60, 10, 10, 30, 60));
 			
 			FlxG.playMusic(Sound7,1);
 			
@@ -90,6 +91,8 @@ package
 			builds = map.builds;
 			for each (var z:Buildings in builds.members) {
 				if ((z != null) && (z.lootable == true)) {
+					z.rating = rating;
+					z.ratid = ratid;
 					player.buildings.add(z);
 					add(z.hitbox);
 				}
@@ -212,8 +215,9 @@ package
 				FlxG.camera.follow(player);
 				super.update();
 
-				if (childcount > rating[ratid][0])
-					ratid++;
+				trace("CHILD : ", childcount, " RATING : ",rating[ratid][2]);
+				if (childcount > rating[ratid][1])
+					ratid++;	
 				count2++;
 				if ((count2 == 60) ) {
 					distances = distanceCalculator(player);
@@ -222,7 +226,7 @@ package
 				for each (var en:ESRB in esrbs.members) {
 					if (en != null) {
 						en.findPath(distances, player);
-					}
+					}//  HERE COLLISIONS ESRB / PLAYER
 					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
 						player.lives--;
 						immunity = null;
@@ -235,17 +239,19 @@ package
 				}
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
-				FlxG.collide(player, esrbs);
+				FlxG.overlap(player, esrbs, get_hurt);
 				FlxG.collide(player, builds);
 				FlxG.collide(esrbs, builds);
-				FlxG.collide(esrbs, esrbs);
-				
+				FlxG.collide(esrbs, kids);;
+				FlxG.overlap(esrbs, kids, trans_bisou);
 				
 				if (started == false) {
 					playtime.start(map.time);
 					started = true;
 				}
 				for each (var b:Buildings in builds.members) {
+					if (b != null)
+						b.updateRating(this);
 					if ((b != null) && (b.lootable == true)){
 						if (b.taken == false) {
 							player.getBuild();
@@ -270,7 +276,16 @@ package
 					if ((b.label == "Centre") && (!b.bspawnesrb) && (!b.spawntimeresrb.paused)) {
 						b.bspawnesrb = true
 						b.spawntimeresrb.start(b.spawnesrb);
-						esrbs.add(new ESRB(b.x + b.frameWidth/2, b.y + b.frameHeight, null));
+						if ((rating[ratid][0] == "12+") || (rating[ratid][0] == "18+"))
+							esrbs.add(new ESRB(b.x + b.frameWidth / 2, b.y + b.frameHeight, null));
+						else if (other) {
+							esrbs.add(new ESRB(b.x + b.frameWidth / 2, b.y + b.frameHeight, null));
+							other = !other;
+						}
+						else {
+							esrbs.add(new PIG(b.x + b.frameWidth / 2, b.y + b.frameHeight));
+							other = !other;
+						}
 					}
 					if (b.spawntimeresrb.finished) {
 						b.bspawnesrb = false;
@@ -291,6 +306,23 @@ package
 			}
 		}
 		
+		public function get_hurt(player:Player, esrb:ESRB):void {
+			/*for each (var child:Kid in kids.members) {
+				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
+					child.loadGraphic(imgs.assets[child.infect]);
+					map.childs--;
+					childcount++;
+					child.INFECTED_MODE.play(true);
+					FlxG.score += 10;
+					child.validated = true; 
+				}
+			} */
+		}
+		public function trans_bisou(esrb:ESRB, k:Kid):void {
+			/*for each (var child:Kid in kids.members) {
+				if (child != null){} 
+			} */
+		}
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {
 				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
