@@ -4,7 +4,6 @@ package
 	import org.flixel.FlxState;
 	import org.flixel.FlxSprite;
 	import flash.system.System;
-	import flash.display.Sprite;
 	
 	/**
 	 * Main menu

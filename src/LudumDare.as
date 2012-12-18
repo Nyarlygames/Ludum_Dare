@@ -14,7 +14,7 @@ package
 		public function LudumDare()
 		{
 			//Function to call to create the game at a specified screen size and display the first state (MenuState)
-			super(1024, 768, Menu);
+			super(1024, 768, Intro);
 		}
 		
 	}

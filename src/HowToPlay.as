@@ -15,13 +15,15 @@ package
 		private var pages:Array;
 		[Embed(source = '../assets/IMAGES/TUTORIAL/hit.png')] public var n0:Class;
 		[Embed(source = '../assets/IMAGES/TUTORIAL/kids.png')] public var n1:Class;
-		[Embed(source = '../assets/IMAGES/TUTORIAL/buildings.png')] public var n2:Class;
-		[Embed(source = '../assets/IMAGES/TUTORIAL/hospital.png')] public var n3:Class;
-		[Embed(source = '../assets/IMAGES/TUTORIAL/games.png')] public var n4:Class;
+		[Embed(source = '../assets/IMAGES/TUTORIAL/rating.png')] public var n2:Class;
+		[Embed(source = '../assets/IMAGES/TUTORIAL/buildings.png')] public var n3:Class;
+		[Embed(source = '../assets/IMAGES/TUTORIAL/hospital.png')] public var n4:Class;
+		[Embed(source = '../assets/IMAGES/TUTORIAL/games.png')] public var n5:Class;
+		[Embed(source = '../assets/IMAGES/TUTORIAL/credits.png')] public var n6:Class;
 		private var background:FlxSprite;
 		
 		public var current:uint;
-		private var totalOptions:uint = 5;
+		private var totalOptions:uint = 7;
 		
 		private var game:Game;
 		
@@ -34,6 +36,8 @@ package
 			pages.push(n2);
 			pages.push(n3);
 			pages.push(n4);
+			pages.push(n5);
+			pages.push(n6);
 			
 			current = 0;
 			

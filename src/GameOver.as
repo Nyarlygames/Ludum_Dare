@@ -24,7 +24,7 @@ package
 		}
 		
 		override public function update():void {
-			if (FlxG.keys.justReleased("ENTER")) {
+			if (FlxG.keys.justReleased("ENTER") || FlxG.keys.justReleased("SPACE")) {
 				FlxG.switchState(new Game());				
 			}
 		}
