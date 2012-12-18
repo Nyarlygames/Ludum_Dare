@@ -17,7 +17,7 @@ package
 		[Embed(source = '../assets/IMAGES/BUILDINGS/market.png')] public var ImgJeu:Class;
 		[Embed(source = '../assets/IMAGES/BUILDINGS/market_converted.png')] public var ImgJeu2:Class;
 		[Embed(source = '../assets/ANIMATIONS/ANIM_BUILDINGS/anim_hb_jeu.png')] public var ImgJeuHB:Class;
-		[Embed(source = '../assets/IMAGES/ph_speed.png')] public var ImgSpawnSpeed:Class;
+		[Embed(source = '../assets/IMAGES/POWERUP/boost_floor.png')] public var ImgSpawnSpeed:Class;
 		[Embed(source = '../assets/IMAGES/POWERUP/shield_floor.png')] public var ImgSpawnShield:Class;
 		[Embed(source = '../assets/IMAGES/BUILDINGS/school.png')] public var ImgEcole:Class;
 		[Embed(source = '../assets/IMAGES/BUILDINGS/serb.png')] public var ImgCentre:Class;

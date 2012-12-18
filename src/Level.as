@@ -41,7 +41,7 @@ package
 		public var ratid:int = 0;
 		public var playtime:FlxTimer = new FlxTimer();
 		public var totaltime:FlxTimer = new FlxTimer();
-		public var immunity:FlxTimer;
+		public var immunity:FlxTimer = null;
 		public var immunetime:int = 1;
 		public var shopcount:int = 0;
 		public var childcount:int = 0;
@@ -243,6 +243,7 @@ package
 				count2++;
 				if ((count2 == 60) ) {
 					distances = distanceCalculator(player);
+					FlxG.score++;
 					count2 = 0;
 				}
 				for each (var en:ESRB in esrbs.members) {
@@ -253,7 +254,7 @@ package
 				
 				FlxG.collide(kids, kids);
 				FlxG.collide(kids, builds);
-				FlxG.collide(player, esrbs, get_hurt);
+				FlxG.overlap(player, esrbs, get_hurt);
 				FlxG.collide(player, builds);
 				FlxG.collide(esrbs, builds);
 				FlxG.collide(esrbs, kids);
@@ -316,6 +317,9 @@ package
 					if (b.spawntimeresrb.finished) {
 						b.bspawnesrb = false;
 					}
+					if ((immunity != null) && (immunity.finished)) {
+						immunity = null;
+					}
 				}
 				if ((playtime != null) && ((playtime.time - playtime.timeLeft) / 60 == 0) && (int (playtime.timeLeft) != int (map.time)))
 					FlxG.score++;
@@ -331,50 +335,45 @@ package
 						else 
 							child.behave(builds);
 					}
-				} 
+				}
 			}
+			
 		}
 
 		// TRANSFORME EN BISOUNOURS
 		public function trans_bisou(esrb:ESRB, k:Kid):void {
-			if (FlxCollision.pixelPerfectCheck(esrb, k)) {
+			if ((FlxCollision.pixelPerfectCheck(esrb, k)) && (k.validated == true)) {
 				k.TRANSFORMED_MODE.play();
-				k.loadGraphic(k.ImgBisounours, true, false, 64, 64);
+				k.loadGraphic(k.ImgBisounours, true, false, 31, 64);
 				k.transformed == true;
 			}
 		}
 		
-		
-		
-		
 		// GET HURT BY ESRB
 		public function get_hurt(pl:Player, es:ESRB):void {
-			
-		}
-		/*HERE COLLISIONS ESRB / PLAYER
-					if (FlxCollision.pixelPerfectCheck(en, player) && (immunity != null) && (immunity.finished)) {
-						// SI BOUCLIER
-						if (player.shield == 1) {
-							player.shield = 0;
-							ui.lives.members[this.player.lives].exists = false;
-							sfx_lost_life.play();
-						}
-						// SI VIES
-						else {
-							player.lives--;
-							ui.lives.members[player.lives] = new FlxSprite(ui.lives.members[player.lives].x, ui.lives.members[player.lives].y, ui.ImgLifeEmpty);
-							ui.lives.members[player.lives].scrollFactor.x = ui.lives.members[player.lives].scrollFactor.y = 0;
-							sfx_lost_life.play();
-						}
-						// SI STILL ALIVE
-						if (player.lives > 0)
-							immunity = null;
-							
-						// SI MORT
-						else {
-							FlxG.switchState(new GameOver());
-						}
-					}*/
+			if ((player.lives > 0) && (immunity == null)) {
+				// SI BOUCLIER
+				if (player.shield == 1) {
+					player.shield = 0;
+  					ui.lives.members[this.player.lives-1].exists = false;
+					sfx_lost_life.play();
+				}
+				// SI VIES
+				else {
+					player.lives--;
+					ui.lives.members[player.lives] = new FlxSprite(ui.lives.members[player.lives].x, ui.lives.members[player.lives].y, ui.ImgLifeEmpty);
+					ui.lives.members[player.lives].scrollFactor.x = ui.lives.members[player.lives].scrollFactor.y = 0;
+					sfx_lost_life.play();
+					}
+					//SI STILL ALIVE
+					immunity = new FlxTimer();
+					immunity.start(immunetime);
+				}
+				if (player.lives == 0) {
+					FlxG.music.stop();
+					FlxG.switchState(new GameOver());
+				}
+			}
 		
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {

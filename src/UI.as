@@ -20,7 +20,7 @@ package
 		[Embed(source = '../assets/IMAGES/HUD/current_rating_18.png')] public var Img18:Class;
 		[Embed(source = '../assets/IMAGES/HUD/life.png')] public var ImgLife:Class;
 		[Embed(source = '../assets/IMAGES/HUD/life_empty.png')] public var ImgLifeEmpty:Class;
-		[Embed(source = '../assets/IMAGES/POWERUP/shield_floor.png')] public var ImgShield:Class;
+		[Embed(source = '../assets/IMAGES/HUD/shield.png')] public var ImgShield:Class;
 		[Embed(source = '../assets/IMAGES/HUD/objective_check.png')] public var ImgObjCheck:Class;
 		[Embed(source = '../assets/IMAGES/HUD/objective_uncheck.png')] public var ImgObjUncheck:Class;
 		public var score:FlxText;
@@ -83,10 +83,10 @@ package
 			var objectif:FlxSprite = new FlxSprite (700, 0, ImgObjUncheck);
 			objectif.scrollFactor.x = objectif.scrollFactor.y = 0;
 			objects.add(objectif);
-			objectif = new FlxSprite (700, 48, ImgObjUncheck);
+			objectif = new FlxSprite (700, 32, ImgObjUncheck);
 			objectif.scrollFactor.x = objectif.scrollFactor.y = 0;
 			objects.add(objectif);
-			objectif = new FlxSprite (700, 96, ImgObjUncheck);
+			objectif = new FlxSprite (700, 64, ImgObjUncheck);
 			objectif.scrollFactor.x = objectif.scrollFactor.y = 0;
 			objects.add(objectif);
 			
@@ -105,17 +105,6 @@ package
 			rating_sprite = new FlxSprite(64, 8, Img7);
 			rating_sprite.scrollFactor.x = rating_sprite.scrollFactor.y = 0;
 			components.add(rating_sprite);
-			
-			// DEBUG NB ENNEMIS
-			nben = new FlxText(FlxG.width - 300, FlxG.height  - 200,  FlxG.width, "NB ENNEMIS : " + level.esrbs.length);
-			nben.setFormat(null, 14, 0xa10000);
-			nben.scrollFactor.x = nben.scrollFactor.y = 0;
-			components.add(nben);
-			// DEBUG NB KID
-			nbch = new FlxText(FlxG.width - 300, FlxG.height  - 100,  FlxG.width, "NB CHILD : " + level.kids.length);
-			nbch.setFormat(null, 14, 0xa10000);
-			nbch.scrollFactor.x = nbch.scrollFactor.y = 0;
-			components.add(nbch);
 		}
 		
 		override public function update():void {
@@ -145,9 +134,9 @@ package
 				}
 				
 				if (level.map.shops > 0)
-					objs.text = "CAPTURE " + level.map.shops + " SHOPS.";
+					objs.text = "CAPTURE " + level.map.shops + " BUILDINGS.";
 				else if (level.map.shops > -1) {
-					objs.text = "SHOP CAPTURED.";
+					objs.text = " CAPTURED.";
 					FlxG.score += 500;
 					objects.members[1] = new FlxSprite(objects.members[1].x, objects.members[1].y, ImgObjCheck);
 					objects.members[1].scrollFactor.x = objects.members[1].scrollFactor.y = 0;

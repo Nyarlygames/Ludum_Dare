@@ -94,6 +94,10 @@ package
 					spawnobj();
 				timer_spawn.start(spawntime);
 			}
+			
+			if ((taken == true) && (hitbox != null)){
+				hitbox.visible = false;
+			}
 		}
 		
 		public function spawnobj():void {

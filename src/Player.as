@@ -50,13 +50,13 @@ package
 			speed = 15;
 			loadGraphic(ImgPlayer, true, false, 64, 64);
 			nbanim++;
-			addAnimation("walkd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			addAnimation("walkd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3], 20, false);
 			nbanim += 5;
-			addAnimation("walkg", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			addAnimation("walkg", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3], 20, false);
 			nbanim += 5;
-			addAnimation("walkhg", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			addAnimation("walkhd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3], 20, false);
 			nbanim += 5;
-			addAnimation("walkhd", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3, nbanim  + 4], 5, false);
+			addAnimation("walkhg", [nbanim  + 0, nbanim  + 1, nbanim  + 2, nbanim  + 3], 20, false);
 			pw_life.loadEmbedded(Get_Life, false, true);
 			pw_shield.loadEmbedded(Got_shield, false, true);
 			SUP.loadEmbedded(Speed_UP, false, true);
@@ -67,25 +67,52 @@ package
 			super.update();
 			// DROITE
 			if (lives >= 0) {
-				if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
+				
+				
+				
+				
+				
+				if (FlxG.keys.pressed("UP") && (FlxG.keys.pressed("RIGHT"))){
+					y -= speed;
+					x += speed;
+					play("walkhd");
+				}
+				else if (FlxG.keys.pressed("UP") && (FlxG.keys.pressed("LEFT"))) {
+					y -= speed;
+					x -= speed;
+					play("walkhg");
+				}
+				else if (FlxG.keys.pressed("DOWN") && (FlxG.keys.pressed("LEFT"))){
+					y += speed;
+					x -= speed;
+					play("walkg");
+				}
+				else if (FlxG.keys.pressed("DOWN") && (FlxG.keys.pressed("RIGHT"))){
+					y += speed;
+					x += speed;
+					play("walkd");
+				}
+				else if ((FlxG.keys.pressed("RIGHT") || FlxG.keys.pressed("D")) && x < w - frameWidth) {
 					x += speed;
 					play("walkd");
 				}
 				// GAUCHE
-				if ((FlxG.keys.pressed("LEFT") || FlxG.keys.pressed("A")) && x > 0) {
+				else if ((FlxG.keys.pressed("LEFT") || FlxG.keys.pressed("A")) && x > 0) {
 					x -= speed;
 					play("walkg");
 				}
 				// HAUT
-				if ((FlxG.keys.pressed("UP") || FlxG.keys.pressed("W")) && y > 0) {
+				else if ((FlxG.keys.pressed("UP") || FlxG.keys.pressed("W")) && y > 0) {
 					y -= speed;	
-					play("walkh");
+					play("walkhd");
 				}
 				// BAS
-				if ((FlxG.keys.pressed("DOWN") || FlxG.keys.pressed("Z")) && y < h - frameHeight) {
+				else if ((FlxG.keys.pressed("DOWN") || FlxG.keys.pressed("Z")) && y < h - frameHeight) {
 					y += speed;
-					play("walkb");
+					play("walkg");
 				}
+				
+				
 				if (FlxG.keys.justReleasedAny() != -1) {
 					frame = 0;
 				}

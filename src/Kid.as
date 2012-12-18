@@ -7,6 +7,7 @@ package
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxG;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
+	import org.flixel.plugin.photonstorm.FlxWeapon;
 	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.FlxSound;
 	/**
@@ -65,6 +66,7 @@ package
 			speed = 5;
 			INFECTED_MODE.loadEmbedded(Sfx_INFECTED, false, true);
 			TRANSFORMED_MODE.loadEmbedded(Sfx_TRANSFORMED, false, true);
+			
 		}
 		
 		override public function update():void {
