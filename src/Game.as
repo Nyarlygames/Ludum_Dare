@@ -36,7 +36,7 @@ package
 		
 		override public function update():void {
 			// PAUSE
-			if(FlxG.keys.justPressed("P") || (pauseMenu != null && FlxG.keys.justPressed("ENTER") && pauseMenu.current == 0)) {
+			if((FlxG.keys.justPressed("P") || FlxG.keys.justPressed("ESCAPE")) || (pauseMenu != null && (FlxG.keys.justPressed("ENTER") || FlxG.keys.justPressed("SPACE")) && pauseMenu.current == 0)) {
 				paused = !paused;
 				if (paused) {
 					pauseMenu = new Pause();
@@ -49,11 +49,11 @@ package
 				}
 			}
 			//Pause menu management
-			if (pauseMenu != null && FlxG.keys.justPressed("ENTER")) {
+			if (pauseMenu != null && (FlxG.keys.justPressed("ENTER") || FlxG.keys.justPressed("SPACE"))) {
 				if (pauseMenu.current == 1) {
 					FlxG.mute = !FlxG.mute;
 				} else if (pauseMenu.current == 2) {
-					FlxG.resetGame();
+					FlxG.switchState(new Menu());
 				}
 			}
 			if (paused) {
@@ -77,11 +77,6 @@ package
 			if ((state == 1) && (onstate == false)) {
 				state = 2;
 				onstate = true;
-			}
-			
-			// ESCAPE
-			if (FlxG.keys.justPressed("ESCAPE")) {
-				System.exit(0);
 			}
 		}
 		
