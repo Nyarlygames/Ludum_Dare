@@ -23,6 +23,7 @@ package
 		[Embed(source = '../assets/IMAGES/BUILDINGS/serb.png')] public var ImgCentre:Class;
 		[Embed(source = '../assets/IMAGES/BUILDINGS/ph_fontaine.png')] public var ImgFontaine:Class;
 		[Embed(source = '../assets/IMAGES/BUILDINGS/house.png')] public var ImgMaison:Class;
+		[Embed(source = '../assets/ANIMATIONS/ANIM_BUILDINGS/ANIM_HOP.png')] public var Anim_Build_Hop:Class;
 
 		public var assets:Array = new Array();
 		
@@ -42,6 +43,7 @@ package
 			assets.push(ImgCentre);
 			assets.push(ImgFontaine);
 			assets.push(ImgMaison);
+			assets.push(Anim_Build_Hop);
 		}
 	}
 

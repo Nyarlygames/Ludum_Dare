@@ -17,7 +17,6 @@ local.properties
 obj/
 *.old
 *.xml
-*.swf
 
 # External tool builders
 .externalToolBuilders/
@@ -64,7 +63,6 @@ obj/
 *.vspscc
 .builds
 *.dotCover
-bin/
 
 ## TODO: If you have NuGet Package Restore enabled, uncomment this
 #packages/

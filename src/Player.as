@@ -131,6 +131,11 @@ package
 					if (z.take != this) {
 						z.timer = new FlxTimer();
 						z.timer.start(z.time);
+						if (z.label == "Hopital") {
+							z.loadGraphic(imgs.assets[14], true, false, 320, 512);
+							z.addAnimation("animget", [0, 1, 2, 3, 4, 5, 6,7], 4, true);
+							z.play("animget");
+						}
 						z.take = this;
 						z.sfx_getting.play();
 					}
