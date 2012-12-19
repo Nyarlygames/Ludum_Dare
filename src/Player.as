@@ -26,7 +26,7 @@ package
 
 		public var maxspeed:int = 20;
 		public var normalspeed:int = 15;
-		public var lives:int = 3;                                                              
+		public var lives:int = 2;                                                              
 		private var imgs:ImgRegistry = new ImgRegistry();
 		private var w:int = 0;
 		private var h:int = 0;
@@ -150,8 +150,9 @@ package
 						if (shield == 0) {
 							shield++;
 							pw_shield.play();
-							niveau.ui.lives.members[obj1.lives-1 ] = new FlxSprite(niveau.ui.lives.members[obj1.lives-1].x, niveau.ui.lives.members[obj1.lives-1].y, niveau.ui.ImgShield);
-							niveau.ui.lives.members[obj1.lives-1].scrollFactor.x = niveau.ui.lives.members[obj1.lives-1].scrollFactor.y = 0;
+							var vie:FlxSprite = new FlxSprite(299, 53, niveau.ui.ImgShield);
+							vie.scrollFactor.x = vie.scrollFactor.y = 0;
+							niveau.ui.lives.add(vie);
 						}
 					}
 					else {
@@ -162,12 +163,12 @@ package
 					}
 				break;
 				case "Hopital":
-					if (lives < 3) {
-						niveau.ui.lives.members[lives] = new FlxSprite(niveau.ui.lives.members[lives].x, niveau.ui.lives.members[lives].y, niveau.ui.ImgLife);
-						niveau.ui.lives.members[lives].scrollFactor.x = niveau.ui.lives.members[lives].scrollFactor.y = 0;
+					if (lives < 2) {
+						niveau.ui.lives.members[lives+1].loadGraphic(niveau.ui.ImgLife, true, false, 32, 32);
 						lives++;
+						niveau.ui.lives.members[lives].scrollFactor.x = niveau.ui.lives.members[lives].scrollFactor.y = 0;
+						pw_life.play();
 					}
-					pw_life.play();
 				break;
 				default:
 			}

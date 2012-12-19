@@ -81,8 +81,8 @@ package
 			 */
 			ratid = rat;
 			rating = new Array();
-			rating.push(new Array("7+", 2, "Kick", 20, 30, 60, 90, 180));
-			rating.push(new Array("12+", 4, "Gun", 40, 20, 40, 60, 120));
+			rating.push(new Array("7+", 10, "Kick", 20, 30, 60, 90, 180));
+			rating.push(new Array("12+", 20, "Gun", 40, 20, 40, 60, 120));
 			rating.push(new Array("18+", -1, "MG", 60, 10, 10, 30, 60));
 			
 			FlxG.playMusic(Sound7, 1);
@@ -351,28 +351,28 @@ package
 		
 		// GET HURT BY ESRB
 		public function get_hurt(pl:Player, es:ESRB):void {
-			if ((player.lives > 0) && (immunity == null)) {
+			if ((player.lives > -1) && (immunity == null)) {
 				// SI BOUCLIER
+				if (player.lives ==0) {
+					FlxG.music.stop();
+					FlxG.switchState(new GameOver());
+				}
 				if (player.shield == 1) {
 					player.shield = 0;
-  					ui.lives.members[this.player.lives-1].exists = false;
+					ui.lives.members[3] = null;
 					sfx_lost_life.play();
 				}
 				// SI VIES
 				else {
-					player.lives--;
-					ui.lives.members[player.lives] = new FlxSprite(ui.lives.members[player.lives].x, ui.lives.members[player.lives].y, ui.ImgLifeEmpty);
+					ui.lives.members[player.lives].loadGraphic(ui.ImgLifeEmpty, true, false, 32, 32);
 					ui.lives.members[player.lives].scrollFactor.x = ui.lives.members[player.lives].scrollFactor.y = 0;
+					player.lives--;
 					sfx_lost_life.play();
 					}
-					//SI STILL ALIVE
-					immunity = new FlxTimer();
-					immunity.start(immunetime);
 				}
-				if (player.lives == 0) {
-					FlxG.music.stop();
-					FlxG.switchState(new GameOver());
-				}
+				//SI STILL ALIVE
+				immunity = new FlxTimer();
+				immunity.start(immunetime);
 			}
 		
 		public function captureKid(player:Player, kids:FlxGroup):void {
