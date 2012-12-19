@@ -24,7 +24,10 @@ package
 		[Embed(source = '../assets/IMAGES/BUILDINGS/ph_fontaine.png')] public var ImgFontaine:Class;
 		[Embed(source = '../assets/IMAGES/BUILDINGS/house.png')] public var ImgMaison:Class;
 		[Embed(source = '../assets/ANIMATIONS/ANIM_BUILDINGS/ANIM_HOP.png')] public var Anim_Build_Hop:Class;
-
+		[Embed(source = '../assets/ANIMATIONS/ANIM_BUILDINGS/ANIM_JEU.png')] public var Anim_Build_Jeu:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/grisbleu.png')] public var Anim_Child_Grey:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/bleuorange.png')] public var Anim_Child_Blue:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/orangerouge.png')] public var Anim_Child_Orange:Class;
 		public var assets:Array = new Array();
 		
 		public function ImgRegistry() 
@@ -44,6 +47,10 @@ package
 			assets.push(ImgFontaine);
 			assets.push(ImgMaison);
 			assets.push(Anim_Build_Hop);
+			assets.push(Anim_Build_Jeu);
+			assets.push(Anim_Child_Grey);
+			assets.push(Anim_Child_Blue);
+			assets.push(Anim_Child_Orange);
 		}
 	}
 

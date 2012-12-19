@@ -20,8 +20,10 @@ package
 		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_gris.png')] public var ImgKidGrey:Class;
 		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_bleu.png')] public var ImgKidBlue:Class;
 		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_orange.png')] public var ImgKidOrange:Class;
-		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_rouge.png')] public var ImgKidRed:Class;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/anim_kid_rouge.png')] public var ImgKidRed:Class;;
+		[Embed(source = '../assets/ANIMATIONS/CHILD/ammo3.png')] public var ImgAmmo:Class;
 		[Embed(source = '../assets/IMAGES/bisounours1.png')] public var ImgBisounours:Class;
+		[Embed(source = '../assets/IMAGES/bisounours1.png')] public var ANIM_Bisounours:Class;
 		[Embed(source = '../assets/SOUNDS/ENFANT/INFECTED_MODE.mp3')] public var Sfx_INFECTED:Class;
 		[Embed(source = '../assets/SOUNDS/ENFANT/BISOUNOURS_MODE.mp3')] public var Sfx_TRANSFORMED:Class;
 		public var validated:Boolean = false;
@@ -37,6 +39,9 @@ package
 		public var INFECTED_MODE:FlxSound = new FlxSound();
 		public var TRANSFORMED_MODE:FlxSound = new FlxSound();
 		public var transformed:Boolean = false;
+		public var tirs:FlxWeapon = new FlxWeapon("tirs", this, "x", "y");
+		public var go_away:FlxTimer = new FlxTimer;
+		public var transforming:Boolean = false;
 		
 		public function Kid(x:int, y:int) 
 		{
@@ -66,6 +71,10 @@ package
 			speed = 5;
 			INFECTED_MODE.loadEmbedded(Sfx_INFECTED, false, true);
 			TRANSFORMED_MODE.loadEmbedded(Sfx_TRANSFORMED, false, true);
+			tirs = new FlxWeapon("tirs", this, "x", "y");
+			tirs.makeImageBullet(50, ImgAmmo, 16, 16);
+			tirs.setFireRate(3000);
+			tirs.setBulletSpeed(200);
 			
 		}
 		
@@ -80,7 +89,6 @@ package
 				if (y > FlxG.worldBounds.height - frameHeight)
 					y = FlxG.worldBounds.height - frameHeight;
 			}
-			
 			if (lastdir != dir) {
 				switch(dir) { }
 			}
@@ -201,6 +209,12 @@ package
 		}
 		
 		public function goAway():void {
+			if (go_away.finished) {
+				this.exists = false;
+				this.destroy();
+				this.alive = false;
+				this.kill();
+			}
 		}
 		
 	}

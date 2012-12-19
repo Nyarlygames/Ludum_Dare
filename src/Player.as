@@ -19,6 +19,7 @@ package
 	public class Player extends Character 
 	{
 		[Embed(source = '../assets/ANIMATIONS/PLAYER/player.png')] public var ImgPlayer:Class;
+		[Embed(source = '../assets/ANIMATIONS/PLAYER/ondesRonde.png')] public var Anim_Attack:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/GET_LIFE.mp3")] public  var Get_Life:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/GOT_SHIELD.mp3")] public  var Got_shield:Class;
 		[Embed(source="../assets/SOUNDS/POWERUPS/SPEED_UP.mp3")] public  var Speed_UP:Class;
@@ -136,6 +137,11 @@ package
 							z.addAnimation("animget", [0, 1, 2, 3, 4, 5, 6,7], 4, true);
 							z.play("animget");
 						}
+						else if (z.label == "Jeu") {
+							z.loadGraphic(imgs.assets[15], true, false, 384, 384);
+							z.addAnimation("animget", [0, 1, 2, 3, 4, 5, 6], 3, true);
+							z.play("animget");
+						}
 						z.take = this;
 						z.sfx_getting.play();
 					}
@@ -144,6 +150,7 @@ package
 					z.timer.stop();
 					z.take = null;
 					z.sfx_getting.stop();
+					z.frame = 0;
 				}
 			}
 		}

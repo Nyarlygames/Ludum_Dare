@@ -10,6 +10,7 @@ package
 	import org.flixel.FlxText;
 	import org.flixel.FlxTimer;
 	import org.flixel.plugin.photonstorm.FlxVelocity;
+	import org.flixel.plugin.photonstorm.BaseTypes.Bullet;
 	import org.flixel.plugin.photonstorm.FlxCollision;
 	/**
 	 * Level
@@ -55,6 +56,7 @@ package
 		public var sfx_spawnpig:FlxSound = new FlxSound();
 		private var distances:Array;
 		public var other:Boolean = true;
+		public var childtransforme:FlxTimer = new FlxTimer;
 		
 		public function Level(nom:String, rat:int):void
 		{
@@ -84,7 +86,8 @@ package
 			rating.push(new Array("7+", 10, "Kick", 20, 30, 60, 90, 180));
 			rating.push(new Array("12+", 20, "Gun", 40, 20, 40, 60, 120));
 			rating.push(new Array("18+", -1, "MG", 60, 10, 10, 30, 60));
-			
+			FlxG.width = 1024;
+			FlxG.height = 768;
 			FlxG.playMusic(Sound7, 1);
 			FlxG.music.getActualVolume();
 			sfx_trans.loadEmbedded(Sound7_12, false, true);
@@ -221,11 +224,12 @@ package
 		////UPDATE
 		override public function update():void {
 			if(!Game.paused) {
-				FlxG.worldBounds = new FlxRect(0, 0, background.frameWidth, background.frameHeight);
-				FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
-				FlxG.camera.follow(player);
 				super.update();
-
+				FlxG.width = background.frameWidth;
+				FlxG.height = background.frameHeight;
+				FlxG.camera.setBounds(0, 0, background.frameWidth, background.frameHeight);
+				FlxG.worldBounds = new FlxRect(0, 0, background.frameWidth, background.frameHeight);
+				FlxG.camera.follow(player);
 				if ((childcount > rating[ratid][1]) && (ratid < 2)) {
 					if (ratid == 0) {
 						sfx_trans.play();
@@ -257,7 +261,7 @@ package
 				FlxG.overlap(player, esrbs, get_hurt);
 				FlxG.collide(player, builds);
 				FlxG.collide(esrbs, builds);
-				FlxG.collide(esrbs, kids);
+			//	FlxG.collide(esrbs, kids);
 				FlxG.collide(esrbs, esrbs);
 				FlxG.collide(kids, kids);
 				FlxG.overlap(esrbs, kids, trans_bisou);
@@ -285,7 +289,9 @@ package
 					}
 					if ((b.label == "Ecole") && (!b.bspawnkid)) {
 						b.spawntimer.start(b.spawnkid);
-						kids.add(new Kid(b.x + b.frameWidth / 2, b.y + b.frameHeight));
+						var kid:Kid = new Kid(b.x + b.frameWidth / 2, b.y + b.frameHeight);
+						kids.add(kid);
+						add(kid.tirs.group);
 						sfx_spawn.loadEmbedded(Kid_Spawn, false, true);
 						sfx_spawn.play();
 						b.bspawnkid = true;
@@ -330,22 +336,50 @@ package
 				
 				for each (var child:Kid in kids.members) {
 					if (child != null) {
-						if (child.transformed == true)
+						if ((child.transformed == true) && (child.transforming == false)) {
+							child.transforming = true;
+							child.go_away.start(1);
+						}
+						if (child.transformed == true) {
 							child.goAway();
+						}
+						if (child.go_away.finished) {
+							kids.remove(child, true);
+						}
 						else 
 							child.behave(builds);
+					}	
+					FlxG.overlap(child.tirs.group, esrbs, hit_esrbs);
+					if ((child.validated == true) && (ratid == 1)) {
+						child.tirs.fireFromAngle(Math.random() * 360);
 					}
+					else if ((child.validated == true) && (ratid == 2)) {
+						child.tirs.setFireRate(1000);
+						child.tirs.fireFromAngle(Math.random() * 360);
+					}
+						
+					if ((child.validated == true ) && (childtransforme.finished) && (child.transformed == false)) {
+						child.loadGraphic(child.getImg(ratid), true, false, 64, 64);
+					}
+					
 				}
 			}
 			
 		}
 
+		// KID TOUCHE ESRB
+		public function hit_esrbs(k:Bullet, en:ESRB):void {
+			if (FlxCollision.pixelPerfectCheck(en, k)) {
+				en.hurt(en.attack);   
+			}
+			k.exists = false;
+		}
 		// TRANSFORME EN BISOUNOURS
 		public function trans_bisou(esrb:ESRB, k:Kid):void {
-			if ((FlxCollision.pixelPerfectCheck(esrb, k)) && (k.validated == true)) {
+			if ((FlxCollision.pixelPerfectCheck(esrb, k)) && (k.validated == true) && (k.transformed ==false)) {
 				k.TRANSFORMED_MODE.play();
 				k.loadGraphic(k.ImgBisounours, true, false, 31, 64);
-				k.transformed == true;
+				k.transformed = true;
 			}
 		}
 		
@@ -377,8 +411,21 @@ package
 		
 		public function captureKid(player:Player, kids:FlxGroup):void {
 			for each (var child:Kid in kids.members) {
-				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {
-					child.loadGraphic(child.getImg(ratid), true, false, 64, 64);
+				if ((child != null) && (child.validated == false) && (FlxVelocity.distanceBetween(player, child) < 2 * Constants.TILESIZE)) {		
+					switch(ratid) {
+						case 0:
+							child.loadGraphic(imgs.assets[16], true, false, 64, 64);
+							break;
+						case 1:
+							child.loadGraphic(imgs.assets[17], true, false, 64, 64);
+							break;
+						case 2:
+							child.loadGraphic(imgs.assets[18], true, false, 64, 64);
+							break;
+					}
+					child.addAnimation("animtrans", [0, 1, 2, 3, 4, 5, 6, 7], 8, false);
+					child.play("animtrans");
+					childtransforme.start(1);
 					map.childs--;
 					childcount++;
 					child.INFECTED_MODE.play(true);

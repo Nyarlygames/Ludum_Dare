@@ -31,7 +31,8 @@ package
 		
 		public function Pause()
 		{
-			
+			FlxG.width = 1024;
+			FlxG.height = 768;
 			background = new FlxSprite(0, 0, bgPause);
 			background.scrollFactor.x = 0;
 			background.scrollFactor.y = 0;
